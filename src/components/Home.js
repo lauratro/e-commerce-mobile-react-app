@@ -45,7 +45,7 @@ function Home() {
               setFilteredProducts(filteredProducts)
             }
           />
-          <RangeSlider />
+          <RangeSlider products={products} />
         </React.Fragment>
       )}
 

@@ -15,16 +15,29 @@ function valuetext(value) {
   return `${value} $`;
 }
 
-export default function RangeSlider() {
+export default function RangeSlider(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState([0, 1000]);
-
+  let products = props.products;
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  console.log("value", value[0]);
+  let sliderFilter = (products) => {
+    let filtered = [];
+    products.forEach((prod) => {
+      if (
+        Number(value[0]) <= Number(prod.price) &&
+        Number(value[1]) >= Number(prod.price)
+      ) {
+        filtered.push(prod);
+      }
+    });
+    console.log("slider", filtered);
+  };
+  sliderFilter(products);
   return (
-    <div className={classes.root} classNamae={classes.position}>
+    <div className={classes.root}>
       <Typography id="range-slider" gutterBottom>
         Price range
       </Typography>

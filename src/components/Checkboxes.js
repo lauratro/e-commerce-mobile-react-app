@@ -37,7 +37,7 @@ export default function CheckboxesGroup(props) {
   const hasCategoryNameFilter = Object.keys(state).filter(function (k) {
     return state[k] == true;
   });
-  console.log("stateKey", hasCategoryNameFilter);
+  /* console.log("stateKey", hasCategoryNameFilter); */
   let filterCheckbox = (products) => {
     let filtered = [];
     products.forEach((prod) => {
