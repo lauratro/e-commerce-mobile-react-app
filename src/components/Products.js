@@ -11,10 +11,18 @@ import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles({
   root: {
     width: 300,
-    height: 330,
+  },
+  height: {
+    height: "fit-content",
   },
   media: {
     height: 140,
+  },
+  margin: {
+    marginBottom: 5,
+  },
+  fontSize: {
+    fontSize: 12,
   },
 });
 
@@ -24,8 +32,15 @@ export default function MediaCard(props) {
 
   return props.products.map((product) => {
     return (
-      <Grid item spacing={3} xs={12} sm={3}>
-        <Card key={product.id} className={classes.root} xs="6" sm="3">
+      <Grid item xs={12} sm={3}>
+        <Card
+          key={product.id}
+          className={classes.root}
+          className={classes.margin}
+          className={classes.height}
+          xs="6"
+          sm="3"
+        >
           <CardActionArea>
             <CardMedia
               className={classes.media}
@@ -33,12 +48,17 @@ export default function MediaCard(props) {
               title="Contemplative Reptile"
             />
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
+              <Typography gutterBottom variant="h6" component="h2">
                 {product.title}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
                 {product.category}
               </Typography>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+              ></Typography>
             </CardContent>
           </CardActionArea>
           <CardActions>

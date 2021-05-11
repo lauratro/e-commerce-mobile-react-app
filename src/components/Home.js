@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import MediaCard from "./Products";
-import PrimarySearchAppBar from "./App-bar";
+import SearchAppBar from "./App-bar";
 import Box from "@material-ui/core/Box";
 import { spacing } from "@material-ui/system";
 import Grid from "@material-ui/core/Grid";
@@ -9,11 +9,11 @@ import Grid from "@material-ui/core/Grid";
 function Home() {
   const [products, setProducts] = useState([]);
   let fetchApi = () => {
-    fetch("https://fakestoreapi.com/products/")
+    fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setProducts(data);
+      .then((response) => {
+        console.log(response);
+        setProducts(response);
       });
   };
   useEffect(() => {
@@ -22,13 +22,12 @@ function Home() {
 
   return (
     <React.Fragment>
-      <PrimarySearchAppBar />
-      <Box mt={8}>
+      <SearchAppBar />
+      <Box mt={8} position="relative" top="60px">
         <Grid
           container
           direction="row"
           justify="space-around"
-          alignItems="center"
 
           /*  display="flex"
         flexWrap="wrap"
