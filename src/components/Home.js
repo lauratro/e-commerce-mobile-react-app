@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import MediaCard from "./Products";
-import SearchAppBar from "./App-bar";
+import MenuAppBar from "./App-bar";
 import CheckboxesGroup from "./Checkboxes";
 import RangeSlider from "./PriceSlider";
+import Bubble from "./BubbleNavBar";
 import "../styles/Checkboxes.css";
 import Box from "@material-ui/core/Box";
 import { spacing } from "@material-ui/system";
@@ -13,13 +14,16 @@ function Home() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [showFilters, setShowFilters] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   let fetchApi = () => {
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
       .then((response) => {
         console.log(response);
         setProducts(response);
-        setFilteredProducts();
+        setIsLoading(false);
+        setFilteredProducts(filteredProducts);
       });
   };
 
@@ -29,40 +33,53 @@ function Home() {
   let showFilter = () => {
     setShowFilters((noShow) => !noShow);
   };
+
+  const onchangeFilter = (data) => {
+    setFilteredProducts(data);
+    console.log("Form>", data);
+  };
   return (
-    <React.Fragment>
-      <SearchAppBar />
-      <button className="posRelative" onClick={showFilter}>
-        Filters
-      </button>
-      {showFilters && (
+    <div>
+      {!isLoading ? (
         <React.Fragment>
-          <CheckboxesGroup
-            className="posRelative"
-            products={products}
-            filteredProducts={filteredProducts}
-            filterCheckbox={(filteredProducts) =>
-              setFilteredProducts(filteredProducts)
-            }
-          />
-          <RangeSlider products={products} />
+          <button className="posRelative" onClick={showFilter}>
+            Filters
+          </button>
+          {showFilters && (
+            <React.Fragment>
+              <CheckboxesGroup
+                className="posRelative"
+                products={products}
+                data={filteredProducts}
+                onchange={(e) => {
+                  onchangeFilter(e);
+                }}
+              />
+              <RangeSlider products={products} />
+            </React.Fragment>
+          )}
+
+          <Box mt={8}>
+            <Grid
+              container
+              direction="row"
+              justify="space-around"
+
+              /*  display="flex"
+  flexWrap="wrap"
+  */
+            >
+              <MediaCard products={products} />
+            </Grid>
+          </Box>
         </React.Fragment>
+      ) : (
+        <img
+          className="loadingImg"
+          src="https://media.giphy.com/media/WuvJKSxPaE2ESfjRsJ/giphy.gif"
+        ></img>
       )}
-
-      <Box mt={8}>
-        <Grid
-          container
-          direction="row"
-          justify="space-around"
-
-          /*  display="flex"
-        flexWrap="wrap"
-        */
-        >
-          <MediaCard products={products} />
-        </Grid>
-      </Box>
-    </React.Fragment>
+    </div>
   );
 }
 export default Home;
