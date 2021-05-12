@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Checkboxes.css";
 import { makeStyles } from "@material-ui/core/styles";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CheckboxesGroup(props) {
   const classes = useStyles();
+  const [filtered, setFiltered] = useState([]);
   const [state, setState] = React.useState({
     electronics: false,
     jewelery: false,
@@ -38,8 +39,10 @@ export default function CheckboxesGroup(props) {
     return state[k] == true;
   });
   /* console.log("stateKey", hasCategoryNameFilter); */
+  let handleResultFilter = (filtered) => {
+    props.onchange(filtered);
+  };
   let filterCheckbox = (products) => {
-    let filtered = [];
     products.forEach((prod) => {
       if (prod.category == "men's clothing") {
         prod.category = "men";
@@ -68,9 +71,7 @@ export default function CheckboxesGroup(props) {
                 checked={electronics}
                 onChange={handleChange}
                 name="electronics"
-                onClick={() => {
-                  filterCheckbox(products);
-                }}
+                onClick={handleResultFilter}
               />
             }
             label="Electronics"
