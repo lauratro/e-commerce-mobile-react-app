@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import MediaCard from "./Products";
 import MenuAppBar from "./App-bar";
+import IsLoadingData from "./IsLoadingData";
 import CheckboxesGroup from "./Checkboxes";
 import RangeSlider from "./PriceSlider";
-import Bubble from "./BubbleNavBar";
+import CardContainer from "./CardsContainer";
+import ButtonFilters from "./ButtonFilters";
+
 import "../styles/Checkboxes.css";
 import Box from "@material-ui/core/Box";
 import { spacing } from "@material-ui/system";
@@ -30,10 +33,17 @@ function Home() {
   useEffect(() => {
     fetchApi();
   }, [filteredProducts]);
-  let showFilter = () => {
+
+  function showButtonFilter(data) {
+    setShowFilters(data);
+
+    console.log("showBut", data);
+  }
+
+  /* let showFilter = () => {
     setShowFilters((noShow) => !noShow);
   };
-
+*/
   const onchangeFilter = (data) => {
     setFilteredProducts(data);
     console.log("Form>", data);
@@ -42,9 +52,11 @@ function Home() {
     <div>
       {!isLoading ? (
         <React.Fragment>
-          <button className="posRelative" onClick={showFilter}>
-            Filters
-          </button>
+          <ButtonFilters
+            onClick={(showFilter) => showButtonFilter(showFilter)}
+            showFilters={showFilters}
+          />
+
           {showFilters && (
             <React.Fragment>
               <CheckboxesGroup
@@ -74,10 +86,9 @@ function Home() {
           </Box>
         </React.Fragment>
       ) : (
-        <img
-          className="loadingImg"
-          src="https://media.giphy.com/media/WuvJKSxPaE2ESfjRsJ/giphy.gif"
-        ></img>
+        <div>
+          <IsLoadingData />
+        </div>
       )}
     </div>
   );
