@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import logo from "../img/lby.png";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
@@ -19,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+  },
+  logo: {
+    width: 60,
+    height: 60,
   },
 }));
 
@@ -47,6 +52,7 @@ export default function MenuAppBar() {
             aria-haspopup="true"
             onClick={handleClick}
           >
+            <img src={logo} alt="logo" className={classes.logo} />
             <MenuIcon />
           </IconButton>
 
