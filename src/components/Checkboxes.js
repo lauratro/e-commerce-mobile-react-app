@@ -26,7 +26,7 @@ export default function CheckboxesGroup(props) {
     men: false,
     women: false,
   });
-  let products = props.products;
+  let { products } = props;
   console.log("check", products);
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
@@ -36,32 +36,34 @@ export default function CheckboxesGroup(props) {
   const hasCategoryFilter = Object.values(state).includes(true);
   console.log("state", hasCategoryFilter);
   const hasCategoryNameFilter = Object.keys(state).filter(function (k) {
-    return state[k] == true;
+    return state[k] === true;
   });
   /* console.log("stateKey", hasCategoryNameFilter); */
   let handleResultFilter = (filtered) => {
     props.onchange(filtered);
   };
-  let filterCheckbox = (products) => {
+  let filterCheckbox = () => {
+    let filteredCheckResult = [];
     products.forEach((prod) => {
-      if (prod.category == "men's clothing") {
+      if (prod.category === "men's clothing") {
         prod.category = "men";
       }
-      if (prod.category == "women's clothing") {
+      if (prod.category === "women's clothing") {
         prod.category = "women";
       }
       if (hasCategoryNameFilter.includes(prod.category)) {
-        filtered.push(prod);
+        filteredCheckResult.push(prod);
       }
     });
-    console.log(filtered);
+
+    console.log("checkBox", filteredCheckResult);
   };
-  filterCheckbox(products);
+
   const error =
     [electronics, jewelery, men, women].filter((v) => v).length !== 2;
 
   return (
-    <div className={classes.root} className="posRelative">
+    <div className={classes.root}>
       <FormControl component="fieldset" className={classes.formControl}>
         <FormLabel component="legend">Our categories:</FormLabel>
         <FormGroup>

@@ -6,7 +6,7 @@ function ButtonFilters(props) {
   let valueBtn = props.showFilters;
 
   function handleChange() {
-    if (valueBtn == true) {
+    if (valueBtn === true) {
       props.onClick(false);
     } else {
       props.onClick(true);

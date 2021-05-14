@@ -20,6 +20,7 @@ export default function RangeSlider(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState([0, 1000]);
   let [filtered, setFiltered] = useState([]);
+  console.log("fillength", filtered.length);
   let products = props.products;
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -37,6 +38,8 @@ export default function RangeSlider(props) {
     });
 
     filtered = filteredData;
+    console.log("prodslider", filtered.length);
+
     return filtered;
   };
   filtered = sliderFilter();

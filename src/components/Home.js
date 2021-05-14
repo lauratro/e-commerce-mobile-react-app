@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import MediaCard from "./Products";
-import MenuAppBar from "./App-bar";
+
 import IsLoadingData from "./IsLoadingData";
 import CheckboxesGroup from "./Checkboxes";
 import RangeSlider from "./PriceSlider";
-import CardContainer from "./CardsContainer";
+
 import ButtonFilters from "./ButtonFilters";
 
 import "../styles/Checkboxes.css";
 import Box from "@material-ui/core/Box";
-import { spacing } from "@material-ui/system";
-import { positions } from "@material-ui/system";
+
 import Grid from "@material-ui/core/Grid";
 
 function Home() {
@@ -26,7 +25,6 @@ function Home() {
         console.log(response);
         setProducts(response);
         setIsLoading(false);
-        setFilteredProducts(filteredProducts);
       });
   };
 
@@ -39,7 +37,12 @@ function Home() {
 
     console.log("showBut", data);
   }
-
+  //Filtered Products
+  function filterData(data) {
+    setFilteredProducts(data);
+    console.log("sliderData", data);
+  }
+  console.log("dati Home filtrati", filteredProducts);
   /* let showFilter = () => {
     setShowFilters((noShow) => !noShow);
   };
@@ -67,7 +70,10 @@ function Home() {
                   onchangeFilter(e);
                 }}
               />
-              <RangeSlider products={products} />
+              <RangeSlider
+                products={products}
+                filterData={(data) => filterData(data)}
+              />
             </React.Fragment>
           )}
 
@@ -81,7 +87,10 @@ function Home() {
   flexWrap="wrap"
   */
             >
-              <MediaCard products={products} />
+              <MediaCard
+                products={products}
+                filteredProducts={filteredProducts}
+              />
             </Grid>
           </Box>
         </React.Fragment>

@@ -3,14 +3,13 @@ import Page from "./PageTitle";
 import IsLoadingData from "./IsLoadingData";
 import ButtonFilters from "./ButtonFilters";
 import RangeSlider from "./PriceSlider";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
+
 import MediaCard from "./Products";
 import CardContainer from "./CardsContainer";
 
 function Electronics() {
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
   /*   let showFilter = () => {
     setShowFilters((noShow) => !noShow);
@@ -24,23 +23,29 @@ function Electronics() {
         console.log(response);
         setProducts(response);
         setIsLoading(false);
-        setFilteredProducts(filteredProducts);
       });
   };
   useEffect(() => {
     fetchApi();
-  }, []);
+  }, [filteredProducts]);
   //Filter Button
   function showButtonFilter(data) {
     setShowFilters(data);
 
     console.log("showBut", data);
   }
+
   //Filtered Data
   function filterData(data) {
-    setFilteredProducts(data);
+    if (data.length === 0) {
+      data = products;
+      console.log("data", data);
+    } else {
+      setFilteredProducts(data);
+      console.log("sliderData", data);
+    }
   }
-
+  console.log("dati Ele filt", filteredProducts);
   return (
     <Page title="Electronics">
       {!isLoading ? (
@@ -58,7 +63,10 @@ function Electronics() {
             </React.Fragment>
           )}
           <CardContainer>
-            <MediaCard products={products} />
+            <MediaCard
+              products={products}
+              filteredProducts={filteredProducts}
+            />
           </CardContainer>
         </React.Fragment>
       ) : (

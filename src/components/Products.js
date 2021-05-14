@@ -29,9 +29,12 @@ const useStyles = makeStyles({
 export default function MediaCard(props) {
   console.log("prod", props);
   const classes = useStyles();
-  const { filteredProducts } = props;
+  let { products } = props;
+  let { filteredProducts } = props;
   console.log("filProd", filteredProducts);
-
+  if (filteredProducts.length === 0) {
+    filteredProducts = props.products;
+  }
   return filteredProducts.map((product) => {
     return (
       <Grid item xs={12} sm={3}>
