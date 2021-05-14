@@ -1,5 +1,4 @@
-import { PersonPinCircleSharp, TrendingUpOutlined } from "@material-ui/icons";
-import React, { useState } from "react";
+import React from "react";
 
 function ButtonFilters(props) {
   console.log("btn", props.onClick);
