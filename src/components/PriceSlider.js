@@ -16,18 +16,25 @@ function valuetext(value) {
 }
 
 export default function RangeSlider(props) {
-  console.log("funct", props.filterData);
+  let { filteredProducts } = props;
+  console.log("dati da filtrare slider", filteredProducts);
+  let { filteredCheckBoxData } = props;
   const classes = useStyles();
   const [value, setValue] = React.useState([0, 1000]);
   let [filtered, setFiltered] = useState([]);
-  console.log("fillength", filtered.length);
+  /*   console.log("fillength", filtered.length); */
   let products = props.products;
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  console.log("value", value[0]);
+  /*  console.log("value", value[0]); */
   let sliderFilter = () => {
     let filteredData = [];
+    /*  if (filteredProducts) {
+      filteredProducts = filteredProducts;
+    } else {
+      filteredProducts = products;
+    } */
     products.forEach((prod) => {
       if (
         Number(value[0]) <= Number(prod.price) &&
@@ -38,12 +45,12 @@ export default function RangeSlider(props) {
     });
 
     filtered = filteredData;
-    console.log("prodslider", filtered.length);
+    /*  console.log("prodslider", filtered.length); */
 
     return filtered;
   };
   filtered = sliderFilter();
-  console.log("filterout", filtered);
+  console.log("filteroutslider", filtered);
   function transferData(array) {
     array = sliderFilter();
     props.filterData(array);

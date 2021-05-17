@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -30,11 +31,13 @@ const useStyles = makeStyles({
 export default function MediaCard(props) {
   console.log("prod", props);
   const classes = useStyles();
+  let [mixedResult, setMixedResult] = useState([]);
   let { products } = props;
   let { filteredProducts } = props;
+  let { filteredCheckBoxData } = props;
   console.log("filProd", filteredProducts);
   if (filteredProducts.length === 0) {
-    filteredProducts = props.products;
+    filteredProducts = products;
   }
   return filteredProducts.map((product) => {
     return (
@@ -51,7 +54,7 @@ export default function MediaCard(props) {
             <CardMedia
               className={classes.media}
               image={product.image}
-              title="Contemplative Reptile"
+              title={product.title}
             />
             <CardContent>
               <Typography gutterBottom variant="h6" component="h2">

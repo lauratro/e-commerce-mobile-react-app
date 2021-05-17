@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Checkboxes.css";
 import { makeStyles } from "@material-ui/core/styles";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -19,7 +19,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CheckboxesGroup(props) {
   const classes = useStyles();
-  const [filtered, setFiltered] = useState([]);
+  let { filteredProducts } = props;
+  console.log("dati da filtrare Check", filteredProducts);
+  let [filtered, setFiltered] = useState([]);
   const [state, setState] = React.useState({
     electronics: false,
     jewelery: false,
@@ -28,6 +30,8 @@ export default function CheckboxesGroup(props) {
   });
   let { products } = props;
   console.log("check", products);
+  const [checked, setChecked] = useState(false);
+
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
@@ -38,12 +42,18 @@ export default function CheckboxesGroup(props) {
   const hasCategoryNameFilter = Object.keys(state).filter(function (k) {
     return state[k] === true;
   });
-  /* console.log("stateKey", hasCategoryNameFilter); */
-  let handleResultFilter = (filtered) => {
+  console.log("stateKey", hasCategoryNameFilter);
+  /*  let handleResultFilter = (filtered) => {
     props.onchange(filtered);
-  };
+  }; */
+  /* const error =
+    [electronics, jewelery, men, women].filter((v) => v).length !== 2; */
   let filterCheckbox = () => {
     let filteredCheckResult = [];
+    /*   if (filteredProducts.length === 0) {
+      filteredProducts = products;
+    } */
+
     products.forEach((prod) => {
       if (prod.category === "men's clothing") {
         prod.category = "men";
@@ -55,16 +65,29 @@ export default function CheckboxesGroup(props) {
         filteredCheckResult.push(prod);
       }
     });
-
-    console.log("checkBox", filteredCheckResult);
+    filtered = filteredCheckResult;
+    return filtered;
   };
+  filtered = filterCheckbox();
+  console.log("checkbox", filtered);
 
-  const error =
-    [electronics, jewelery, men, women].filter((v) => v).length !== 2;
+  function transferDataCheck(array) {
+    array = filtered;
 
+    props.filterData(array);
+  }
+
+  function twoFunctions(e, filtered) {
+    handleChange(e);
+    transferDataCheck(filtered);
+  }
   return (
     <div className={classes.root}>
-      <FormControl component="fieldset" className={classes.formControl}>
+      <FormControl
+        component="fieldset"
+        className={classes.formControl}
+        onChange={twoFunctions}
+      >
         <FormLabel component="legend">Our categories:</FormLabel>
         <FormGroup>
           <FormControlLabel
@@ -73,7 +96,6 @@ export default function CheckboxesGroup(props) {
                 checked={electronics}
                 onChange={handleChange}
                 name="electronics"
-                onClick={handleResultFilter}
               />
             }
             label="Electronics"

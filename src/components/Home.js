@@ -15,14 +15,14 @@ import Grid from "@material-ui/core/Grid";
 function Home() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState(products);
+  let [filteredCheckBoxData, setFilteredCheckBoxData] = useState(products);
   const [showFilters, setShowFilters] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   let fetchApi = () => {
-    fetch("https://fakestoreapi.com/products")
+    fetch("https://fakestoreapi.com/products?limit=30")
       .then((res) => res.json())
       .then((response) => {
-        console.log(response);
         setProducts(response);
         setIsLoading(false);
       });
@@ -31,26 +31,30 @@ function Home() {
   useEffect(() => {
     fetchApi();
   }, [filteredProducts]);
-
+  //Filter Button
   function showButtonFilter(data) {
     setShowFilters(data);
 
     console.log("showBut", data);
   }
-  //Filtered Products
-  function filterData(data) {
-    setFilteredProducts(data);
-    console.log("sliderData", data);
-  }
-  console.log("dati Home filtrati", filteredProducts);
   /* let showFilter = () => {
     setShowFilters((noShow) => !noShow);
   };
 */
-  const onchangeFilter = (data) => {
+  //Filtered Products
+  function filterData(data) {
     setFilteredProducts(data);
-    console.log("Form>", data);
-  };
+
+    console.log("sliderData", data);
+  }
+  console.log("dati Home filtrati", filteredProducts);
+  /*  function filterDataCheckBox(data) {
+    setFilteredCheckBoxData(data);
+
+    console.log("CheckboxData", data);
+  }
+  console.log("dati Home check filtrati", filteredCheckBoxData); */
+
   return (
     <div>
       {!isLoading ? (
@@ -65,13 +69,14 @@ function Home() {
               <CheckboxesGroup
                 className="posRelative"
                 products={products}
-                data={filteredProducts}
-                onchange={(e) => {
-                  onchangeFilter(e);
-                }}
+                filteredProducts={filteredProducts}
+                // filterDataCheckBox={(data) => filterDataCheckBox(data)}
+                filterData={(data) => filterData(data)}
               />
               <RangeSlider
                 products={products}
+                filteredProducts={filteredProducts}
+                // filteredCheckBoxData={filteredCheckBoxData}
                 filterData={(data) => filterData(data)}
               />
             </React.Fragment>
@@ -90,6 +95,7 @@ function Home() {
               <MediaCard
                 products={products}
                 filteredProducts={filteredProducts}
+                filteredCheckBoxData={filteredCheckBoxData}
               />
             </Grid>
           </Box>

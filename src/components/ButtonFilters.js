@@ -1,8 +1,8 @@
 import React from "react";
 
 function ButtonFilters(props) {
-  console.log("btn", props.onClick);
-  console.log("btnvalue", props.showFilters);
+  /*   console.log("btn", props.onClick);
+  console.log("btnvalue", props.showFilters); */
   let valueBtn = props.showFilters;
 
   function handleChange() {
