@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -70,9 +71,11 @@ export default function MediaCard(props) {
             <Button size="small" color="primary">
               Share
             </Button>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
+            <Link to={`detail/${product.id}`}>
+              <Button size="small" color="primary">
+                Learn More
+              </Button>
+            </Link>
           </CardActions>
         </Card>
       </Grid>

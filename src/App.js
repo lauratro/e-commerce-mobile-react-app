@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Home from "./components/Home";
+import SingleProduct from "./components/Single-Product";
 import MenuAppBar from "./components/App-bar";
 import Electronics from "./components/Electronics";
 
@@ -22,6 +23,11 @@ function App() {
             <Route exact path="/electronics">
               <Electronics />
             </Route>
+            <Route
+              exact
+              path="/detail/:id"
+              children={<SingleProduct />}
+            ></Route>
           </Switch>
         </div>
       ) : (
