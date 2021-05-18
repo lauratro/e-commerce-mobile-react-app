@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Page from "./PageTitle";
-import IsLoadingData from "./IsLoadingData";
-import ButtonFilters from "./ButtonFilters";
-import RangeSlider from "./PriceSlider";
+import Page from "../components/PageTitle";
+import IsLoadingData from "../components/IsLoadingData";
+import ButtonFilters from "../components/ButtonFilters";
+import RangeSlider from "../components/PriceSlider";
 
 import MediaCard from "./Products";
-import CardContainer from "./CardsContainer";
+import CardContainer from "../components/CardsContainer";
 
 function Electronics() {
   const [products, setProducts] = useState([]);
@@ -16,15 +16,24 @@ function Electronics() {
   }; */
 
   const [isLoading, setIsLoading] = useState(true);
-  let fetchApi = () => {
-    fetch("https://fakestoreapi.com/products/category/electronics")
+  let fetchApi = async () => {
+ try{
+   const response= await fetch("https://fakestoreapi.com/products/category/electronics");
+   const data = await response.json()
+console.log(data);
+        setProducts(data);
+        setIsLoading(false)
+ }catch(err){
+      console.log(err)
+    }
+    
+  };
+    /*  fetch("https://fakestoreapi.com/products/category/electronics")
       .then((res) => res.json())
       .then((response) => {
         console.log(response);
         setProducts(response);
-        setIsLoading(false);
-      });
-  };
+        setIsLoading(false); */
   useEffect(() => {
     fetchApi();
   }, [filteredProducts]);
