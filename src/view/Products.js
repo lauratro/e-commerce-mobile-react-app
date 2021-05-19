@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import { VariablesContext } from "../context/ContextStorage";
 import { makeStyles } from "@material-ui/core/styles";
@@ -29,22 +29,33 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCard(props) {
+export default function MediaCard() {
+
+ 
   let { products, setProducts, filteredProducts, setFilteredProducts } =
     useContext(VariablesContext);
+ 
 console.log("MediaCard",filteredProducts)
-  const classes = useStyles();
-  
-  // let { products } = props;
-  // let { filteredProducts } = props;
-  let { filteredCheckBoxData } = props;
-  console.log("filProdMediaCard", filteredProducts);
- /* if (filteredProducts.length === 0) {
-    filteredProducts = products;
-  } */
-    if (document.title === "Home | LBY") {
-   filteredProducts= products
+  const classes = useStyles(); 
+  console.log("MediaCardProduct" , products)
+console.log("filProdMediaCard", filteredProducts);
+ function cleanUp() {
+  setFilteredProducts([])
   }
+  
+
+  function defineData() {
+    
+   setFilteredProducts(products)
+  
+  }
+ 
+ useEffect(() => {
+  
+   defineData()
+    
+  },[])   
+
   return filteredProducts.map((product) => {
     return (
       <Grid item xs={12} sm={3}>
@@ -69,6 +80,9 @@ console.log("MediaCard",filteredProducts)
               <Typography variant="body2" color="textSecondary" component="p">
                 {product.category}
               </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+               ` {product.price} $`
+              </Typography>
               <Typography
                 variant="body2"
                 color="textSecondary"
@@ -76,15 +90,15 @@ console.log("MediaCard",filteredProducts)
               ></Typography>
             </CardContent>
           </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">
-              Share
-            </Button>
+          <CardActions> 
             <Link to={`detail/${product.id}`}>
               <Button size="small" color="primary">
-                Learn More
+               See More
               </Button>
             </Link>
+            <Button size="small" color="primary">
+              Buy
+            </Button>
           </CardActions>
         </Card>
       </Grid>

@@ -10,6 +10,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import CustomizedDialogs from "./Login";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +39,13 @@ export default function MenuAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const refreshPage = () => {
+    window.location.reload();
+  };
+  function twoFunction() {
+    refreshPage();
+    handleClose();
+  }
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -63,14 +70,18 @@ export default function MenuAppBar() {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={twoFunction}>
               <Link to="/">Home</Link>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={twoFunction}>
               <Link to="/electronics">Electronics</Link>
             </MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={twoFunction}>
+              <Link to="/jewelery">Jewelery</Link>
+            </MenuItem>
+            <MenuItem onClick={twoFunction}>Logout</MenuItem>
           </Menu>
+          <CustomizedDialogs />
         </Toolbar>
       </AppBar>
     </div>

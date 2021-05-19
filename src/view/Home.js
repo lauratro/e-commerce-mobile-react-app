@@ -25,8 +25,7 @@ function Home() {
       const response=  await fetch("https://fakestoreapi.com/products?limit=30")
    const data= await response.json()
    console.log(data);
-      setProducts(data)
-      
+      setProducts(data) 
    setIsLoading(false)
     }catch(err){
       console.log(err)
@@ -49,7 +48,7 @@ function Home() {
   useEffect(() => {
 
     fetchApi();
-  }, []);
+  }, [filteredProducts]);
   //Filter Button
 
   function showButtonFilter(data) {

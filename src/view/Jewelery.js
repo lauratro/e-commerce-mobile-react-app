@@ -8,7 +8,7 @@ import RangeSlider from "../components/PriceSlider";
 import MediaCard from "./Products";
 import CardContainer from "../components/CardsContainer";
 
-function Electronics() {
+function Jewelery() {
   const {
     products,
     setProducts,
@@ -19,7 +19,8 @@ function Electronics() {
     singleCatProducts,
     setSingleCatProducts,
   } = useContext(VariablesContext);
-
+  // const [products, setProducts] = useState([]);
+  //const [filteredProducts, setFilteredProducts] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
   /*   let showFilter = () => {
     setShowFilters((noShow) => !noShow);
@@ -28,29 +29,26 @@ function Electronics() {
   // const [isLoading, setIsLoading] = useState(true);
   let fetchApi = async () => {
     try {
-     
       const response = await fetch(
-        "https://fakestoreapi.com/products/category/electronics"
+        "https://fakestoreapi.com/products/category/jewelery"
       );
       const data = await response.json();
-      console.log("electData",data);
+      console.log("jeweleryData", data);
       setProducts(data);
-      
       setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
+
   function defineFilterData() {
     setFilteredProducts(products);
   }
-  
+
   useEffect(() => {
-   
     fetchApi();
   }, [filteredProducts]);
-
- /* useEffect(() => {
+  /* useEffect(() => {
     defineFilterData();
   }, []); */
   //Filter Button
@@ -60,19 +58,8 @@ function Electronics() {
     console.log("showBut", data);
   }
 
-  //Filtered Data
- /*  function filterData(data) {
-    if (data.length === 0) {
-      data = products;
-      console.log("data", data);
-    } else {
-      setFilteredProducts(data);
-      console.log("sliderData", data);
-    }
-  }
-  console.log("dati Ele filt", filteredProducts); */
   return (
-    <Page title="Electronics">
+    <Page title="Jewelery">
       {!isLoading ? (
         <React.Fragment>
           <ButtonFilters
@@ -82,15 +69,15 @@ function Electronics() {
           {showFilters && (
             <React.Fragment>
               <RangeSlider
-               // products={products}
-               // filterData={(data) => filterData(data)}
+              // products={products}
+              // filterData={(data) => filterData(data)}
               />
             </React.Fragment>
           )}
           <CardContainer>
             <MediaCard
-              //products={products}
-              //filteredProducts={filteredProducts}
+            //products={products}
+            //filteredProducts={filteredProducts}
             />
           </CardContainer>
         </React.Fragment>
@@ -102,4 +89,4 @@ function Electronics() {
     </Page>
   );
 }
-export default Electronics;
+export default Jewelery;
