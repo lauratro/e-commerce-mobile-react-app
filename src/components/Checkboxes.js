@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../styles/Checkboxes.css";
+import {VariablesContext} from "../context/ContextStorage"
 import { makeStyles } from "@material-ui/core/styles";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -19,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CheckboxesGroup(props) {
   const classes = useStyles();
-  let { filteredProducts } = props;
+  let {products, setProducts, isLoading, setIsLoading, filteredProducts, setFilteredProducts}= useContext(VariablesContext)
+ // let { filteredProducts } = props;
   console.log("dati da filtrare Check", filteredProducts);
   let [filtered, setFiltered] = useState([]);
   const [state, setState] = React.useState({
@@ -28,8 +30,9 @@ export default function CheckboxesGroup(props) {
     men: false,
     women: false,
   });
-  let { products } = props;
-  console.log("check", products);
+ 
+  console.log("checkprod", products);
+  console.log("checkfilPro",filteredProducts)
   const [checked, setChecked] = useState(false);
 
   const handleChange = (event) => {
@@ -43,58 +46,59 @@ export default function CheckboxesGroup(props) {
     return state[k] === true;
   });
   console.log("stateKey", hasCategoryNameFilter);
-  /*  let handleResultFilter = (filtered) => {
-    props.onchange(filtered);
-  }; */
+ 
   /* const error =
     [electronics, jewelery, men, women].filter((v) => v).length !== 2; */
+  let checkfilterData=(data)=>{
+    setFilteredProducts(data)
+  }
   let filterCheckbox = () => {
-    let filteredCheckResult = [];
-    /*   if (filteredProducts.length === 0) {
-      filteredProducts = products;
+  /*   if (filteredProducts.length === 0) {
+      filteredProducts = products
     } */
-
+    let filteredCheckResult = [];
     products.forEach((prod) => {
+    
       if (prod.category === "men's clothing") {
         prod.category = "men";
-      }
-      if (prod.category === "women's clothing") {
+      } else if (prod.category === "women's clothing") {
         prod.category = "women";
       }
       if (hasCategoryNameFilter.includes(prod.category)) {
-        filteredCheckResult.push(prod);
-      }
-    });
-    filtered = filteredCheckResult;
-    return filtered;
+      //filteredCheckResult.push(prod)
+        checkfilterData(prod)
+     }
+   
+     filtered = filteredCheckResult
+     return filteredProducts;
+   });
+    
   };
-  filtered = filterCheckbox();
-  console.log("checkbox", filtered);
+  filterCheckbox()
+  console.log("checkbox", filteredProducts);
 
+  function filterData(data) {
+    setFilteredProducts(data)
+  }
   function transferDataCheck(array) {
     array = filtered;
-
-    props.filterData(array);
+  filterData(array);
   }
 
-  function twoFunctions(e, filtered) {
+  function twoFunctions(e) {
     handleChange(e);
-    transferDataCheck(filtered);
+ //   transferDataCheck(filtered);
   }
   return (
     <div className={classes.root}>
-      <FormControl
-        component="fieldset"
-        className={classes.formControl}
-        onChange={twoFunctions}
-      >
+      <FormControl component="fieldset" className={classes.formControl}>
         <FormLabel component="legend">Our categories:</FormLabel>
         <FormGroup>
           <FormControlLabel
             control={
               <Checkbox
                 checked={electronics}
-                onChange={handleChange}
+                onChange={twoFunctions}
                 name="electronics"
               />
             }
@@ -104,7 +108,7 @@ export default function CheckboxesGroup(props) {
             control={
               <Checkbox
                 checked={jewelery}
-                onChange={handleChange}
+                onChange={twoFunctions}
                 name="jewelery"
               />
             }
@@ -112,13 +116,13 @@ export default function CheckboxesGroup(props) {
           />
           <FormControlLabel
             control={
-              <Checkbox checked={men} onChange={handleChange} name="men" />
+              <Checkbox checked={men} onChange={twoFunctions} name="men" />
             }
             label="Men's clothing"
           />
           <FormControlLabel
             control={
-              <Checkbox checked={women} onChange={handleChange} name="women" />
+              <Checkbox checked={women} onChange={twoFunctions} name="women" />
             }
             label="Women's clothing"
           />

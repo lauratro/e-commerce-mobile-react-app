@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import { VariablesContext } from "../context/ContextStorage";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Card from "@material-ui/core/Card";
@@ -29,15 +30,20 @@ const useStyles = makeStyles({
 });
 
 export default function MediaCard(props) {
-  console.log("prod", props);
+  let { products, setProducts, filteredProducts, setFilteredProducts } =
+    useContext(VariablesContext);
+console.log("MediaCard",filteredProducts)
   const classes = useStyles();
-  let [mixedResult, setMixedResult] = useState([]);
-  let { products } = props;
-  let { filteredProducts } = props;
+  
+  // let { products } = props;
+  // let { filteredProducts } = props;
   let { filteredCheckBoxData } = props;
-  console.log("filProd", filteredProducts);
-  if (filteredProducts.length === 0) {
+  console.log("filProdMediaCard", filteredProducts);
+ /* if (filteredProducts.length === 0) {
     filteredProducts = products;
+  } */
+    if (document.title === "Home | LBY") {
+   filteredProducts= products
   }
   return filteredProducts.map((product) => {
     return (

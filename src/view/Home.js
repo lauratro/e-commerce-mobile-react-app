@@ -6,6 +6,7 @@ import CheckboxesGroup from "../components/Checkboxes";
 import RangeSlider from "../components/PriceSlider";
 import {VariablesContext} from "../context/ContextStorage"
 import ButtonFilters from "../components/ButtonFilters";
+import Page from "../components/PageTitle"
 
 import "../styles/Checkboxes.css";
 import Box from "@material-ui/core/Box";
@@ -13,19 +14,19 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 
 function Home() {
-  const {products, setProducts, isLoading,setIsLoading}= useContext(VariablesContext)
- // const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const {products, setProducts, isLoading, setIsLoading, filteredProducts, setFilteredProducts}= useContext(VariablesContext)
+ 
   let [filteredCheckBoxData, setFilteredCheckBoxData] = useState(products);
   const [showFilters, setShowFilters] = useState(false);
- // const [isLoading, setIsLoading] = useState(true);
+
 
   let fetchApi = async () => {
     try{
       const response=  await fetch("https://fakestoreapi.com/products?limit=30")
    const data= await response.json()
    console.log(data);
-   setProducts(data)
+      setProducts(data)
+      
    setIsLoading(false)
     }catch(err){
       console.log(err)
@@ -40,12 +41,17 @@ function Home() {
       .catch((error) => {
         console.error("Error:", error);
       }); */
-  
+  function cleanup(){
+    setFilteredProducts([])
+  }
+    
 
   useEffect(() => {
+
     fetchApi();
-  }, [filteredProducts]);
+  }, []);
   //Filter Button
+
   function showButtonFilter(data) {
     setShowFilters(data);
 
@@ -56,6 +62,8 @@ function Home() {
   };
 */
   //Filtered Products
+
+
   function filterData(data) {
     setFilteredProducts(data);
 
@@ -70,7 +78,7 @@ function Home() {
   console.log("dati Home check filtrati", filteredCheckBoxData); */
 
   return (
-    <div>
+    <Page title="Home">
       {!isLoading ? (
         <React.Fragment>
           <ButtonFilters
@@ -82,14 +90,14 @@ function Home() {
             <React.Fragment>
               <CheckboxesGroup
                 className="posRelative"
-                products={products}
-                filteredProducts={filteredProducts}
+               // products={products}
+               // filteredProducts={filteredProducts}
                 // filterDataCheckBox={(data) => filterDataCheckBox(data)}
                 filterData={(data) => filterData(data)}
               />
               <RangeSlider
-                products={products}
-                filteredProducts={filteredProducts}
+                //products={products}
+                //filteredProducts={filteredProducts}
                 // filteredCheckBoxData={filteredCheckBoxData}
                 filterData={(data) => filterData(data)}
               />
@@ -119,7 +127,7 @@ function Home() {
           <IsLoadingData />
         </div>
       )}
-    </div>
+    </Page>
   );
 }
 export default Home;

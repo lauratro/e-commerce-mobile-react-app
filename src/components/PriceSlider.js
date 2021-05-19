@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
+import { VariablesContext } from "../context/ContextStorage";
 
 const useStyles = makeStyles({
   root: {
@@ -16,25 +17,31 @@ function valuetext(value) {
 }
 
 export default function RangeSlider(props) {
-  let { filteredProducts } = props;
+  const {
+    products,
+    setProducts,
+    isLoading,
+    setIsLoading,
+    filteredProducts,
+    setFilteredProducts,
+    singleCatProducts,
+    setSingleCatProducts,
+  } = useContext(VariablesContext);
+  //let { filteredProducts } = props;
   console.log("dati da filtrare slider", filteredProducts);
   let { filteredCheckBoxData } = props;
   const classes = useStyles();
   const [value, setValue] = React.useState([0, 1000]);
   let [filtered, setFiltered] = useState([]);
   /*   console.log("fillength", filtered.length); */
-  let products = props.products;
+  //let products = props.products;
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   /*  console.log("value", value[0]); */
   let sliderFilter = () => {
     let filteredData = [];
-    /*  if (filteredProducts) {
-      filteredProducts = filteredProducts;
-    } else {
-      filteredProducts = products;
-    } */
+
     products.forEach((prod) => {
       if (
         Number(value[0]) <= Number(prod.price) &&
@@ -51,9 +58,12 @@ export default function RangeSlider(props) {
   };
   filtered = sliderFilter();
   console.log("filteroutslider", filtered);
+  function filterData(data) {
+    setFilteredProducts(data);
+  }
   function transferData(array) {
     array = sliderFilter();
-    props.filterData(array);
+    filterData(array);
   }
   function twoFunctions(e, newValue, filtered) {
     handleChange(e, newValue);
