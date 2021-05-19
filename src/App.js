@@ -7,6 +7,8 @@ import SingleProduct from "./view/Single-Product";
 import MenuAppBar from "./components/App-bar";
 import Electronics from "./view/Electronics";
 import {VariablesContextProvider} from "./context/ContextStorage"
+import Jewelery from "./view/Jewelery";
+import ModalLogin from "./components/Login"
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +26,11 @@ function App() {
             </Route>
             <Route exact path="/electronics">
               <Electronics />
-            </Route>
+              </Route>
+               <Route exact path="/jewelery">
+              <Jewelery />
+              </Route>
+                
             <Route
               exact
               path="/detail/:id"
