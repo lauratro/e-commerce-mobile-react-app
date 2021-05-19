@@ -2,16 +2,18 @@ import logo from "./logo.svg";
 import React, { useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
-import Home from "./components/Home";
-import SingleProduct from "./components/Single-Product";
+import Home from "./view/Home";
+import SingleProduct from "./view/Single-Product";
 import MenuAppBar from "./components/App-bar";
-import Electronics from "./components/Electronics";
+import Electronics from "./view/Electronics";
+import {VariablesContextProvider} from "./context/ContextStorage"
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   setTimeout(() => setIsLoading(false), 1500);
   return (
+    <VariablesContextProvider>
     <BrowserRouter>
       {!isLoading ? (
         <div className="App">
@@ -37,6 +39,7 @@ function App() {
         ></img>
       )}
     </BrowserRouter>
+    </VariablesContextProvider>
   );
 }
 
