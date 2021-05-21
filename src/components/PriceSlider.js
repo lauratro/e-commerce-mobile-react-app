@@ -16,50 +16,58 @@ function valuetext(value) {
   return `${value} $`;
 }
 
-export default function RangeSlider(props) {
-  const {
+export default function RangeSlider() {
+  let {
     products,
     setProducts,
     isLoading,
     setIsLoading,
     filteredProducts,
     setFilteredProducts,
+    priceResult,
+    setPriceResult,
     singleCatProducts,
     setSingleCatProducts,
   } = useContext(VariablesContext);
-  //let { filteredProducts } = props;
+
   console.log("dati da filtrare slider", filteredProducts);
-  let { filteredCheckBoxData } = props;
+
   const classes = useStyles();
   const [value, setValue] = React.useState([0, 1000]);
   let [filtered, setFiltered] = useState([]);
-  /*   console.log("fillength", filtered.length); */
-  //let products = props.products;
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  /*  console.log("value", value[0]); */
+  function assignProductValue() {
+    filteredProducts = products;
+  }
   let sliderFilter = () => {
     let filteredData = [];
-
+    // assignProductValue();
+    /*  if (document.title !== "Home | LBY") {
+      priceResult = products;
+    } */
+    /* if (document.title == "Home | LBY") {
+      filteredProducts = products;
+    } */
     products.forEach((prod) => {
       if (
         Number(value[0]) <= Number(prod.price) &&
         Number(value[1]) >= Number(prod.price)
       ) {
-        filteredData.push(prod);
+        filteredData.push(prod.price);
       }
     });
 
     filtered = filteredData;
-    /*  console.log("prodslider", filtered.length); */
 
     return filtered;
   };
   filtered = sliderFilter();
   console.log("filteroutslider", filtered);
   function filterData(data) {
-    setFilteredProducts(data);
+    setPriceResult(data);
   }
   function transferData(array) {
     array = sliderFilter();
