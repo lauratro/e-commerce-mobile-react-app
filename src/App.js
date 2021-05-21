@@ -8,6 +8,8 @@ import MenuAppBar from "./components/App-bar";
 import Electronics from "./view/Electronics";
 import {VariablesContextProvider} from "./context/ContextStorage"
 import Jewelery from "./view/Jewelery";
+import Men from "./view/MenClothing"
+import Women from "./view/WomenClothing"
 import ModalLogin from "./components/Login"
 
 function App() {
@@ -29,6 +31,13 @@ function App() {
               </Route>
                <Route exact path="/jewelery">
               <Jewelery />
+              </Route>
+               
+               <Route exact path="/men">
+              <Men />
+              </Route>
+                 <Route exact path="/women">
+              <Women />
               </Route>
                 
             <Route

@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import CustomizedDialogs from "./Login";
+import RegistrationForm from "./RegistrationForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,9 +80,17 @@ export default function MenuAppBar() {
             <MenuItem onClick={twoFunction}>
               <Link to="/jewelery">Jewelery</Link>
             </MenuItem>
+            <MenuItem onClick={twoFunction}>
+              <Link to="/men">Men's Clothing</Link>
+            </MenuItem>
+            <MenuItem onClick={twoFunction}>
+              <Link to="/women">Women's Clothing</Link>
+            </MenuItem>
             <MenuItem onClick={twoFunction}>Logout</MenuItem>
           </Menu>
-          <CustomizedDialogs />
+          <CustomizedDialogs>
+            <RegistrationForm />
+          </CustomizedDialogs>
         </Toolbar>
       </AppBar>
     </div>

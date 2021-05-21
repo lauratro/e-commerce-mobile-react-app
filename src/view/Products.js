@@ -30,33 +30,56 @@ const useStyles = makeStyles({
 });
 
 export default function MediaCard() {
+  let {
+    products,
+    setProducts,
+    filteredProducts,
+    setFilteredProducts,
+    priceResult,
+    setPriceResult,
+    categoryResult,
+    setCategoryResult,
+  } = useContext(VariablesContext);
 
- 
-  let { products, setProducts, filteredProducts, setFilteredProducts } =
-    useContext(VariablesContext);
- 
-console.log("MediaCard",filteredProducts)
-  const classes = useStyles(); 
-  console.log("MediaCardProduct" , products)
-console.log("filProdMediaCard", filteredProducts);
- function cleanUp() {
-  setFilteredProducts([])
+  const classes = useStyles();
+  console.log("MediaCardProduct", products);
+  console.log("filProdMediaCard", filteredProducts);
+  console.log("mediaCategResu", categoryResult);
+  console.log("mediaPrice", priceResult);
+  let [filtered, setfiltered] = useState([]);
+  //Filters Home page
+  if (categoryResult.length == 0 && priceResult.length === 0) {
+    let result = products.filter((p) => {
+      return p;
+    });
+    products = result;
   }
-  
-
-  function defineData() {
-    
-   setFilteredProducts(products)
-  
+  if (categoryResult.length > 0 && priceResult.length === 0) {
+    let result = products.filter((p) => {
+      if (categoryResult.includes(p.category)) {
+        return p;
+      }
+    });
+    products = result;
+  } else if (categoryResult.length === 0 && priceResult.length > 0) {
+    let result = products.filter((p) => {
+      if (priceResult.includes(p.price)) {
+        return p;
+      }
+    });
+    products = result;
+  } else if (categoryResult.length > 0 && priceResult.length > 0) {
+    let result = products.filter((p) => {
+      if (
+        priceResult.includes(p.price) &&
+        categoryResult.includes(p.category)
+      ) {
+        return p;
+      }
+    });
+    products = result;
   }
- 
- useEffect(() => {
-  
-   defineData()
-    
-  },[])   
-
-  return filteredProducts.map((product) => {
+  return products.map((product) => {
     return (
       <Grid item xs={12} sm={3}>
         <Card
@@ -81,7 +104,7 @@ console.log("filProdMediaCard", filteredProducts);
                 {product.category}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-               ` {product.price} $`
+                ` {product.price} $`
               </Typography>
               <Typography
                 variant="body2"
@@ -90,10 +113,10 @@ console.log("filProdMediaCard", filteredProducts);
               ></Typography>
             </CardContent>
           </CardActionArea>
-          <CardActions> 
+          <CardActions>
             <Link to={`detail/${product.id}`}>
               <Button size="small" color="primary">
-               See More
+                See More
               </Button>
             </Link>
             <Button size="small" color="primary">

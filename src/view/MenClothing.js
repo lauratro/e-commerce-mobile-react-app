@@ -8,7 +8,7 @@ import RangeSlider from "../components/PriceSlider";
 import MediaCard from "./Products";
 import CardContainer from "../components/CardsContainer";
 
-function Jewelery() {
+function Men() {
   const {
     products,
     setProducts,
@@ -30,7 +30,7 @@ function Jewelery() {
   let fetchApi = async () => {
     try {
       const response = await fetch(
-        "https://fakestoreapi.com/products/category/jewelery"
+        "https://fakestoreapi.com/products/category/men's clothing"
       );
       const data = await response.json();
       console.log("jeweleryData", data);
@@ -53,7 +53,7 @@ function Jewelery() {
   }
 
   return (
-    <Page title="Jewelery">
+    <Page title="Men's Clothing">
       {!isLoading ? (
         <React.Fragment>
           <ButtonFilters
@@ -83,4 +83,4 @@ function Jewelery() {
     </Page>
   );
 }
-export default Jewelery;
+export default Men;
