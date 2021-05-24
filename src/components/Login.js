@@ -65,8 +65,8 @@ export default function CustomizedDialogs({ children }) {
 
   return (
     <div>
-      <Button variant="outlined" color="white" onClick={handleClickOpen}>
-        Log in
+      <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
+        Sign up
       </Button>
       <Dialog
         onClose={handleClose}
@@ -74,14 +74,10 @@ export default function CustomizedDialogs({ children }) {
         open={open}
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Modal title
+          Sign up or Sign in
         </DialogTitle>
         <DialogContent dividers>{children}</DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
-            Save changes
-          </Button>
-        </DialogActions>
+        <DialogActions></DialogActions>
       </Dialog>
     </div>
   );
