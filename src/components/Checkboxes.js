@@ -46,7 +46,7 @@ export default function CheckboxesGroup(props) {
   const [checked, setChecked] = useState(false);
 
   const handleChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
 
     if (event.target.checked) {
       setCategoryResult([...categoryResult, event.target.value]);
@@ -63,14 +63,13 @@ export default function CheckboxesGroup(props) {
 
   const { electronics, jewelery, men, women } = state;
   const hasCategoryFilter = Object.values(state).includes(true);
-  console.log("state", hasCategoryFilter);
+  // console.log("state", hasCategoryFilter);
   const hasCategoryNameFilter = Object.keys(state).filter(function (k) {
     return state[k] === true;
   });
 
-  console.log("stateKey", hasCategoryNameFilter);
-  console.log(typeof hasCategoryNameFilter);
-  console.log(hasCategoryNameFilter[2]);
+  // console.log("stateKey", hasCategoryNameFilter);
+
   for (var key in hasCategoryNameFilter) {
     if (hasCategoryNameFilter[key] == "men") {
       hasCategoryNameFilter[key] = `men's clothing`;
@@ -79,7 +78,7 @@ export default function CheckboxesGroup(props) {
     }
   }
   categoryResult = Object.values(hasCategoryNameFilter);
-  console.log("categoryResult", categoryResult);
+  //console.log("categoryResult", categoryResult);
 
   /* const error =
     [electronics, jewelery, men, women].filter((v) => v).length !== 2;

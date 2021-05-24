@@ -11,12 +11,15 @@ import Jewelery from "./view/Jewelery";
 import Men from "./view/MenClothing"
 import Women from "./view/WomenClothing"
 import ModalLogin from "./components/Login"
+import { AuthProvider } from "./context/AuthContext"
+import {AccountBox} from "./view/accountBox/ContainerForm"
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   setTimeout(() => setIsLoading(false), 1500);
   return (
+  <AuthProvider>
     <VariablesContextProvider>
     <BrowserRouter>
       {!isLoading ? (
@@ -38,6 +41,9 @@ function App() {
               </Route>
                  <Route exact path="/women">
               <Women />
+                </Route>
+                     <Route exact path="/account">
+              <AccountBox />
               </Route>
                 
             <Route
@@ -54,7 +60,8 @@ function App() {
         ></img>
       )}
     </BrowserRouter>
-    </VariablesContextProvider>
+      </VariablesContextProvider>
+      </AuthProvider>
   );
 }
 

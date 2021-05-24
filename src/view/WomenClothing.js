@@ -8,7 +8,7 @@ import RangeSlider from "../components/PriceSlider";
 import MediaCard from "./Products";
 import CardContainer from "../components/CardsContainer";
 
-function Electronics() {
+function Women() {
   const {
     products,
     setProducts,
@@ -16,6 +16,8 @@ function Electronics() {
     setIsLoading,
     filteredProducts,
     setFilteredProducts,
+    priceResult,
+    setPriceResult,
     singleCatProducts,
     setSingleCatProducts,
   } = useContext(VariablesContext);
@@ -25,16 +27,14 @@ function Electronics() {
     setShowFilters((noShow) => !noShow);
   }; */
 
-  // const [isLoading, setIsLoading] = useState(true);
   let fetchApi = async () => {
     try {
       const response = await fetch(
-        "https://fakestoreapi.com/products/category/electronics"
+        "https://fakestoreapi.com/products/category/women's clothing"
       );
       const data = await response.json();
-      // console.log("electData", data);
+      console.log("jeweleryData", data);
       setProducts(data);
-
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -53,7 +53,7 @@ function Electronics() {
   }
 
   return (
-    <Page title="Electronics">
+    <Page title="Women's Clothing">
       {!isLoading ? (
         <React.Fragment>
           <ButtonFilters
@@ -62,17 +62,11 @@ function Electronics() {
           />
           {showFilters && (
             <React.Fragment>
-              <RangeSlider
-              // products={products}
-              // filterData={(data) => filterData(data)}
-              />
+              <RangeSlider />
             </React.Fragment>
           )}
           <CardContainer>
-            <MediaCard
-            //products={products}
-            //filteredProducts={filteredProducts}
-            />
+            <MediaCard />
           </CardContainer>
         </React.Fragment>
       ) : (
@@ -83,4 +77,4 @@ function Electronics() {
     </Page>
   );
 }
-export default Electronics;
+export default Women;

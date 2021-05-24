@@ -30,7 +30,7 @@ export default function RangeSlider() {
     setSingleCatProducts,
   } = useContext(VariablesContext);
 
-  console.log("dati da filtrare slider", filteredProducts);
+  // console.log("dati da filtrare slider", filteredProducts);
 
   const classes = useStyles();
   const [value, setValue] = React.useState([0, 1000]);
@@ -65,7 +65,7 @@ export default function RangeSlider() {
     return filtered;
   };
   filtered = sliderFilter();
-  console.log("filteroutslider", filtered);
+  // console.log("filteroutslider", filtered);
   function filterData(data) {
     setPriceResult(data);
   }

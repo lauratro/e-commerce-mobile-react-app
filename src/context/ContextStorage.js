@@ -1,4 +1,7 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
+import appFirebase from "../firebase";
+import auth from "../firebase";
+
 //Initialize the context
 const initContextVariables = {
   products: [],
@@ -7,6 +10,8 @@ const initContextVariables = {
   categoryResult: [],
   singleCatProducts: [],
   filteredProducts: [],
+  currentUser: null,
+  loading: true,
 };
 //Create context
 export const VariablesContext = createContext(initContextVariables);
@@ -27,7 +32,25 @@ export const VariablesContextProvider = ({ children }) => {
   const [singleCatProducts, setSingleCatProducts] = useState(
     initContextVariables.singleCatProducts
   );
-  console.log("in context", categoryResult);
+  /*  const [currentUser, setCurrentUser] = useState(
+    initContextVariables.currentUser
+  );
+  const [loading, setLoading] = useState(initContextVariables.currentUser);
+  function signUp(email, password) {
+    return auth.createUserWithEmailAndPassword(email, password);
+  }
+
+  useEffect(() => {
+    const unlisten = appFirebase.auth().onAuthStateChanged((currentUser) => {
+      currentUser ? setCurrentUser(currentUser) : setCurrentUser(null);
+      setLoading(false);
+    });
+    return () => {
+      unlisten();
+    };
+  });
+ */
+  //console.log("in context", categoryResult);
   return (
     <VariablesContext.Provider
       value={{
@@ -43,6 +66,9 @@ export const VariablesContextProvider = ({ children }) => {
         setSingleCatProducts,
         priceResult,
         setPriceResult,
+        // currentUser,
+        // setCurrentUser,
+        // signUp,
       }}
     >
       {children}

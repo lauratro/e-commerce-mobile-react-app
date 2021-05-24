@@ -42,10 +42,10 @@ export default function MediaCard() {
   } = useContext(VariablesContext);
 
   const classes = useStyles();
-  console.log("MediaCardProduct", products);
-  console.log("filProdMediaCard", filteredProducts);
-  console.log("mediaCategResu", categoryResult);
-  console.log("mediaPrice", priceResult);
+  // console.log("MediaCardProduct", products);
+  // console.log("filProdMediaCard", filteredProducts);
+  // console.log("mediaCategResu", categoryResult);
+  // console.log("mediaPrice", priceResult);
   let [filtered, setfiltered] = useState([]);
   //Filters Home page
   if (categoryResult.length == 0 && priceResult.length === 0) {

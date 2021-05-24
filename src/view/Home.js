@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useContext} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import MediaCard from "./Products";
 
 import IsLoadingData from "../components/IsLoadingData";
 import CheckboxesGroup from "../components/Checkboxes";
 import RangeSlider from "../components/PriceSlider";
-import {VariablesContext} from "../context/ContextStorage"
+import { VariablesContext } from "../context/ContextStorage";
 import ButtonFilters from "../components/ButtonFilters";
-import Page from "../components/PageTitle"
+import Page from "../components/PageTitle";
 
 import "../styles/Checkboxes.css";
 import Box from "@material-ui/core/Box";
@@ -14,41 +14,33 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 
 function Home() {
-  const {products, setProducts, isLoading, setIsLoading, filteredProducts, setFilteredProducts}= useContext(VariablesContext)
- 
+  const {
+    products,
+    setProducts,
+    isLoading,
+    setIsLoading,
+    filteredProducts,
+    setFilteredProducts,
+  } = useContext(VariablesContext);
+
   let [filteredCheckBoxData, setFilteredCheckBoxData] = useState(products);
   const [showFilters, setShowFilters] = useState(false);
 
-
   let fetchApi = async () => {
-    try{
-      const response=  await fetch("https://fakestoreapi.com/products?limit=30")
-   const data= await response.json()
-   console.log(data);
-      setProducts(data) 
-   setIsLoading(false)
-    }catch(err){
-      console.log(err)
+    try {
+      const response = await fetch("https://fakestoreapi.com/products");
+      const data = await response.json();
+      console.log(data);
+      setProducts(data);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
     }
-  }
-   /*  fetch("https://fakestoreapi.com/products?limit=30")
-      .then((res) => res.json())
-      .then((response) => {
-        setProducts(response);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      }); */
-  function cleanup(){
-    setFilteredProducts([])
-  }
-    
+  };
 
   useEffect(() => {
-
     fetchApi();
-  }, [filteredProducts]);
+  }, [products]);
   //Filter Button
 
   function showButtonFilter(data) {
@@ -62,19 +54,7 @@ function Home() {
 */
   //Filtered Products
 
-
-  function filterData(data) {
-    setFilteredProducts(data);
-
-    console.log("sliderData", data);
-  }
   console.log("dati Home filtrati", filteredProducts);
-  /*  function filterDataCheckBox(data) {
-    setFilteredCheckBoxData(data);
-
-    console.log("CheckboxData", data);
-  }
-  console.log("dati Home check filtrati", filteredCheckBoxData); */
 
   return (
     <Page title="Home">
@@ -87,19 +67,8 @@ function Home() {
 
           {showFilters && (
             <React.Fragment>
-              <CheckboxesGroup
-                className="posRelative"
-               // products={products}
-               // filteredProducts={filteredProducts}
-                // filterDataCheckBox={(data) => filterDataCheckBox(data)}
-                filterData={(data) => filterData(data)}
-              />
-              <RangeSlider
-                //products={products}
-                //filteredProducts={filteredProducts}
-                // filteredCheckBoxData={filteredCheckBoxData}
-                filterData={(data) => filterData(data)}
-              />
+              <CheckboxesGroup className="posRelative" />
+              <RangeSlider />
             </React.Fragment>
           )}
 
@@ -113,11 +82,7 @@ function Home() {
   flexWrap="wrap"
   */
             >
-              <MediaCard
-                products={products}
-                filteredProducts={filteredProducts}
-                filteredCheckBoxData={filteredCheckBoxData}
-              />
+              <MediaCard />
             </Grid>
           </Box>
         </React.Fragment>
