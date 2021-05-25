@@ -43,12 +43,20 @@ const useStyles = makeStyles((theme) => ({
   menuIconColor: {
     color: "green",
   },
+  welcometext: {
+    margin: "auto 10px",
+    color: "black",
+    fontWeight: 600,
+  },
 }));
 
 export default function MenuAppBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { user, setUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { user, setUser, isLoggedIn, setIsLoggedIn, name, setName } =
+    useContext(AuthContext);
+  let userCurr = auth.currentUser;
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -120,11 +128,17 @@ export default function MenuAppBar() {
               <Link to="/account">Account</Link>
             </MenuItem>
           </Menu>
-          <CustomizedDialogs>
-            <AccountBox />
-          </CustomizedDialogs>
+          {!user && (
+            <CustomizedDialogs>
+              <AccountBox />
+            </CustomizedDialogs>
+          )}
           {user && <button onClick={signout}>Log out</button>}
-          {user && <p>Welcome {user.name}</p>}
+          {user && (
+            <p className={classes.welcometext}>
+              Welcome {user.displayName ? user.displayName : name}
+            </p>
+          )}
         </Toolbar>
       </AppBar>
     </div>

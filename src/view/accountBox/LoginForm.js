@@ -49,7 +49,7 @@ export function LoginForm(props) {
       .then((userCredential) => {
         // Signed in
         var user = userCredential.user;
-        console.log("user", user);
+        console.log("userLogin", user);
         setUser(user);
         setIsLoggedIn(true);
         // ...

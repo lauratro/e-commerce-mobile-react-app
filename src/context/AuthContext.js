@@ -3,6 +3,7 @@ import React, { createContext, useState } from "react";
 const initAuthContext = {
   user: null,
   isLoggedIn: false,
+  name: null,
 };
 
 export const AuthContext = createContext(initAuthContext);
@@ -10,6 +11,7 @@ export const AuthContext = createContext(initAuthContext);
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(initAuthContext.user);
   const [isLoggedIn, setIsLoggedIn] = useState(initAuthContext.isLoggedIn);
+  const [name, setName] = useState(initAuthContext.name);
   return (
     <AuthContext.Provider
       value={{
@@ -17,6 +19,8 @@ export const AuthContextProvider = ({ children }) => {
         setUser,
         isLoggedIn,
         setIsLoggedIn,
+        name,
+        setName,
       }}
     >
       {children}
