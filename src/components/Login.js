@@ -65,8 +65,8 @@ export default function CustomizedDialogs({ children }) {
 
   return (
     <div>
-      <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
-        Sign up
+      <Button variant="outlined" color="default" onClick={handleClickOpen}>
+        Sign Up / In
       </Button>
       <Dialog
         onClose={handleClose}
@@ -74,7 +74,7 @@ export default function CustomizedDialogs({ children }) {
         open={open}
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Sign up or Sign in
+          Sign up/In
         </DialogTitle>
         <DialogContent dividers>{children}</DialogContent>
         <DialogActions></DialogActions>
