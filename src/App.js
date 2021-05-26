@@ -10,8 +10,9 @@ import {VariablesContextProvider} from "./context/ContextStorage"
 import Jewelery from "./view/Jewelery";
 import Men from "./view/MenClothing"
 import Women from "./view/WomenClothing"
+import ShoppingCart from "./view/ShoppingCart"
 import ModalLogin from "./components/Login"
-import { AuthProvider } from "./context/AuthContext"
+import { AuthContextProvider } from "./context/AuthContext"
 import {AccountBox} from "./view/accountBox/ContainerForm"
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
 
   setTimeout(() => setIsLoading(false), 1500);
   return (
-  <AuthProvider>
+  <AuthContextProvider>
     <VariablesContextProvider>
     <BrowserRouter>
       {!isLoading ? (
@@ -44,6 +45,9 @@ function App() {
                 </Route>
                      <Route exact path="/account">
               <AccountBox />
+                </Route>
+                <Route exact path="/shopping">
+              <ShoppingCart />
               </Route>
                 
             <Route
@@ -61,7 +65,7 @@ function App() {
       )}
     </BrowserRouter>
       </VariablesContextProvider>
-      </AuthProvider>
+      </AuthContextProvider>
   );
 }
 

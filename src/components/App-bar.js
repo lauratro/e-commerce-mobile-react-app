@@ -55,7 +55,6 @@ export default function MenuAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { user, setUser, isLoggedIn, setIsLoggedIn, name, setName } =
     useContext(AuthContext);
-  let userCurr = auth.currentUser;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -79,7 +78,7 @@ export default function MenuAppBar() {
     window.location.reload();
   };
   function twoFunction() {
-    refreshPage();
+    // refreshPage();
     handleClose();
   }
 
@@ -101,7 +100,7 @@ export default function MenuAppBar() {
           >
             <MenuIcon className={classes.menuIconColor} />
           </IconButton>
-
+          <Link to="/shopping">Shopping</Link>
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
