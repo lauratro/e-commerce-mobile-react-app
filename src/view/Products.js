@@ -1,6 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import { VariablesContext } from "../context/ContextStorage";
+import { AuthContext } from "../context/AuthContext";
+import { auth } from "../firebase";
+import myfirebase from "../firebase";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Card from "@material-ui/core/Card";
@@ -8,7 +11,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
+import { TextField, Button } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles({
@@ -40,13 +43,27 @@ export default function MediaCard() {
     categoryResult,
     setCategoryResult,
   } = useContext(VariablesContext);
-
+  const db = myfirebase.firestore();
+  const {
+    user,
+    setUser,
+    isLoggedIn,
+    setIsLoggedIn,
+    name,
+    setName,
+    productName,
+    setProductName,
+  } = useContext(AuthContext);
   const classes = useStyles();
+  //Button Buy
+
+  //End Button Buy
   // console.log("MediaCardProduct", products);
   // console.log("filProdMediaCard", filteredProducts);
   // console.log("mediaCategResu", categoryResult);
   // console.log("mediaPrice", priceResult);
   let [filtered, setfiltered] = useState([]);
+
   //Filters Home page
   if (categoryResult.length == 0 && priceResult.length === 0) {
     let result = products.filter((p) => {
@@ -119,9 +136,6 @@ export default function MediaCard() {
                 See More
               </Button>
             </Link>
-            <Button size="small" color="primary">
-              Buy
-            </Button>
           </CardActions>
         </Card>
       </Grid>

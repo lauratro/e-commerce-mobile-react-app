@@ -1,17 +1,34 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
+import { auth } from "../firebase";
+import firebase from "../firebase";
 
 const initAuthContext = {
   user: null,
   isLoggedIn: false,
   name: null,
+  productName: "",
+  productPrice: " ",
+
+  loading: true,
 };
 
 export const AuthContext = createContext(initAuthContext);
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(initAuthContext.user);
+  const [loading, setLoading] = useState(initAuthContext.user);
   const [isLoggedIn, setIsLoggedIn] = useState(initAuthContext.isLoggedIn);
   const [name, setName] = useState(initAuthContext.name);
+  const [productName, setProductName] = useState(initAuthContext.productName);
+  const [productPrice, setProductPrice] = useState(initAuthContext.productName);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+      setLoading(false);
+    });
+    return unsubscribe;
+  }, [user]);
   return (
     <AuthContext.Provider
       value={{
@@ -21,6 +38,10 @@ export const AuthContextProvider = ({ children }) => {
         setIsLoggedIn,
         name,
         setName,
+        productName,
+        setProductName,
+        productPrice,
+        productName,
       }}
     >
       {children}
@@ -93,13 +114,7 @@ export function AuthProvider({ children }) {
     });
     return promise;
   }; 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
-      setLoading(false);
-    });
-    return unsubscribe;
-  }, [user]);
+ 
   const value = {
     user,
     setUser,
