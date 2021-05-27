@@ -1,8 +1,8 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext } from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import { VariablesContext } from "../context/ContextStorage";
 import { AuthContext } from "../context/AuthContext";
-import { auth } from "../firebase";
+
 import myfirebase from "../firebase";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -11,7 +11,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import { TextField, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles({
@@ -36,8 +36,7 @@ export default function MediaCard() {
   let {
     products,
     setProducts,
-    filteredProducts,
-    setFilteredProducts,
+
     priceResult,
     setPriceResult,
     categoryResult,
@@ -65,7 +64,11 @@ export default function MediaCard() {
   let [filtered, setfiltered] = useState([]);
 
   //Filters Home page
-  if (categoryResult.length == 0 && priceResult.length === 0) {
+  if (
+    categoryResult.length == 0 &&
+    priceResult.length === 0 &&
+    document.title == "Home | LBY"
+  ) {
     let result = products.filter((p) => {
       return p;
     });

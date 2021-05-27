@@ -43,7 +43,7 @@ function Women() {
 
   useEffect(() => {
     fetchApi();
-  }, [products]);
+  }, []);
 
   //Filter Button
   function showButtonFilter(data) {

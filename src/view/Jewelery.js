@@ -43,7 +43,7 @@ function Jewelery() {
 
   useEffect(() => {
     fetchApi();
-  }, [products]);
+  }, []);
 
   //Filter Button
   function showButtonFilter(data) {

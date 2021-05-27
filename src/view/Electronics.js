@@ -43,7 +43,7 @@ function Electronics() {
 
   useEffect(() => {
     fetchApi();
-  }, [products]);
+  }, []);
 
   //Filter Button
   function showButtonFilter(data) {

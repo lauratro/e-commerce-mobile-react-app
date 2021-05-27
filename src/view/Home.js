@@ -30,7 +30,7 @@ function Home() {
     try {
       const response = await fetch("https://fakestoreapi.com/products");
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setProducts(data);
       setIsLoading(false);
     } catch (err) {
@@ -40,13 +40,13 @@ function Home() {
 
   useEffect(() => {
     fetchApi();
-  }, [products]);
+  }, []);
   //Filter Button
 
   function showButtonFilter(data) {
     setShowFilters(data);
 
-    console.log("showBut", data);
+    // console.log("showBut", data);
   }
   /* let showFilter = () => {
     setShowFilters((noShow) => !noShow);
@@ -54,7 +54,7 @@ function Home() {
 */
   //Filtered Products
 
-  console.log("dati Home filtrati", filteredProducts);
+  // console.log("dati Home filtrati", filteredProducts);
 
   return (
     <Page title="Home">
