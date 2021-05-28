@@ -12,6 +12,9 @@ const initContextVariables = {
   filteredProducts: [],
   currentUser: null,
   loading: true,
+  docProduct: [],
+  idProductArray: [],
+  favorite: [],
 };
 //Create context
 export const VariablesContext = createContext(initContextVariables);
@@ -32,6 +35,11 @@ export const VariablesContextProvider = ({ children }) => {
   const [singleCatProducts, setSingleCatProducts] = useState(
     initContextVariables.singleCatProducts
   );
+  const [docProduct, setDocProduct] = useState(initContextVariables.docProduct);
+  const [idProductArray, setIdProductArray] = useState(
+    initContextVariables.idProductArray
+  );
+  const [favorite, setFavorite] = useState(initContextVariables.favorite);
   /*  const [currentUser, setCurrentUser] = useState(
     initContextVariables.currentUser
   );
@@ -50,7 +58,7 @@ export const VariablesContextProvider = ({ children }) => {
     };
   });
  */
-  //console.log("in context", categoryResult);
+  //  console.log("in context", docProduct);
   return (
     <VariablesContext.Provider
       value={{
@@ -66,6 +74,12 @@ export const VariablesContextProvider = ({ children }) => {
         setSingleCatProducts,
         priceResult,
         setPriceResult,
+        docProduct,
+        setDocProduct,
+        idProductArray,
+        setIdProductArray,
+        favorite,
+        setFavorite,
         // currentUser,
         // setCurrentUser,
         // signUp,

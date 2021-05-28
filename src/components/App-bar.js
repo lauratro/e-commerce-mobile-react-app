@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import logo from "../img/LbyBig.png";
-
+import LocalMallIcon from "@material-ui/icons/LocalMall";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
@@ -78,7 +79,7 @@ export default function MenuAppBar() {
     window.location.reload();
   };
   function twoFunction() {
-    // refreshPage();
+    refreshPage();
     handleClose();
   }
 
@@ -100,7 +101,14 @@ export default function MenuAppBar() {
           >
             <MenuIcon className={classes.menuIconColor} />
           </IconButton>
-          <Link to="/shopping">Shopping</Link>
+          {user && (
+            <Link to="/shopping">
+              <LocalMallIcon />
+            </Link>
+          )}
+          <Link to="/favorites">
+            <FavoriteIcon />
+          </Link>
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}

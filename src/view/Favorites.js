@@ -23,44 +23,50 @@ const useStyles = makeStyles((theme) => ({
     height: 300,
   },
 }));
-function ShoppingCart() {
+function Favorites() {
   const classes = useStyles();
   const db = myfirebase.firestore();
   const { user, setUser } = useContext(AuthContext);
-  const { docProduct, setDocProduct, idProductArray, setIdProductArray } =
-    useContext(VariablesContext);
-  console.log("docsho", docProduct);
-  console.log("user", user);
+  const {
+    docProduct,
+    setDocProduct,
+    idProductArray,
+    setIdProductArray,
+    favorite,
+    setFavorite,
+  } = useContext(VariablesContext);
+  console.log("docsfav", favorite);
+  //console.log("user", user);
   // let [docProduct, setDocProduct] = useState();
 
   useEffect(() => {
     if (user) {
-      db.collection("shopping")
+      db.collection("favorites")
         .where("uid", "==", user.uid)
         .get()
         .then((querySnapshot) => {
-          let arrayShopProd = [];
-          //let arrayId = [];
+          let arrayFavorites = [];
+
           querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
-            // console.log("intern", doc.data());
+            console.log(doc.id, " fav=> ", doc.data());
+            console.log("Favinter", doc.data());
             /*     db.collection("shopping").doc(doc.id).update({
               docId: doc.id,
             }); */
             let docData = doc.data();
-            let docDataProd = docData;
+            let docDataFav = docData;
             //Product id
             /*    let idProd = docData.product.id;
             console.log("id", idProd);
             arrayId.push(idProd); */
 
             //  console.log("docProd", docDataProd);
-            arrayShopProd.push(docDataProd);
+            arrayFavorites.push(docDataFav);
           });
-          setDocProduct(arrayShopProd);
+          setFavorite(arrayFavorites);
           // setIdProductArray(arrayId);
-          console.log("doc", docProduct);
+          console.log("docFav", favorite);
         })
         .catch((error) => {
           console.log("Error getting documents: ", error);
@@ -68,15 +74,15 @@ function ShoppingCart() {
     }
   }, []);
   let removeProduct = (id, title) => {
-    console.log("externa", docProduct);
+    console.log("externa", favorite);
     let removedPro = [];
-    removedPro = docProduct.filter((elem) => elem.product.title !== title);
-    setDocProduct(removedPro);
+    removedPro = favorite.filter((elem) => elem.product.title !== title);
+    setFavorite(removedPro);
     // setDocProduct(
     //  (docProduct) => docProduct.filter((elem) => elem.id !== prodid)
     // tracks = tracks.filter(currentTrack => currentTrack.id !== track.id );
 
-    db.collection("shopping")
+    db.collection("favorites")
       .doc(id)
       .delete()
       .then(() => {
@@ -86,14 +92,14 @@ function ShoppingCart() {
         console.error("Error removing document: ", error);
       });
 
-    console.log(docProduct);
+    console.log(favorite);
   };
-  console.log("extern", docProduct);
-  if (docProduct) {
-    return docProduct.map((prod) => {
+  console.log("extern", favorite);
+  if (favorite) {
+    return favorite.map((prod) => {
       // console.log("title", prod.docId);
       return (
-        <Page title="Bag">
+        <Page title="Favorites">
           <div className={classes.root} name={prod.title}>
             <Paper className={classes.paper}>
               <Grid
@@ -120,7 +126,7 @@ function ShoppingCart() {
                     >
                       Remove
                     </button>
-                  {/*   <Link to={`detail/${prod.product.id}`}>
+                    {/*   <Link to={`detail/${prod.product.id}`}>
                       <Button size="small" color="primary">
                         See More
                       </Button>
@@ -137,4 +143,4 @@ function ShoppingCart() {
     return <p>No products selected</p>;
   }
 }
-export default ShoppingCart;
+export default Favorites;
