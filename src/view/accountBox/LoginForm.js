@@ -1,27 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import myfirebase from "../../firebase";
+
 import { auth } from "../../firebase";
-import {
-  BoxContainer,
-  FormContainer,
-  Input,
-  SubmitButton,
-  MutedLink,
-  BoldLink,
-} from "./Common";
+import { BoxContainer, MutedLink, BoldLink } from "./Common";
 import { AccountContext } from "./AccountContext";
-import {
-  Grid,
-  Paper,
-  Avatar,
-  TextField,
-  Button,
-  Typography,
-  FormGroup,
-  FormControl,
-} from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 const btnStyle = {
   margin: "15px 0",
   background: "rgb(58,180,117)",
@@ -60,6 +44,7 @@ export function LoginForm(props) {
         setUser(null);
         setIsLoggedIn(false);
         setError(errorMessage);
+        setLoading(false);
       });
   };
   const handleSignin = (e) => {

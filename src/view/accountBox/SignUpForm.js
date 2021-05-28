@@ -73,6 +73,7 @@ export function SignUpForm(props) {
           .set({
             name: fullName,
             email: email,
+            uid: user.uid,
           })
           .then(() => {
             db.collection("users")
@@ -94,6 +95,7 @@ export function SignUpForm(props) {
         setUser(null);
         setIsLoggedIn(false);
         setError(errorMessage);
+        setLoading(false);
         // ..
       });
   };
@@ -156,15 +158,6 @@ export function SignUpForm(props) {
           Sign Up
         </Button>
       </form>
-      {/*   <form onSubmit={(e) => handleSignup(e)}>
-            <Input type="email" placeholder="email"  inputRef={emailRef}
-              value={email}
-              onInput={(e) => setEmail(e.target.value)}/>
-            <Input type="password" placeholder="password"  inputRef={passwordRef}
-              value={password}
-                    onInput={(e) => setPassword(e.target.value)} />
-                    <SubmitButton type="submit"  disabled={loading}>Sign up</SubmitButton>
-            </form> */}
 
       <MutedLink href="#">
         Do you have an account?
