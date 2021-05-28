@@ -96,7 +96,7 @@ function SingleProduct(props) {
         });
     }
     if (user) {
-      db.collection("favorite")
+      db.collection("favorites")
         .where("uid", "==", user.uid)
         .get()
         .then((querySnapshot) => {
@@ -108,17 +108,17 @@ function SingleProduct(props) {
             let docData = doc.data();
 
             //Product id
-            let idProd = docData.product.id;
-            console.log("idfire", idProd);
+            let idProdFav = docData.product.id;
+            console.log("idfire", idProdFav);
             //----KEEP BUTTON SELECTED---////
-            if (idProd == id) {
+            if (idProdFav == id) {
               setButtonFav(true);
             }
             //  console.log("id", idProd);
             // console.log("idpage", id);
-          //  arrayId.push(idProd);
+            //  arrayId.push(idProd);
           });
-         // setIdProductArray(arrayId);
+          // setIdProductArray(arrayId);
         })
         .catch((error) => {
           console.log("Error getting documents: ", error);
