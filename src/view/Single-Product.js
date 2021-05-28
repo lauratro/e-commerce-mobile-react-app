@@ -114,11 +114,7 @@ function SingleProduct(props) {
             if (idProdFav == id) {
               setButtonFav(true);
             }
-            //  console.log("id", idProd);
-            // console.log("idpage", id);
-            //  arrayId.push(idProd);
           });
-          // setIdProductArray(arrayId);
         })
         .catch((error) => {
           console.log("Error getting documents: ", error);

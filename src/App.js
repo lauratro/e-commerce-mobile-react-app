@@ -10,7 +10,8 @@ import { VariablesContextProvider } from "./context/ContextStorage";
 import Jewelery from "./view/Jewelery";
 import Men from "./view/MenClothing";
 import Women from "./view/WomenClothing";
-import ShoppingCart from "./view/ShoppingCart";
+
+import ShoppingCartContainer from "./view/ShoppingCartContainer";
 import Favorites from "./view/Favorites";
 
 import { AuthContextProvider } from "./context/AuthContext";
@@ -48,7 +49,7 @@ function App() {
                   <AccountBox />
                 </Route>
                 <Route exact path="/shopping">
-                  <ShoppingCart />
+                  <ShoppingCartContainer />
                 </Route>
                 <Route exact path="/favorites">
                   <Favorites />

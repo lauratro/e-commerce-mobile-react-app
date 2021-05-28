@@ -15,6 +15,7 @@ const initContextVariables = {
   docProduct: [],
   idProductArray: [],
   favorite: [],
+  priceCart: [,],
 };
 //Create context
 export const VariablesContext = createContext(initContextVariables);
@@ -39,6 +40,7 @@ export const VariablesContextProvider = ({ children }) => {
   const [idProductArray, setIdProductArray] = useState(
     initContextVariables.idProductArray
   );
+  const [priceCart, setPriceCart] = useState(initContextVariables.priceCart);
   const [favorite, setFavorite] = useState(initContextVariables.favorite);
   /*  const [currentUser, setCurrentUser] = useState(
     initContextVariables.currentUser
@@ -58,7 +60,7 @@ export const VariablesContextProvider = ({ children }) => {
     };
   });
  */
-  //  console.log("in context", docProduct);
+  console.log("in context", priceCart);
   return (
     <VariablesContext.Provider
       value={{
@@ -80,6 +82,8 @@ export const VariablesContextProvider = ({ children }) => {
         setIdProductArray,
         favorite,
         setFavorite,
+        priceCart,
+        setPriceCart,
         // currentUser,
         // setCurrentUser,
         // signUp,
