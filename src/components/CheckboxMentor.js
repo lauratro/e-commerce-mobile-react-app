@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CheckboxMentor() {
   const { docProduct, setDocProduct, priceCart, setPriceCart } =
     useContext(VariablesContext);
+  const [discountText, setDiscountText] = useState(false);
   const classes = useStyles();
   const [state, setState] = React.useState({
     mentor: false,
@@ -32,10 +33,12 @@ export default function CheckboxMentor() {
     console.log("prezzo", priceDiscountMentor);
     if (event.target.checked) {
       setPriceCart(priceDiscountMentor);
+      setDiscountText(true);
     } else {
       priceDiscountMentor = priceCart * 1.42857142857142857;
 
       setPriceCart(priceDiscountMentor);
+      setDiscountText(false);
     }
     setState({ ...state, [event.target.name]: event.target.checked });
   };
@@ -59,8 +62,9 @@ export default function CheckboxMentor() {
             label="Mentor Discount"
           />
         </FormGroup>
-        <FormHelperText>Be careful</FormHelperText>
+        <FormHelperText>Be careful!</FormHelperText>
       </FormControl>
+      {discountText ? <p>30% Discount added</p> : ""}
     </div>
   );
 }

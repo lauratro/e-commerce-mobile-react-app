@@ -7,7 +7,9 @@ import CheckboxMentor from "../components/CheckboxMentor";
 export default function TotalShoppingCart() {
   const { docProduct, setDocProduct, priceCart, setPriceCart } =
     useContext(VariablesContext);
+  const [threeProdDiscountText, setThreeProdDiscountText] = useState(false);
   let amount = 0;
+  console.log("totaldoc", docProduct);
 
   if (priceCart.length > 0) {
     amount = priceCart.reduce((a, c) => a + c, 0);
@@ -16,6 +18,10 @@ export default function TotalShoppingCart() {
   } else {
     amount = 0;
   }
+  /*  if (docProduct.length >= 3) {
+    let priceThreeProd = priceCart * 0.9;
+    setPriceCart(priceThreeProd);
+  } */
   return (
     <div>
       <Grid container>
