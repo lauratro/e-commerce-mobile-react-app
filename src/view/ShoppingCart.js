@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
-import TotalShoppingCart from "../view/TotalShoppingCart";
+
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Page from "../components/PageTitle";
 import { Button } from "@material-ui/core";
@@ -10,6 +10,7 @@ import myfirebase from "../firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -135,6 +136,7 @@ function ShoppingCart() {
                   >
                     Remove
                   </button>
+
                   {/*   <Link to={`detail/${prod.product.id}`}>
                       <Button size="small" color="primary">
                         See More

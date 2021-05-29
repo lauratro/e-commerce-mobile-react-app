@@ -11,6 +11,8 @@ import Grid from "@material-ui/core/Grid";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import QuantityStock from "../components/QuantityStock";
+import { handleBuy } from "../components/QuantityStock";
 
 import { TextField, Button } from "@material-ui/core";
 
@@ -35,13 +37,22 @@ const useStyles = makeStyles((theme) => ({
 function SingleProduct(props) {
   const db = myfirebase.firestore();
   const { user, setUser } = useContext(AuthContext);
-  const { docProduct, setDocProduct, idProductArray, setIdProductArray } =
-    useContext(VariablesContext);
-
+  const {
+    docProduct,
+    setDocProduct,
+    idProductArray,
+    setIdProductArray,
+    objectQuantity,
+    setObjectQuantity,
+    allIdProductArray,
+    setAllIdProductArray,
+  } = useContext(VariablesContext);
+  console.log("spobj", objectQuantity);
   let { id } = useParams();
   let [product, setProduct] = useState();
   let [buttonBuy, setButtonBuy] = useState(false);
   let [buttonFav, setButtonFav] = useState(false);
+
   const classes = useStyles();
   // console.log("array", docProduct);
   useEffect(() => {
@@ -59,7 +70,6 @@ function SingleProduct(props) {
         .then((querySnapshot) => {
           let arrayId = [];
           querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
             // console.log(doc.id, " => ", doc.data());
 
             let docData = doc.data();
@@ -67,29 +77,10 @@ function SingleProduct(props) {
             //Product id
             let idProd = docData.product.id;
 
-            //----KEEP BUTTON SELECTED---////
-            if (idProd == id) {
-              setButtonBuy(true);
-            }
-            //  console.log("id", idProd);
-            // console.log("idpage", id);
             arrayId.push(idProd);
           });
           setIdProductArray(arrayId);
           // console.log("doc", idProductArray);
-          /*    if (idProductArray) {
-            console.log("idvar", id);
-            console.log("prodArray", idProductArray);
-            if (idProductArray.indexOf(Number(id)) !== -1) {
-              console.log("funziona");
-              setButtonBuy(true);
-              console.log("ok", buttonBuy);
-            } else {
-              console.log("sbaglio");
-            }
-          } else {
-            console.log("empty");
-          } */
         })
         .catch((error) => {
           console.log("Error getting documents: ", error);
@@ -103,13 +94,13 @@ function SingleProduct(props) {
           let arrayId = [];
           querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " spfav=> ", doc.data());
+            // console.log(doc.id, " spfav=> ", doc.data());
 
             let docData = doc.data();
 
             //Product id
             let idProdFav = docData.product.id;
-            console.log("idfire", idProdFav);
+
             //----KEEP BUTTON SELECTED---////
             if (idProdFav == id) {
               setButtonFav(true);
@@ -120,38 +111,26 @@ function SingleProduct(props) {
           console.log("Error getting documents: ", error);
         });
     }
+    //Quantity
   }, []);
   //console.log("afterFetch", idProductArray);
   //console.log("afterFetch", buttonBuy);
+  var objectKeyValue = allIdProductArray.reduce(function (acc, curr) {
+    if (typeof acc[curr] == "undefined") {
+      acc[curr] = 1;
+    } else {
+      acc[curr] += 1;
+    }
 
-  const onClickBtn = () => {
-    setButtonBuy(true);
-  };
+    return acc;
+  }, {});
+  console.log("kv", objectKeyValue);
+  console.log(objectQuantity);
+
   const onClickBtnFav = () => {
     setButtonFav(true);
   };
-  const handleBuy = () => {
-    // setProductName(product);
-    // setProductName(price);
 
-    console.log(user);
-    if (user) {
-      db.collection("shopping")
-        .add({
-          product: product,
-          uid: user.uid,
-        })
-        .then((doc) => {
-          console.log("new", doc.id);
-          db.collection("shopping").doc(doc.id).update({
-            docId: doc.id,
-          });
-        })
-        .catch((error) => {
-          console.error("Error adding document: ", error);
-        });
-    }
-  };
   const handleFavorites = () => {
     console.log(user);
     if (user) {
@@ -171,9 +150,77 @@ function SingleProduct(props) {
         });
     }
   };
+  const refreshData = () => {
+    // console.log("externa", allIdProductArray);
+    db.collection("shopping")
+      .get()
+      .then((querySnapshot) => {
+        let arrayIdGen = [];
+        querySnapshot.forEach((doc) => {
+          // console.log(doc.id, " => ", doc.data());
+          let docDatagen = doc.data();
+          console.log(docDatagen);
+          let idDocGen = docDatagen.product.id;
+          console.log("idgen", idDocGen);
+
+          /* if (objectKeyValue) {
+            if (objectKeyValue[idDocGen] >= 3) {
+              setButtonBuy(true);
+            }
+          } */
+
+          arrayIdGen.push(idDocGen);
+        });
+        setAllIdProductArray(arrayIdGen);
+        console.log("idquantity", allIdProductArray);
+        setObjectQuantity(objectKeyValue);
+      });
+  };
+  const handleBuy = () => {
+    console.log(user);
+    if (user) {
+      db.collection("shopping")
+        .add({
+          product: product,
+          uid: user.uid,
+        })
+        .then((doc) => {
+          console.log("new", doc.id);
+          db.collection("shopping").doc(doc.id).update({
+            docId: doc.id,
+          });
+        })
+        .catch((error) => {
+          console.error("Error adding document: ", error);
+        });
+    }
+    db.collection("shopping")
+      .get()
+      .then((querySnapshot) => {
+        let arrayIdGen = [];
+        querySnapshot.forEach((doc) => {
+          // console.log(doc.id, " => ", doc.data());
+          let docDatagen = doc.data();
+          console.log(docDatagen);
+          let idDocGen = docDatagen.product.id;
+          console.log("idgen", idDocGen);
+
+          /* if (objectKeyValue) {
+            if (objectKeyValue[idDocGen] >= 3) {
+              setButtonBuy(true);
+            }
+          } */
+
+          arrayIdGen.push(idDocGen);
+        });
+        setAllIdProductArray(arrayIdGen);
+        console.log("idquantity", allIdProductArray);
+        setObjectQuantity(objectKeyValue);
+      });
+  };
   const twoFunctionsBuy = () => {
     handleBuy();
-    onClickBtn();
+    //refreshData();
   };
   const twoFunctionsFavorites = () => {
     handleFavorites();
@@ -199,7 +246,6 @@ function SingleProduct(props) {
             </Grid>
             <Grid item xs={6}>
               <Paper className={classes.paper}>Price: {product.price}$</Paper>
-
               <Paper className={classes.paper}>
                 Category: {product.category}
               </Paper>
@@ -208,9 +254,10 @@ function SingleProduct(props) {
                   size="small"
                   color="primary"
                   disabled={
-                    /* user ? false : true || */ buttonBuy ? true : false
+                    /* buttonBuy ? true : false */ objectKeyValue[product.id] >=
+                      2 && true
                   }
-                  onClick={twoFunctionsBuy}
+                  onClick={handleBuy}
                 >
                   <LocalMallIcon />
                 </Button>
@@ -226,6 +273,7 @@ function SingleProduct(props) {
               >
                 {buttonFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               </Button>
+              {objectQuantity[product.id] >= 2 && <p>Sold out</p>}
             </Grid>
             <Grid item xs={12}>
               <Paper className={classes.paper}>{product.description}</Paper>
