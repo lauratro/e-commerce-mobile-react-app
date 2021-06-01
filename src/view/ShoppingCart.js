@@ -41,8 +41,7 @@ function ShoppingCart() {
   const [priceTotal, setPriceTotal] = useState();
   const [quantityUser, setQuantityUser] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  console.log("docsho", docProduct);
-  console.log("user", user);
+
   // let [docProduct, setDocProduct] = useState();
 
   useEffect(() => {
@@ -56,18 +55,18 @@ function ShoppingCart() {
           let arrayId = [];
           querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
+            // console.log(doc.id, " => ", doc.data());
             // console.log("intern", doc.data());
 
             let docData = doc.data();
             let docDataProd = docData;
             let priceI = docDataProd.product.price;
-            console.log("price", priceI);
+            //   console.log("price", priceI);
             //Product id
             let idProd = docData.product.id;
-            console.log("id", idProd);
+            //  console.log("id", idProd);
             arrayId.push(idProd);
-            console.log("idlist", arrayId);
+            //  console.log("idlist", arrayId);
             //Product Price
             arrayPrice.push(Number(docDataProd.product.price));
 
@@ -78,7 +77,7 @@ function ShoppingCart() {
           setIdProductArray(arrayId);
 
           // setIdProductArray(arrayId);
-          console.log("doc", docProduct);
+          // console.log("doc", docProduct);
           //Object with quantity
           var objectKeyValue = idProductArray.reduce(function (acc, curr) {
             if (typeof acc[curr] == "undefined") {
@@ -113,13 +112,13 @@ function ShoppingCart() {
     }
   }, []);
   //Remove Product
-  let removeProduct = (id, title) => {
+  let removeProduct = (id, title, prodId) => {
     db.collection("shopping")
       .doc(id)
       .delete()
       .then(() => {
         console.log("Document successfully deleted!");
-        console.log("externa", docProduct);
+        //  console.log("externa", docProduct);
         let removedPro = [];
 
         /* removedPro = docProduct.filter((elem) => elem.product.title !== title); */
@@ -130,19 +129,13 @@ function ShoppingCart() {
         docProduct.splice(indexToRemove, 1);
         console.log("docP", docProduct);
         setDocProduct(docProduct);
-        console.log("id", docProduct.product.id);
+
+        console.log("id", prodId);
         if (quantityUser) {
-          if (quantityUser.hasOwnProperty(docProduct.product.id)) {
+          if (quantityUser.hasOwnProperty(prodId)) {
             setQuantityUser({
               ...quantityUser,
-              [docProduct.product.id]: (quantityUser[
-                docProduct.product.id
-              ] -= 1),
-            });
-          } else {
-            setQuantityUser({
-              ...quantityUser,
-              [docProduct.product.id]: 1,
+              [prodId]: (quantityUser[prodId] -= 1),
             });
           }
         }
@@ -154,8 +147,8 @@ function ShoppingCart() {
 
     console.log(docProduct);
   };
-  console.log("extern", docProduct);
-  console.log("externPrice", priceCart);
+  // console.log("extern", docProduct);
+  // console.log("externPrice", priceCart);
 
   //Filter array to have unique object
 
@@ -202,7 +195,11 @@ function ShoppingCart() {
                 <Grid items>
                   <button
                     onClick={() =>
-                      removeProduct(prod.docId, prod.product.title)
+                      removeProduct(
+                        prod.docId,
+                        prod.product.title,
+                        prod.product.id
+                      )
                     }
                   >
                     Remove
