@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { VariablesContext } from "../context/ContextStorage";
-import Page from "../components/PageTitle";
-import { auth } from "../firebase";
+
 import myfirebase from "../firebase";
 import { BrowserRouter as Router, Link, useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,14 +10,16 @@ import Grid from "@material-ui/core/Grid";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import QuantityStock from "../components/QuantityStock";
-import { handleBuy } from "../components/QuantityStock";
+
+import { useMediaQuery } from "react-responsive";
 
 import { TextField, Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    position: "relative",
+    top: 100,
   },
   paper: {
     padding: theme.spacing(2),
@@ -35,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SingleProduct(props) {
+  const isTabletOrMobileDevice = useMediaQuery({
+    query: "(max-device-width: 600px)",
+  });
   const db = myfirebase.firestore();
   const { user, setUser } = useContext(AuthContext);
   const {
@@ -52,7 +56,7 @@ function SingleProduct(props) {
   let [product, setProduct] = useState();
   let [buttonBuy, setButtonBuy] = useState(false);
   let [buttonFav, setButtonFav] = useState(false);
-
+  const [shoppingCart, setShoppingCart] = useState({});
   const classes = useStyles();
   // console.log("array", docProduct);
   useEffect(() => {
@@ -63,7 +67,7 @@ function SingleProduct(props) {
     };
     fetchData();
 
-    if (user) {
+    /*   if (user) {
       db.collection("shopping")
         .where("uid", "==", user.uid)
         .get()
@@ -85,15 +89,14 @@ function SingleProduct(props) {
         .catch((error) => {
           console.log("Error getting documents: ", error);
         });
-    }
+    } */
+    //Favorites
     if (user) {
       db.collection("favorites")
         .where("uid", "==", user.uid)
         .get()
         .then((querySnapshot) => {
-          let arrayId = [];
           querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
             // console.log(doc.id, " spfav=> ", doc.data());
 
             let docData = doc.data();
@@ -111,21 +114,9 @@ function SingleProduct(props) {
           console.log("Error getting documents: ", error);
         });
     }
-    //Quantity
   }, []);
   //console.log("afterFetch", idProductArray);
   //console.log("afterFetch", buttonBuy);
-  var objectKeyValue = allIdProductArray.reduce(function (acc, curr) {
-    if (typeof acc[curr] == "undefined") {
-      acc[curr] = 1;
-    } else {
-      acc[curr] += 1;
-    }
-
-    return acc;
-  }, {});
-  console.log("kv", objectKeyValue);
-  console.log(objectQuantity);
 
   const onClickBtnFav = () => {
     setButtonFav(true);
@@ -150,8 +141,18 @@ function SingleProduct(props) {
         });
     }
   };
-  const refreshData = () => {
+
+  const twoFunctionsFavorites = () => {
+    handleFavorites();
+    onClickBtnFav();
+  };
+  // -------------------------------------End Favorites-------------------------------
+
+  //console.log("kv", objectKeyValue);
+
+  useEffect(() => {
     // console.log("externa", allIdProductArray);
+    console.log("checking shoppingcart");
     db.collection("shopping")
       .get()
       .then((querySnapshot) => {
@@ -159,9 +160,9 @@ function SingleProduct(props) {
         querySnapshot.forEach((doc) => {
           // console.log(doc.id, " => ", doc.data());
           let docDatagen = doc.data();
-          console.log(docDatagen);
+          // console.log(docDatagen);
           let idDocGen = docDatagen.product.id;
-          console.log("idgen", idDocGen);
+          // console.log("idgen", idDocGen);
 
           /* if (objectKeyValue) {
             if (objectKeyValue[idDocGen] >= 3) {
@@ -171,11 +172,23 @@ function SingleProduct(props) {
 
           arrayIdGen.push(idDocGen);
         });
-        setAllIdProductArray(arrayIdGen);
+        /* setAllIdProductArray(arrayIdGen); */
         console.log("idquantity", allIdProductArray);
+        // Define how many time a object is repeated
+        var objectKeyValue = arrayIdGen.reduce(function (acc, curr) {
+          if (typeof acc[curr] == "undefined") {
+            acc[curr] = 1;
+          } else {
+            acc[curr] += 1;
+          }
+
+          return acc;
+        }, {});
         setObjectQuantity(objectKeyValue);
       });
-  };
+  }, []);
+
+  //Add product to Shopping Collection Firebase
   const handleBuy = () => {
     console.log(user);
     if (user) {
@@ -186,58 +199,77 @@ function SingleProduct(props) {
         })
         .then((doc) => {
           console.log("new", doc.id);
-          db.collection("shopping").doc(doc.id).update({
-            docId: doc.id,
-          });
+          db.collection("shopping")
+            .doc(doc.id)
+            .update({
+              docId: doc.id,
+            })
+            .then(() => {
+              console.log(objectQuantity.hasOwnProperty(product.id));
+              console.log("then", objectQuantity);
+              console.log("idthen", product.id);
+              console.log(
+                "objectQuantity[product.id]",
+                objectQuantity[product.id]
+              );
+              if (objectQuantity) {
+                if (objectQuantity.hasOwnProperty(product.id)) {
+                  setObjectQuantity({
+                    ...objectQuantity,
+                    [product.id]: (objectQuantity[product.id] += 1),
+                  });
+                } else {
+                  setObjectQuantity({
+                    ...objectQuantity,
+                    [product.id]: 1,
+                  });
+                }
+              }
+
+              /* var objectKeyValue = allIdProductArray.reduce(function (
+                acc,
+                curr
+              ) {
+                if (typeof acc[curr] == "undefined") {
+                  acc[curr] = 1;
+                } else {
+                  acc[curr] += 1;
+                }
+
+                return acc;
+              },
+              {});
+              console.log("objectKeyValue", objectKeyValue);
+              setObjectQuantity(objectKeyValue); */
+            });
         })
         .catch((error) => {
           console.error("Error adding document: ", error);
         });
     }
-    db.collection("shopping")
-      .get()
-      .then((querySnapshot) => {
-        let arrayIdGen = [];
-        querySnapshot.forEach((doc) => {
-          // console.log(doc.id, " => ", doc.data());
-          let docDatagen = doc.data();
-          console.log(docDatagen);
-          let idDocGen = docDatagen.product.id;
-          console.log("idgen", idDocGen);
-
-          /* if (objectKeyValue) {
-            if (objectKeyValue[idDocGen] >= 3) {
-              setButtonBuy(true);
-            }
-          } */
-
-          arrayIdGen.push(idDocGen);
-        });
-        setAllIdProductArray(arrayIdGen);
-        console.log("idquantity", allIdProductArray);
-        setObjectQuantity(objectKeyValue);
-      });
   };
-  const twoFunctionsBuy = () => {
-    handleBuy();
-    //refreshData();
-  };
-  const twoFunctionsFavorites = () => {
-    handleFavorites();
-    onClickBtnFav();
-  };
+  console.log("quantity", objectQuantity);
   return (
     // <Page title={product.title}>
     <div>
       {product && (
         <div className={classes.root}>
-          <Grid container spacing={3} alignItems="center">
+          <Grid
+            container
+            spacing={3}
+            alignItems="center"
+            style={
+              isTabletOrMobileDevice
+                ? { flexDirection: "column" }
+                : { flexDirection: "row" }
+            }
+          >
             <Grid item xs={12}>
               <Paper className={classes.paper} className={classes.fontBold}>
                 {product.title}
               </Paper>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <img
                 className={classes.media}
                 src={product.image}
@@ -249,13 +281,14 @@ function SingleProduct(props) {
               <Paper className={classes.paper}>
                 Category: {product.category}
               </Paper>
+              <Paper className={classes.paper}>{product.id}</Paper>
               {user ? (
                 <Button
                   size="small"
                   color="primary"
                   disabled={
-                    /* buttonBuy ? true : false */ objectKeyValue[product.id] >=
-                      2 && true
+                    /* buttonBuy ? true : false */ objectQuantity[product.id] >=
+                      3 && true
                   }
                   onClick={handleBuy}
                 >
@@ -273,7 +306,9 @@ function SingleProduct(props) {
               >
                 {buttonFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               </Button>
-              {objectQuantity[product.id] >= 2 && <p>Sold out</p>}
+              {objectQuantity[product.id] >= 3 && <p>Sold out</p>}
+              {objectQuantity.length > 0 && <p>There is value</p>}
+              {!objectQuantity && <p>no value</p>}
             </Grid>
             <Grid item xs={12}>
               <Paper className={classes.paper}>{product.description}</Paper>

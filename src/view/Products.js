@@ -2,9 +2,11 @@ import React, { useState, useContext } from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import { VariablesContext } from "../context/ContextStorage";
 import { AuthContext } from "../context/AuthContext";
+import { useMediaQuery } from "react-responsive";
 
 import myfirebase from "../firebase";
 import { makeStyles } from "@material-ui/core/styles";
+import MediaQueries from "../styles/MediaQueries";
 
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -22,17 +24,31 @@ const useStyles = makeStyles({
     height: "fit-content",
   },
   media: {
-    height: 140,
+    height: 250,
   },
   margin: {
-    marginBottom: 5,
+    marginBottom: 25,
   },
   fontSize: {
     fontSize: 12,
   },
+  seeMore: {
+    fontFamily: "Montserrat",
+    color: "rgb(0,100,0)",
+    fontWeight: "bold",
+    "&:hover": {
+      color: "rgb(144,238,144)",
+    },
+  },
+  borderCard: {
+    borderStyle: "5px solid black",
+  },
 });
 
 export default function MediaCard() {
+  const isTabletOrMobileDevice = useMediaQuery({
+    query: "(max-device-width: 600px)",
+  });
   let {
     products,
     setProducts,
@@ -101,23 +117,33 @@ export default function MediaCard() {
   }
   return products.map((product) => {
     return (
-      <Grid item xs={12} sm={3}>
+      <Grid item xs={12} sm={6} md={4} className={classes.margin}>
         <Card
           key={product.id}
           className={classes.root}
-          className={classes.margin}
           className={classes.height}
+          className={classes.borderCard}
           xs="6"
           sm="3"
         >
           <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image={product.image}
-              title={product.title}
-            />
+            <Link to={`detail/${product.id}`}>
+              <CardMedia
+                style={{ margin: 15 }}
+                className={classes.media}
+                image={product.image}
+                title={product.title}
+              />
+            </Link>
             <CardContent>
-              <Typography gutterBottom variant="h6" component="h2">
+              <Typography
+                gutterBottom
+                variant="h6"
+                component="h4"
+                style={
+                  isTabletOrMobileDevice ? { fontSize: 15 } : { fontSize: 20 }
+                }
+              >
                 {product.title}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
@@ -133,12 +159,12 @@ export default function MediaCard() {
               ></Typography>
             </CardContent>
           </CardActionArea>
-          <CardActions>
-            <Link to={`detail/${product.id}`}>
-              <Button size="small" color="primary">
+          <CardActions style={{ justifyContent: "center" }}>
+            <Button size="small" color="primary" className={classes.seeMore}>
+              <Link to={`detail/${product.id}`} className={classes.seeMore}>
                 See More
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </CardActions>
         </Card>
       </Grid>

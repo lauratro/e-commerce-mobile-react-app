@@ -14,10 +14,13 @@ export default function TotalShoppingCart() {
   if (priceCart.length > 0) {
     amount = priceCart.reduce((a, c) => a + c, 0);
     console.log(amount);
-    setPriceCart(amount);
+    let rounded = amount.toFixed(2);
+    let roundedPrice = Number(rounded);
+    setPriceCart(roundedPrice);
   } else {
     amount = 0;
   }
+
   /*  if (docProduct.length >= 3) {
     let priceThreeProd = priceCart * 0.9;
     setPriceCart(priceThreeProd);
