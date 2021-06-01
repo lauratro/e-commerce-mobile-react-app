@@ -39,6 +39,8 @@ function ShoppingCart() {
   } = useContext(VariablesContext);
   const [priceItem, setPriceItem] = useState([]);
   const [priceTotal, setPriceTotal] = useState();
+  const [quantityUser, setQuantityUser] = useState([]);
+  const [filtered, setFiltered] = useState([]);
   console.log("docsho", docProduct);
   console.log("user", user);
   // let [docProduct, setDocProduct] = useState();
@@ -51,22 +53,21 @@ function ShoppingCart() {
         .then((querySnapshot) => {
           let arrayShopProd = [];
           let arrayPrice = [];
-          //let arrayId = [];
+          let arrayId = [];
           querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());
             // console.log("intern", doc.data());
-            /*     db.collection("shopping").doc(doc.id).update({
-              docId: doc.id,
-            }); */
+
             let docData = doc.data();
             let docDataProd = docData;
             let priceI = docDataProd.product.price;
             console.log("price", priceI);
             //Product id
-            /*    let idProd = docData.product.id;
+            let idProd = docData.product.id;
             console.log("id", idProd);
-            arrayId.push(idProd); */
+            arrayId.push(idProd);
+            console.log("idlist", arrayId);
             //Product Price
             arrayPrice.push(Number(docDataProd.product.price));
             //  console.log("docProd", docDataProd);
@@ -74,6 +75,8 @@ function ShoppingCart() {
           });
           setDocProduct(arrayShopProd);
           setPriceCart(arrayPrice);
+          setIdProductArray(arrayId);
+          setQuantityUser(objectKeyValue);
           // setIdProductArray(arrayId);
           console.log("doc", docProduct);
         })
@@ -81,33 +84,78 @@ function ShoppingCart() {
           console.log("Error getting documents: ", error);
         });
     }
+    uniqueProd();
   }, []);
+  //Remove Product
   let removeProduct = (id, title) => {
-    console.log("externa", docProduct);
-    let removedPro = [];
-    removedPro = docProduct.filter((elem) => elem.product.title !== title);
-    setDocProduct(removedPro);
-
     db.collection("shopping")
       .doc(id)
       .delete()
       .then(() => {
         console.log("Document successfully deleted!");
+        console.log("externa", docProduct);
+        let removedPro = [];
+
+        /* removedPro = docProduct.filter((elem) => elem.product.title !== title); */
+        let indexToRemove = docProduct.findIndex((elem, index) => {
+          return elem.product.title === title;
+        });
+        console.log(indexToRemove);
+
+        docProduct.splice(indexToRemove, 1);
+
+        console.log(docProduct);
+        setDocProduct(docProduct);
       })
       .catch((error) => {
         console.error("Error removing document: ", error);
       });
 
     console.log(docProduct);
+    uniqueProd();
   };
   console.log("extern", docProduct);
   console.log("externPrice", priceCart);
-  // Total Price
-  // let sum = 0;
-  // sum = priceItem.reduce((a, c) => a + c);
-  // setPriceTotal(sum);
+  const uniqueProd = () => {
+    if (docProduct) {
+      var filtered = docProduct.reduce((unique, o) => {
+        if (!unique.some((obj) => obj.product.title === o.product.title)) {
+          unique.push(o);
+        }
+        return unique;
+      }, []);
+
+      console.log("filt", filtered);
+      setFiltered(filtered);
+    }
+  };
+  //Filter array to have unique object
+
+  const refreshPage = () => {
+    window.location.reload();
+  };
+  function twoFunctionsRemove(id, title) {
+    refreshPage();
+    removeProduct(id, title);
+  }
+  // Define quantity for each product
+
+  //How many times there is an object in the array
+  var objectKeyValue = idProductArray.reduce(function (acc, curr) {
+    if (typeof acc[curr] == "undefined") {
+      acc[curr] = 1;
+    } else {
+      acc[curr] += 1;
+    }
+
+    return acc;
+  }, {});
+  console.log("keyValue", objectKeyValue);
+
+  console.log("varQuantity", quantityUser);
+  console.log(filtered);
   if (docProduct) {
-    return docProduct.map((prod) => {
+    return filtered.map((prod) => {
       // console.log("title", prod.docId);
       return (
         <div className={classes.root} name={prod.title}>
@@ -126,8 +174,11 @@ function ShoppingCart() {
               <Grid items>
                 <p>{prod.product.title}</p>
 
-                <p>{prod.product.price} $</p>
-                <p>{prod.docId}</p>
+                <p>
+                  {objectKeyValue[prod.product.id]} x {prod.product.price} $
+                </p>
+
+                <p>Id : {prod.product.id}</p>
                 <Grid items>
                   <button
                     onClick={() =>
@@ -137,11 +188,11 @@ function ShoppingCart() {
                     Remove
                   </button>
 
-                  {/*   <Link to={`detail/${prod.product.id}`}>
-                      <Button size="small" color="primary">
-                        See More
-                      </Button>
-                    </Link> */}
+                  <Button size="small" color="primary">
+                    <Link to={`detail/${prod.product.id}`}>
+                      Product details
+                    </Link>
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>

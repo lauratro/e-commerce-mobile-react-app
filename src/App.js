@@ -10,6 +10,7 @@ import { VariablesContextProvider } from "./context/ContextStorage";
 import Jewelery from "./view/Jewelery";
 import Men from "./view/MenClothing";
 import Women from "./view/WomenClothing";
+import Footer from "./view/Footer";
 
 import ShoppingCartContainer from "./view/ShoppingCartContainer";
 import Favorites from "./view/Favorites";
@@ -61,6 +62,7 @@ function App() {
                   children={<SingleProduct />}
                 ></Route>
               </Switch>
+              <Footer />
             </div>
           ) : (
             <img

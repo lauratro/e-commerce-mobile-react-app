@@ -32,12 +32,15 @@ export default function CheckboxMentor() {
     let priceDiscountMentor = priceCart - discount;
     console.log("prezzo", priceDiscountMentor);
     if (event.target.checked) {
-      setPriceCart(priceDiscountMentor);
+      let roundPrice = priceDiscountMentor.toFixed(2);
+      let rounded = Number(roundPrice);
+      setPriceCart(rounded);
       setDiscountText(true);
     } else {
       priceDiscountMentor = priceCart * 1.42857142857142857;
-
-      setPriceCart(priceDiscountMentor);
+      let roundPrice = priceDiscountMentor.toFixed(2);
+      let rounded = Number(roundPrice);
+      setPriceCart(rounded);
       setDiscountText(false);
     }
     setState({ ...state, [event.target.name]: event.target.checked });
