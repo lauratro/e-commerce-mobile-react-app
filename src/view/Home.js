@@ -61,6 +61,7 @@ function Home() {
       {!isLoading ? (
         <React.Fragment>
           <ButtonFilters
+            style={{ position: "relative", top: 100 }}
             onClick={(showFilter) => showButtonFilter(showFilter)}
             showFilters={showFilters}
           />

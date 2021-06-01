@@ -4,6 +4,7 @@ import Page from "../components/PageTitle";
 import IsLoadingData from "../components/IsLoadingData";
 import ButtonFilters from "../components/ButtonFilters";
 import RangeSlider from "../components/PriceSlider";
+import Category from "../components/NameCategory";
 
 import MediaCard from "./Products";
 import CardContainer from "../components/CardsContainer";
@@ -65,6 +66,7 @@ function Women() {
               <RangeSlider />
             </React.Fragment>
           )}
+          <Category cat="Women 's Clothing" />
           <CardContainer>
             <MediaCard />
           </CardContainer>

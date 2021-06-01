@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   appBarColor: {
     background: " rgb(255,255,255)",
     background:
-      "linear-gradient(90deg, rgba(255,255,255,1) 9%, rgba(39,161,45,1) 49%, rgba(25,78,34,1) 100%)",
+      "linear-gradient(90deg, rgba(255,255,255,1) 2%, rgba(39,161,45,1) 19%, rgba(25,78,34,1) 100%)",
   },
   menuButton: {
     //  marginRight: theme.spacing(1),
@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
     width: 60,
     height: 60,
     marginRight: 10,
+    borderRadius: "50%",
   },
   marginElem: {
     marginRight: 30,
@@ -48,17 +49,20 @@ const useStyles = makeStyles((theme) => ({
     color: "black",
   },
   menuIconColor: {
-    color: "green",
+    color: "black",
   },
   welcometext: {
     margin: "auto 10px",
     color: "black",
     fontWeight: 600,
     fontFamily: "Montserrat",
+    fontStyle: "italic",
   },
 
   linkText: {
     textDecoration: "none",
+    fontWeight: "bold",
+
     "&:hover": {
       color: "green",
     },
@@ -66,6 +70,9 @@ const useStyles = makeStyles((theme) => ({
   logOut: {
     fontFamily: "Montserrat",
     borderRadius: 5,
+    padding: 5,
+    background: "rgb(2, 48, 32)",
+    color: "white",
   },
 }));
 
@@ -115,7 +122,7 @@ export default function MenuAppBar() {
           }
         >
           <img src={logo} alt="logo" className={classes.logo} />
-          <GoBackButton className={classes.marginElem} />
+
           <IconButton
             edge="start"
             className={classes.menuButton}
@@ -181,6 +188,7 @@ export default function MenuAppBar() {
               </MenuItem>
             </ItemMenu>
           </Menu>
+          <GoBackButton className={classes.marginElem} />
           {!user && (
             <CustomizedDialogs>
               <AccountBox />
@@ -191,7 +199,7 @@ export default function MenuAppBar() {
               onClick={signout}
               className={classes.logOut}
               style={
-                isTabletOrMobileDevice ? { fontSize: 10 } : { fontSize: 20 }
+                isTabletOrMobileDevice ? { fontSize: 10 } : { fontSize: 12 }
               }
             >
               Log out
@@ -201,7 +209,7 @@ export default function MenuAppBar() {
             <p
               className={classes.welcometext}
               style={
-                isTabletOrMobileDevice ? { fontSize: 10 } : { fontSize: 20 }
+                isTabletOrMobileDevice ? { fontSize: 10 } : { fontSize: 14 }
               }
             >
               Welcome {user.displayName ? user.displayName : name}

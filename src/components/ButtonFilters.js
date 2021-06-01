@@ -13,6 +13,10 @@ function ButtonFilters(props) {
     }
   }
 
-  return <button onClick={handleChange}>Filters</button>;
+  return (
+    <button onClick={handleChange} style={{ marginTop: 30 }}>
+      Filters
+    </button>
+  );
 }
 export default ButtonFilters;

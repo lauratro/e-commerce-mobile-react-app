@@ -26,10 +26,21 @@ export default function TotalShoppingCart() {
     setPriceCart(priceThreeProd);
   } */
   return (
-    <div display="flex" style={{ justifyContent: "center" }}>
-      <Grid container>
-        <Paper xs={12}>
-          <p>Total Cost {priceCart} $</p>
+    <div display="flex">
+      <Grid
+        container
+        style={{
+          justifyContent: "center",
+
+          margin: "0 auto",
+
+          width: "90%",
+        }}
+      >
+        <Paper xs={12} style={{ marginTop: 15 }}>
+          <p style={{ backgroundColor: "lightgreen" }}>
+            Total Cost {priceCart} $
+          </p>
           <CheckboxMentor />
         </Paper>
       </Grid>

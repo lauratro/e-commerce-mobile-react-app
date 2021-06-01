@@ -7,6 +7,7 @@ import RangeSlider from "../components/PriceSlider";
 
 import MediaCard from "./Products";
 import CardContainer from "../components/CardsContainer";
+import Category from "../components/NameCategory";
 
 function Men() {
   const {
@@ -68,6 +69,7 @@ function Men() {
               />
             </React.Fragment>
           )}
+          <Category cat="Men's Clothing" />
           <CardContainer>
             <MediaCard
             //products={products}

@@ -117,7 +117,7 @@ export default function MediaCard() {
   }
   return products.map((product) => {
     return (
-      <Grid item xs={12} sm={6} md={4} className={classes.margin}>
+      <Grid item xs={12} sm={12} md={6} className={classes.margin}>
         <Card
           key={product.id}
           className={classes.root}
@@ -125,11 +125,12 @@ export default function MediaCard() {
           className={classes.borderCard}
           xs="6"
           sm="3"
+          style={{ display: "flex", flexDirection: "row" }}
         >
-          <CardActionArea>
+          <CardActionArea style={{ display: "flex", flexDirection: "row" }}>
             <Link to={`detail/${product.id}`}>
               <CardMedia
-                style={{ margin: 15 }}
+                style={{ margin: 15, width: 80, height: 80 }}
                 className={classes.media}
                 image={product.image}
                 title={product.title}

@@ -65,7 +65,10 @@ export default function CustomizedDialogs({ children }) {
 
   return (
     <div>
-      <Button variant="outlined" color="default" onClick={handleClickOpen}>
+      <Button
+        style={{ background: "rgb(2, 48, 32)", color: "white" }}
+        onClick={handleClickOpen}
+      >
         Sign Up / In
       </Button>
       <Dialog

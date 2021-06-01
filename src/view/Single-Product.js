@@ -30,16 +30,21 @@ const useStyles = makeStyles((theme) => ({
     width: "50%",
     margin: "0 auto",
   },
-  fontBold: {
+  fontBoldTitle: {
     fontWeight: "bold",
-    margin: 5,
+    margin: 10,
+    paddingBottom: 10,
   },
 }));
 
 function SingleProduct(props) {
-  const isTabletOrMobileDevice = useMediaQuery({
-    query: "(max-device-width: 600px)",
+  const isTabletOrMobileDeviceVertical = useMediaQuery({
+    query: "(max-device-width: 540px)",
   });
+  const isTabletOrMobileDeviceLandscape = useMediaQuery({
+    query: "(max-device-width: 700px)",
+  });
+
   const db = myfirebase.firestore();
   const { user, setUser } = useContext(AuthContext);
   const {
@@ -251,13 +256,16 @@ function SingleProduct(props) {
             spacing={3}
             alignItems="center"
             style={
-              isTabletOrMobileDevice
+              isTabletOrMobileDeviceVertical
                 ? { flexDirection: "column" }
                 : { flexDirection: "row" }
             }
           >
-            <Grid item xs={12}>
-              <Paper className={classes.paper} className={classes.fontBold}>
+            <Grid item xs={12} sm={6}>
+              <Paper
+                className={classes.paper}
+                className={classes.fontBoldTitle}
+              >
                 {product.title}
               </Paper>
             </Grid>
@@ -269,43 +277,74 @@ function SingleProduct(props) {
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <Paper className={classes.paper}>Price: {product.price}$</Paper>
-              <Paper className={classes.paper}>
-                Category: {product.category}
-              </Paper>
+              <div
+                style={
+                  isTabletOrMobileDeviceVertical
+                    ? { display: "flex", flexDirection: "column" }
+                    : {
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-around",
+                      }
+                }
+              >
+                <Paper className={classes.paper} md={6}>
+                  Price: {product.price}$
+                </Paper>
+                <Paper className={classes.paper} md={6}>
+                  Category: {product.category}
+                </Paper>
+              </div>
               <Paper className={classes.paper}>{product.id}</Paper>
               {user ? (
-                <Button
-                  style={{ marginTop: 5 }}
-                  size="small"
-                  color="primary"
-                  disabled={
-                    /* buttonBuy ? true : false */ objectQuantity[product.id] >=
-                      3 && true
-                  }
-                  onClick={handleBuy}
-                >
-                  <LocalMallIcon />
-                </Button>
+                <div>
+                  <Button
+                    style={{ marginTop: 5 }}
+                    size="small"
+                    color="primary"
+                    disabled={
+                      /* buttonBuy ? true : false */ objectQuantity[
+                        product.id
+                      ] >= 3 && true
+                    }
+                    onClick={handleBuy}
+                  >
+                    <LocalMallIcon />
+                  </Button>
+                  <Button
+                    style={{ marginTop: 5 }}
+                    size="small"
+                    color="primary"
+                    disabled={buttonFav ? true : false}
+                    onClick={twoFunctionsFavorites}
+                  >
+                    {buttonFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                  </Button>
+                </div>
               ) : (
-                <p>Log in to buy products</p>
+                <p
+                  style={{
+                    width: "70%",
+                    margin: "0 auto",
+                    fontWeight: "bold",
+                    padding: 10,
+                  }}
+                >
+                  Log in to buy products and select your favorite ones
+                </p>
               )}
 
-              <Button
-                style={{ marginTop: 5 }}
-                size="small"
-                color="primary"
-                disabled={buttonFav ? true : false}
-                onClick={twoFunctionsFavorites}
-              >
-                {buttonFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-              </Button>
               {objectQuantity[product.id] >= 3 && <p>Sold out</p>}
               {objectQuantity.length > 0 && <p>There is value</p>}
               {!objectQuantity && <p>no value</p>}
             </Grid>
             <Grid item xs={12}>
-              <Paper className={classes.paper}>{product.description}</Paper>
+              <Paper
+                className={classes.paper}
+                style={{ textAlign: "justify", margin: 10 }}
+              >
+                {product.description}
+              </Paper>
             </Grid>
           </Grid>
         </div>

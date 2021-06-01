@@ -7,6 +7,9 @@ import { SignUpForm } from "./SignUpForm";
 
 const BoxContainer = styled.div`
   width: 280px;
+  @media (min-width: 630px) {
+    width: 95%;
+  }
   min-height: 550px;
   display: flex;
   flex-direction: column;
@@ -27,7 +30,7 @@ const ExternContainer = styled.div`
 `;
 const TopContainer = styled.div`
   width: 100%;
-  height: 250px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -57,6 +60,9 @@ const HeaderContainer = styled.div`
   left: 5px;
 `;
 const HeaderText = styled.h2`
+  @media (min-width: 600px) {
+    text-align: center;
+  }
   font-size: 30px;
   font-weight: 600;
   line-height: 1.24;
@@ -65,6 +71,9 @@ const HeaderText = styled.h2`
   margin: 0;
 `;
 const SmallText = styled.div`
+  @media (min-width: 600px) {
+    text-align: center;
+  }
   color: #fff;
   font-weight: 500;
   font-size: 15px;

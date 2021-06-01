@@ -21,8 +21,31 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
   image: {
-    maxWidth: 300,
-    height: 300,
+    maxWidth: 150,
+    height: 150,
+  },
+  prodDetails: {
+    color: "white",
+    backgroundColor: "green",
+    borderRadius: 5,
+    padding: "2px 10px ",
+    textTransform: "uppercase",
+    textDecoration: "none",
+    "&:hover": {
+      color: "black",
+      brigthness: "0.5",
+    },
+  },
+  buttonRemove: {
+    color: "white",
+    backgroundColor: "red",
+    borderRadius: 5,
+    padding: 5,
+    textTransform: "uppercase",
+    textDecoration: "none",
+    "&:hover": {
+      color: "black",
+    },
   },
 }));
 function ShoppingCart() {
@@ -100,6 +123,7 @@ function ShoppingCart() {
   }, [idProductArray]);
 
   useEffect(() => {
+    //Array with unique elements
     if (docProduct) {
       var filteredA = docProduct.reduce((unique, o) => {
         if (!unique.some((obj) => obj.product.title === o.product.title)) {
@@ -154,32 +178,6 @@ function ShoppingCart() {
   };
   console.log("shoppingCartProd", docProduct);
 
-  /*  let removeProductContext = (title, prodId) => {
-      let indexToRemove = docProduct.findIndex((elem, index) => {
-        return elem.product.title === title;
-      });
-      console.log("index", indexToRemove);
-      docProduct.splice(indexToRemove, 1);
-      console.log("docP", docProduct);
-      setDocProduct(docProduct);
-
-      // console.log("id", prodId);
-      if (quantityUser) {
-        if (quantityUser.hasOwnProperty(prodId)) {
-          setQuantityUser({
-            ...quantityUser,
-            [prodId]: (quantityUser[prodId] -= 1),
-          });
-        }
-      }
-    };
-  };
-  removeProductContext(); */
-  // console.log("extern", docProduct);
-  // console.log("externPrice", priceCart);
-
-  //Filter array to have unique object
-
   const refreshPage = () => {
     window.location.reload();
   };
@@ -189,8 +187,6 @@ function ShoppingCart() {
     refreshPage();
   }
   // Define quantity for each product
-
-  //How many times there is an object in the array
 
   // console.log("keyValue", objectKeyValue);
 
@@ -207,39 +203,51 @@ function ShoppingCart() {
               direction="row"
               justify="space-around"
               alignItems="center"
+              xs={12}
             >
               <img
+                xs={6}
                 src={prod.product.image}
                 alt="picture"
                 className={classes.image}
               />
-              <Grid items>
-                <p>{prod.product.title}</p>
+              <Grid items xs={6}>
+                <p style={{ fontWeight: 900 }}>{prod.product.title}</p>
 
                 <p>
                   {quantityUser[prod.product.id]} x {prod.product.price} $
                 </p>
 
                 <p>Id : {prod.product.id}</p>
-                <Grid items>
-                  <button
-                    onClick={() => {
-                      twoFunctionsRemove(
-                        prod.docId,
-                        prod.product.title,
-                        prod.product.id
-                      );
-                    }}
-                  >
-                    Remove
-                  </button>
-
-                  <Button size="small" color="primary">
-                    <Link to={`detail/${prod.product.id}`}>
-                      Product details
-                    </Link>
-                  </Button>
-                </Grid>
+              </Grid>
+              <Grid
+                xs={12}
+                items
+                style={{
+                  display: "flex",
+                  margin: 10,
+                  justifyContent: "center",
+                }}
+              >
+                <button
+                  className={classes.buttonRemove}
+                  style={{ margin: 15 }}
+                  onClick={() => {
+                    twoFunctionsRemove(
+                      prod.docId,
+                      prod.product.title,
+                      prod.product.id
+                    );
+                  }}
+                >
+                  Remove
+                </button>
+                <Link
+                  to={`detail/${prod.product.id}`}
+                  className={classes.prodDetails}
+                >
+                  <p size="small" style={{ margin: 15 }}></p> Product details
+                </Link>
               </Grid>
             </Grid>
           </Paper>
