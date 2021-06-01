@@ -72,3 +72,12 @@ export const SubmitButton = styled.button`
     filter: brightness(1.03);
   }
 `;
+// Navbar
+export const ItemMenu = styled.div`
+  text-decoration: none !important;
+  text-transform: uppercase;
+  border-style: 1px static black;
+  &:hover {
+    color: rgb(58, 180, 117);
+  }
+`;

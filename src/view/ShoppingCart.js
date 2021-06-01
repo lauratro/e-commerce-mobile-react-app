@@ -70,21 +70,47 @@ function ShoppingCart() {
             console.log("idlist", arrayId);
             //Product Price
             arrayPrice.push(Number(docDataProd.product.price));
-            //  console.log("docProd", docDataProd);
+
             arrayShopProd.push(docDataProd);
           });
           setDocProduct(arrayShopProd);
           setPriceCart(arrayPrice);
           setIdProductArray(arrayId);
-          setQuantityUser(objectKeyValue);
+
           // setIdProductArray(arrayId);
           console.log("doc", docProduct);
+          //Object with quantity
+          var objectKeyValue = idProductArray.reduce(function (acc, curr) {
+            if (typeof acc[curr] == "undefined") {
+              acc[curr] = 1;
+            } else {
+              acc[curr] += 1;
+            }
+
+            return acc;
+          }, {});
+          setQuantityUser(objectKeyValue);
+          console.log("quantity", quantityUser);
+        })
+        .then(() => {
+          if (docProduct) {
+            var filtered = docProduct.reduce((unique, o) => {
+              if (
+                !unique.some((obj) => obj.product.title === o.product.title)
+              ) {
+                unique.push(o);
+              }
+              return unique;
+            }, []);
+
+            console.log("filt", filtered);
+            setFiltered(filtered);
+          }
         })
         .catch((error) => {
           console.log("Error getting documents: ", error);
         });
     }
-    uniqueProd();
   }, []);
   //Remove Product
   let removeProduct = (id, title) => {
@@ -101,34 +127,36 @@ function ShoppingCart() {
           return elem.product.title === title;
         });
         console.log(indexToRemove);
-
         docProduct.splice(indexToRemove, 1);
-
-        console.log(docProduct);
+        console.log("docP", docProduct);
         setDocProduct(docProduct);
+        console.log("id", docProduct.product.id);
+        if (quantityUser) {
+          if (quantityUser.hasOwnProperty(docProduct.product.id)) {
+            setQuantityUser({
+              ...quantityUser,
+              [docProduct.product.id]: (quantityUser[
+                docProduct.product.id
+              ] -= 1),
+            });
+          } else {
+            setQuantityUser({
+              ...quantityUser,
+              [docProduct.product.id]: 1,
+            });
+          }
+        }
       })
+      .then(() => {})
       .catch((error) => {
         console.error("Error removing document: ", error);
       });
 
     console.log(docProduct);
-    uniqueProd();
   };
   console.log("extern", docProduct);
   console.log("externPrice", priceCart);
-  const uniqueProd = () => {
-    if (docProduct) {
-      var filtered = docProduct.reduce((unique, o) => {
-        if (!unique.some((obj) => obj.product.title === o.product.title)) {
-          unique.push(o);
-        }
-        return unique;
-      }, []);
 
-      console.log("filt", filtered);
-      setFiltered(filtered);
-    }
-  };
   //Filter array to have unique object
 
   const refreshPage = () => {
@@ -141,16 +169,8 @@ function ShoppingCart() {
   // Define quantity for each product
 
   //How many times there is an object in the array
-  var objectKeyValue = idProductArray.reduce(function (acc, curr) {
-    if (typeof acc[curr] == "undefined") {
-      acc[curr] = 1;
-    } else {
-      acc[curr] += 1;
-    }
 
-    return acc;
-  }, {});
-  console.log("keyValue", objectKeyValue);
+  // console.log("keyValue", objectKeyValue);
 
   console.log("varQuantity", quantityUser);
   console.log(filtered);
@@ -175,7 +195,7 @@ function ShoppingCart() {
                 <p>{prod.product.title}</p>
 
                 <p>
-                  {objectKeyValue[prod.product.id]} x {prod.product.price} $
+                  {quantityUser[prod.product.id]} x {prod.product.price} $
                 </p>
 
                 <p>Id : {prod.product.id}</p>

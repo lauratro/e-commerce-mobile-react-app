@@ -43,7 +43,7 @@ function Men() {
 
   useEffect(() => {
     fetchApi();
-  }, [products]);
+  }, []);
 
   //Filter Button
   function showButtonFilter(data) {

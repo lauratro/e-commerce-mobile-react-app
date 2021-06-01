@@ -9,15 +9,17 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import CustomizedDialogs from "./Login";
-import RegistrationForm from "./RegistrationForm";
+
 import { AccountBox } from "../view/accountBox/ContainerForm";
 import { GoBackButton } from "../components/GoBackButton";
 import { AuthContext } from "../context/AuthContext";
 import { auth } from "../firebase";
+import { ItemMenu } from "../view/accountBox/Common";
+import { useMediaQuery } from "react-responsive";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -28,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
       "linear-gradient(90deg, rgba(255,255,255,1) 9%, rgba(39,161,45,1) 49%, rgba(25,78,34,1) 100%)",
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    //  marginRight: theme.spacing(1),
   },
   title: {
     flexGrow: 1,
@@ -39,7 +41,11 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 10,
   },
   marginElem: {
-    marginRight: 10,
+    marginRight: 30,
+  },
+  marginIcons: {
+    marginRight: 15,
+    color: "black",
   },
   menuIconColor: {
     color: "green",
@@ -48,10 +54,25 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto 10px",
     color: "black",
     fontWeight: 600,
+    fontFamily: "Montserrat",
+  },
+
+  linkText: {
+    textDecoration: "none",
+    "&:hover": {
+      color: "green",
+    },
+  },
+  logOut: {
+    fontFamily: "Montserrat",
+    borderRadius: 5,
   },
 }));
 
 export default function MenuAppBar() {
+  const isTabletOrMobileDevice = useMediaQuery({
+    query: "(max-device-width: 600px)",
+  });
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { user, setUser, isLoggedIn, setIsLoggedIn, name, setName } =
@@ -85,14 +106,19 @@ export default function MenuAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.appBarColor}>
-        <Toolbar>
+      <AppBar position="fixed" className={classes.appBarColor}>
+        <Toolbar
+          style={
+            isTabletOrMobileDevice
+              ? { justifyContent: " space-between" }
+              : { justifyContent: "space-around" }
+          }
+        >
           <img src={logo} alt="logo" className={classes.logo} />
           <GoBackButton className={classes.marginElem} />
           <IconButton
             edge="start"
             className={classes.menuButton}
-            className={classes.marginElem}
             color="inherit"
             aria-label="menu"
             aria-controls="simple-menu"
@@ -102,13 +128,16 @@ export default function MenuAppBar() {
             <MenuIcon className={classes.menuIconColor} />
           </IconButton>
           {user && (
-            <Link to="/shopping">
-              <LocalMallIcon />
-            </Link>
+            <div display="flex">
+              <Link to="/shopping" className={classes.marginIcons}>
+                <LocalMallIcon />
+              </Link>
+
+              <Link to="/favorites" className={classes.marginIcons}>
+                <FavoriteIcon />
+              </Link>
+            </div>
           )}
-          <Link to="/favorites">
-            <FavoriteIcon />
-          </Link>
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
@@ -116,33 +145,65 @@ export default function MenuAppBar() {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={twoFunction}>
-              <Link to="/">Home</Link>
-            </MenuItem>
-            <MenuItem onClick={twoFunction}>
-              <Link to="/electronics">Electronics</Link>
-            </MenuItem>
-            <MenuItem onClick={twoFunction}>
-              <Link to="/jewelery">Jewelery</Link>
-            </MenuItem>
-            <MenuItem onClick={twoFunction}>
-              <Link to="/men">Men's Clothing</Link>
-            </MenuItem>
-            <MenuItem onClick={twoFunction}>
-              <Link to="/women">Women's Clothing</Link>
-            </MenuItem>
-            <MenuItem onClick={twoFunction}>
-              <Link to="/account">Account</Link>
-            </MenuItem>
+            <ItemMenu>
+              <MenuItem className={classes.menuIt} onClick={twoFunction}>
+                <Link to="/" className={classes.linkText}>
+                  Home
+                </Link>
+              </MenuItem>
+            </ItemMenu>
+            <ItemMenu>
+              <MenuItem onClick={twoFunction}>
+                <Link to="/electronics" className={classes.linkText}>
+                  Electronics
+                </Link>
+              </MenuItem>
+            </ItemMenu>
+            <ItemMenu>
+              <MenuItem onClick={twoFunction}>
+                <Link to="/jewelery" className={classes.linkText}>
+                  Jewelery
+                </Link>
+              </MenuItem>
+            </ItemMenu>
+            <ItemMenu>
+              <MenuItem onClick={twoFunction}>
+                <Link to="/men" className={classes.linkText}>
+                  Men's Clothing
+                </Link>
+              </MenuItem>
+            </ItemMenu>
+            <ItemMenu>
+              <MenuItem onClick={twoFunction}>
+                <Link to="/women" className={classes.linkText}>
+                  Women's Clothing
+                </Link>
+              </MenuItem>
+            </ItemMenu>
           </Menu>
           {!user && (
             <CustomizedDialogs>
               <AccountBox />
             </CustomizedDialogs>
           )}
-          {user && <button onClick={signout}>Log out</button>}
           {user && (
-            <p className={classes.welcometext}>
+            <button
+              onClick={signout}
+              className={classes.logOut}
+              style={
+                isTabletOrMobileDevice ? { fontSize: 10 } : { fontSize: 20 }
+              }
+            >
+              Log out
+            </button>
+          )}
+          {user && (
+            <p
+              className={classes.welcometext}
+              style={
+                isTabletOrMobileDevice ? { fontSize: 10 } : { fontSize: 20 }
+              }
+            >
               Welcome {user.displayName ? user.displayName : name}
             </p>
           )}

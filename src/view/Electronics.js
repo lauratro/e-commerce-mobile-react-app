@@ -9,16 +9,8 @@ import MediaCard from "./Products";
 import CardContainer from "../components/CardsContainer";
 
 function Electronics() {
-  const {
-    products,
-    setProducts,
-    isLoading,
-    setIsLoading,
-    filteredProducts,
-    setFilteredProducts,
-    singleCatProducts,
-    setSingleCatProducts,
-  } = useContext(VariablesContext);
+  const { products, setProducts, isLoading, setIsLoading } =
+    useContext(VariablesContext);
 
   const [showFilters, setShowFilters] = useState(false);
   /*   let showFilter = () => {
