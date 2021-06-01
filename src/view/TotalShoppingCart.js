@@ -7,13 +7,13 @@ import CheckboxMentor from "../components/CheckboxMentor";
 export default function TotalShoppingCart() {
   const { docProduct, setDocProduct, priceCart, setPriceCart } =
     useContext(VariablesContext);
-  const [threeProdDiscountText, setThreeProdDiscountText] = useState(false);
+  //const [threeProdDiscountText, setThreeProdDiscountText] = useState(false);
   let amount = 0;
   console.log("totaldoc", docProduct);
 
   if (priceCart.length > 0) {
     amount = priceCart.reduce((a, c) => a + c, 0);
-    console.log(amount);
+    console.log("amount", amount);
     let rounded = amount.toFixed(2);
     let roundedPrice = Number(rounded);
     setPriceCart(roundedPrice);
@@ -26,9 +26,9 @@ export default function TotalShoppingCart() {
     setPriceCart(priceThreeProd);
   } */
   return (
-    <div>
+    <div display="flex" style={{ justifyContent: "center" }}>
       <Grid container>
-        <Paper>
+        <Paper xs={12}>
           <p>Total Cost {priceCart} $</p>
           <CheckboxMentor />
         </Paper>

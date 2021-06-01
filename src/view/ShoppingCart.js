@@ -37,30 +37,30 @@ function ShoppingCart() {
     priceCart,
     setPriceCart,
   } = useContext(VariablesContext);
-  const [priceItem, setPriceItem] = useState([]);
-  const [priceTotal, setPriceTotal] = useState();
-  const [quantityUser, setQuantityUser] = useState([]);
+  //  const [priceItem, setPriceItem] = useState([]);
+  // const [priceTotal, setPriceTotal] = useState();
+  const [quantityUser, setQuantityUser] = useState(null);
   const [filtered, setFiltered] = useState([]);
 
-  // let [docProduct, setDocProduct] = useState();
-
+  console.log("OutshoppingCartProd", docProduct);
   useEffect(() => {
+    console.log("totdoc pre filter", docProduct);
+    let arrayShopProd = [];
     if (user) {
       db.collection("shopping")
         .where("uid", "==", user.uid)
         .get()
         .then((querySnapshot) => {
-          let arrayShopProd = [];
           let arrayPrice = [];
           let arrayId = [];
           querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            // console.log(doc.id, " => ", doc.data());
+            //   console.log(doc.id, " => ", doc.data());
             // console.log("intern", doc.data());
 
             let docData = doc.data();
             let docDataProd = docData;
-            let priceI = docDataProd.product.price;
+            let priceProd = docDataProd.product.price;
             //   console.log("price", priceI);
             //Product id
             let idProd = docData.product.id;
@@ -68,56 +68,64 @@ function ShoppingCart() {
             arrayId.push(idProd);
             //  console.log("idlist", arrayId);
             //Product Price
-            arrayPrice.push(Number(docDataProd.product.price));
+            arrayPrice.push(Number(priceProd));
 
-            arrayShopProd.push(docDataProd);
+            arrayShopProd.push(docData);
           });
+          console.log("docData", arrayShopProd);
           setDocProduct(arrayShopProd);
           setPriceCart(arrayPrice);
           setIdProductArray(arrayId);
-
+          console.log("doc", docProduct);
           // setIdProductArray(arrayId);
-          // console.log("doc", docProduct);
-          //Object with quantity
-          var objectKeyValue = idProductArray.reduce(function (acc, curr) {
-            if (typeof acc[curr] == "undefined") {
-              acc[curr] = 1;
-            } else {
-              acc[curr] += 1;
-            }
-
-            return acc;
-          }, {});
-          setQuantityUser(objectKeyValue);
-          console.log("quantity", quantityUser);
-        })
-        .then(() => {
-          if (docProduct) {
-            var filtered = docProduct.reduce((unique, o) => {
-              if (
-                !unique.some((obj) => obj.product.title === o.product.title)
-              ) {
-                unique.push(o);
-              }
-              return unique;
-            }, []);
-
-            console.log("filt", filtered);
-            setFiltered(filtered);
-          }
         })
         .catch((error) => {
           console.log("Error getting documents: ", error);
         });
     }
   }, []);
+  useEffect(() => {
+    //Object with quantity
+    var objectKeyValue = idProductArray.reduce(function (acc, curr) {
+      if (typeof acc[curr] == "undefined") {
+        acc[curr] = 1;
+      } else {
+        acc[curr] += 1;
+      }
+
+      return acc;
+    }, {});
+    setQuantityUser(objectKeyValue);
+    console.log("quantity", objectKeyValue);
+  }, [idProductArray]);
+
+  useEffect(() => {
+    if (docProduct) {
+      var filteredA = docProduct.reduce((unique, o) => {
+        if (!unique.some((obj) => obj.product.title === o.product.title)) {
+          unique.push(o);
+        }
+        return unique;
+      }, []);
+
+      console.log("filt", filteredA);
+      setFiltered(filteredA);
+    }
+  }, [docProduct]);
   //Remove Product
-  let removeProduct = (id, title, prodId) => {
+  useEffect(() => {
+    removeProductFirebase();
+  }, [idProductArray]);
+
+  let removeProductFirebase = (id, title, prodId) => {
     db.collection("shopping")
       .doc(id)
       .delete()
       .then(() => {
         console.log("Document successfully deleted!");
+        console.log(id);
+      })
+      .then(() => {
         //  console.log("externa", docProduct);
         let removedPro = [];
 
@@ -125,12 +133,12 @@ function ShoppingCart() {
         let indexToRemove = docProduct.findIndex((elem, index) => {
           return elem.product.title === title;
         });
-        console.log(indexToRemove);
+        console.log("index", indexToRemove);
         docProduct.splice(indexToRemove, 1);
         console.log("docP", docProduct);
         setDocProduct(docProduct);
 
-        console.log("id", prodId);
+        // console.log("id", prodId);
         if (quantityUser) {
           if (quantityUser.hasOwnProperty(prodId)) {
             setQuantityUser({
@@ -140,13 +148,33 @@ function ShoppingCart() {
           }
         }
       })
-      .then(() => {})
       .catch((error) => {
         console.error("Error removing document: ", error);
       });
-
-    console.log(docProduct);
   };
+  console.log("shoppingCartProd", docProduct);
+
+  /*  let removeProductContext = (title, prodId) => {
+      let indexToRemove = docProduct.findIndex((elem, index) => {
+        return elem.product.title === title;
+      });
+      console.log("index", indexToRemove);
+      docProduct.splice(indexToRemove, 1);
+      console.log("docP", docProduct);
+      setDocProduct(docProduct);
+
+      // console.log("id", prodId);
+      if (quantityUser) {
+        if (quantityUser.hasOwnProperty(prodId)) {
+          setQuantityUser({
+            ...quantityUser,
+            [prodId]: (quantityUser[prodId] -= 1),
+          });
+        }
+      }
+    };
+  };
+  removeProductContext(); */
   // console.log("extern", docProduct);
   // console.log("externPrice", priceCart);
 
@@ -155,9 +183,10 @@ function ShoppingCart() {
   const refreshPage = () => {
     window.location.reload();
   };
-  function twoFunctionsRemove(id, title) {
+  function twoFunctionsRemove(id, title, prodId) {
+    removeProductFirebase(id, title, prodId);
+    // removeProductContext(title, prodId);
     refreshPage();
-    removeProduct(id, title);
   }
   // Define quantity for each product
 
@@ -165,9 +194,9 @@ function ShoppingCart() {
 
   // console.log("keyValue", objectKeyValue);
 
-  console.log("varQuantity", quantityUser);
-  console.log(filtered);
-  if (docProduct) {
+  console.log("quantity", quantityUser);
+  console.log("filtered", filtered);
+  if (docProduct && quantityUser) {
     return filtered.map((prod) => {
       // console.log("title", prod.docId);
       return (
@@ -194,13 +223,13 @@ function ShoppingCart() {
                 <p>Id : {prod.product.id}</p>
                 <Grid items>
                   <button
-                    onClick={() =>
-                      removeProduct(
+                    onClick={() => {
+                      twoFunctionsRemove(
                         prod.docId,
                         prod.product.title,
                         prod.product.id
-                      )
-                    }
+                      );
+                    }}
                   >
                     Remove
                   </button>

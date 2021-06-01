@@ -128,7 +128,7 @@ export default function MenuAppBar() {
             <MenuIcon className={classes.menuIconColor} />
           </IconButton>
           {user && (
-            <div display="flex">
+            <div display="flex" style={{ marginTop: 5 }}>
               <Link to="/shopping" className={classes.marginIcons}>
                 <LocalMallIcon />
               </Link>

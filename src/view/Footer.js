@@ -10,7 +10,7 @@ export default function Footer() {
         alignItems: "center",
         justifyContent: "center",
         position: "relative",
-        top: 100,
+        top: "40vh",
       }}
     >
       <p>LBY Shop | Created by Laura Tronchin</p>

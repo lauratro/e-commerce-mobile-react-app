@@ -20,7 +20,6 @@ import { AccountBox } from "./view/accountBox/ContainerForm";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-
   setTimeout(() => setIsLoading(false), 1500);
   return (
     <AuthContextProvider>

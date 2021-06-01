@@ -8,7 +8,7 @@ export default function ShoppingCartContainer() {
   const { docProduct, setDocProduct } = useContext(VariablesContext);
 
   return (
-    <div>
+    <div style={{ position: "relative", top: 100 }}>
       <ShoppingCart />
       {docProduct ? <TotalShoppingCart /> : <IsLoadingData />}
     </div>

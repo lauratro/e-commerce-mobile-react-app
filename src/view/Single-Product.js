@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   fontBold: {
     fontWeight: "bold",
+    margin: 5,
   },
 }));
 
@@ -51,7 +52,7 @@ function SingleProduct(props) {
     allIdProductArray,
     setAllIdProductArray,
   } = useContext(VariablesContext);
-  console.log("spobj", objectQuantity);
+  // console.log("spobj", objectQuantity);
   let { id } = useParams();
   let [product, setProduct] = useState();
   let [buttonBuy, setButtonBuy] = useState(false);
@@ -131,7 +132,7 @@ function SingleProduct(props) {
           uid: user.uid,
         })
         .then((doc) => {
-          console.log("newfav", doc.id);
+          // console.log("newfav", doc.id);
           db.collection("favorites").doc(doc.id).update({
             docId: doc.id,
           });
@@ -164,12 +165,6 @@ function SingleProduct(props) {
           let idDocGen = docDatagen.product.id;
           // console.log("idgen", idDocGen);
 
-          /* if (objectKeyValue) {
-            if (objectKeyValue[idDocGen] >= 3) {
-              setButtonBuy(true);
-            }
-          } */
-
           arrayIdGen.push(idDocGen);
         });
         /* setAllIdProductArray(arrayIdGen); */
@@ -190,7 +185,7 @@ function SingleProduct(props) {
 
   //Add product to Shopping Collection Firebase
   const handleBuy = () => {
-    console.log(user);
+    //   console.log(user);
     if (user) {
       db.collection("shopping")
         .add({
@@ -198,20 +193,17 @@ function SingleProduct(props) {
           uid: user.uid,
         })
         .then((doc) => {
-          console.log("new", doc.id);
+          //    console.log("new", doc.id);
           db.collection("shopping")
             .doc(doc.id)
             .update({
               docId: doc.id,
             })
             .then(() => {
-              console.log(objectQuantity.hasOwnProperty(product.id));
-              console.log("then", objectQuantity);
-              console.log("idthen", product.id);
-              console.log(
-                "objectQuantity[product.id]",
-                objectQuantity[product.id]
-              );
+              // console.log(objectQuantity.hasOwnProperty(product.id));
+              // console.log("then", objectQuantity);
+              // console.log("idthen", product.id);
+
               if (objectQuantity) {
                 if (objectQuantity.hasOwnProperty(product.id)) {
                   setObjectQuantity({
@@ -248,7 +240,7 @@ function SingleProduct(props) {
         });
     }
   };
-  console.log("quantity", objectQuantity);
+  // console.log("quantity", objectQuantity);
   return (
     // <Page title={product.title}>
     <div>
@@ -276,7 +268,7 @@ function SingleProduct(props) {
                 alt={product.title}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Paper className={classes.paper}>Price: {product.price}$</Paper>
               <Paper className={classes.paper}>
                 Category: {product.category}
@@ -284,6 +276,7 @@ function SingleProduct(props) {
               <Paper className={classes.paper}>{product.id}</Paper>
               {user ? (
                 <Button
+                  style={{ marginTop: 5 }}
                   size="small"
                   color="primary"
                   disabled={
@@ -299,6 +292,7 @@ function SingleProduct(props) {
               )}
 
               <Button
+                style={{ marginTop: 5 }}
                 size="small"
                 color="primary"
                 disabled={buttonFav ? true : false}

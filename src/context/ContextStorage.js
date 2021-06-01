@@ -69,7 +69,7 @@ export const VariablesContextProvider = ({ children }) => {
     };
   });
  */
-  console.log("in context", objectQuantity);
+  console.log("in context", docProduct);
   return (
     <VariablesContext.Provider
       value={{
