@@ -34,7 +34,7 @@ function Jewelery() {
         "https://fakestoreapi.com/products/category/jewelery"
       );
       const data = await response.json();
-      console.log("jeweleryData", data);
+      // console.log("jeweleryData", data);
       setProducts(data);
       setIsLoading(false);
     } catch (err) {

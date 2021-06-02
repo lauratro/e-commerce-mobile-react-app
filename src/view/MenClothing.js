@@ -34,7 +34,7 @@ function Men() {
         "https://fakestoreapi.com/products/category/men's clothing"
       );
       const data = await response.json();
-      console.log("jeweleryData", data);
+      //  console.log("jeweleryData", data);
       setProducts(data);
       setIsLoading(false);
     } catch (err) {
