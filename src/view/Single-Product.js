@@ -295,7 +295,7 @@ function SingleProduct(props) {
                   Category: {product.category}
                 </Paper>
               </div>
-              <Paper className={classes.paper}>{product.id}</Paper>
+              <Paper className={classes.paper}>Id: {product.id}</Paper>
               {user ? (
                 <div>
                   <Button

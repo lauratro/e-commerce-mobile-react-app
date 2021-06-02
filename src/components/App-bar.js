@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   welcometext: {
     margin: "auto 10px",
-    color: "black",
+    color: "white",
     fontWeight: 600,
     fontFamily: "Montserrat",
     fontStyle: "italic",

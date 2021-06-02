@@ -14,7 +14,15 @@ function ButtonFilters(props) {
   }
 
   return (
-    <button onClick={handleChange} style={{ marginTop: 30 }}>
+    <button
+      onClick={handleChange}
+      style={{
+        marginTop: 30,
+        backgroundColor: "green",
+        color: "white",
+        padding: "5px",
+      }}
+    >
       Filters
     </button>
   );
