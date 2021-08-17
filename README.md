@@ -1,3 +1,16 @@
+###Responsive design available for mobile App
+
+###Characteristics
+ReactJs
+BackEnd: Firebase
+Rest Api: Fake shop Api
+Upload Picture: Cloudinary
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
