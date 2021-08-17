@@ -1,4 +1,4 @@
-# E-Commerce app project
+# LBy-shop - E-Commerce app project
  Responsive design available for mobile App
 
 # Characteristics
