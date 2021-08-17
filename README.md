@@ -1,4 +1,4 @@
-# E-Commerce app prototype
+# E-Commerce app project
  Responsive design available for mobile App
 
 # Characteristics
@@ -7,9 +7,23 @@
 - Rest Api: Fake shop Api
 - Upload Pictures: Cloudinary
 
+# Description
+React app created using an e-commerce API, to fetch and display products. Differents filters and features allow the user to select the categories of products he prefers, create his list of favorite products and add them to the shopping cart. Firebase and Firestore Databases are used to manage user and products collections.
 
+## Screen shots
 
-
+<table style="padding:10px">
+  <tr>
+    <td> 
+         <img src="./Sshot/detail-product-page.jpg"  alt="1" width = 279px height = 496px ></td>
+      
+ <td><img src="./Sshot/favorites-lby.png" align="right" alt="2" width = 279px height = 496px></td>
+   <td><img src="./Sshot/filters.png" alt="3" width = 288px height = 512px></td>
+   <td><img src="./Sshot/shopping-cart.png" alt="3" width = 288px height = 512px></td>
+    
+   <!--<td><img src="./Scshot/trip_end.png" align="right" alt="4" width =  279px height = 496px></td>-->
+  </tr>
+</table>
 
 
 # Getting Started with Create React App
