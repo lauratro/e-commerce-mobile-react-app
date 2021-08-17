@@ -2,10 +2,10 @@
  Responsive design available for mobile App
 
 # Characteristics
-ReactJs
-BackEnd: Firebase
-Rest Api: Fake shop Api
-Upload Picture: Cloudinary
+- ReactJs
+- BackEnd: Firebase
+- Rest Api: Fake shop Api
+- Upload Picture: Cloudinary
 
 
 
