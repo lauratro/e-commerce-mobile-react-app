@@ -1,4 +1,5 @@
-# Responsive design available for mobile App
+# E-Commerce app prototype
+ Responsive design available for mobile App
 
 # Characteristics
 ReactJs
