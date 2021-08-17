@@ -17,7 +17,7 @@ React app created using an e-commerce API, to fetch and display products. Differ
     <td> 
          <img src="./Sshot/detail-product-page.jpg"  alt="1" width = 300px height = 500px ></td>
       
- <td><img src="./Sshot/favorites-lby.jpg" align="right" alt="2" width =300px height = 500px></td>
+ <td><img src="./Sshot/favorites-Iby.jpg" align="right" alt="2" width =300px height = 500px></td>
    <td><img src="./Sshot/filters.jpg" alt="3" width = 300px height = 500px></td>
    <td><img src="./Sshot/shopping-cart.jpg" alt="4" width = 288px height = 500px></td>
     
