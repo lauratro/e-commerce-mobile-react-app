@@ -1,6 +1,6 @@
-###Responsive design available for mobile App
+# Responsive design available for mobile App
 
-###Characteristics
+# Characteristics
 ReactJs
 BackEnd: Firebase
 Rest Api: Fake shop Api
