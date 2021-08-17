@@ -1,3 +1,17 @@
+# E-Commerce app prototype
+ Responsive design available for mobile App
+
+# Characteristics
+- ReactJs
+- BackEnd: Firebase Database
+- Rest Api: Fake shop Api
+- Upload Pictures: Cloudinary
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
