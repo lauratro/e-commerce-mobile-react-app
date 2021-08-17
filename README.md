@@ -3,9 +3,9 @@
 
 # Characteristics
 - ReactJs
-- BackEnd: Firebase
+- BackEnd: Firebase Database
 - Rest Api: Fake shop Api
-- Upload Picture: Cloudinary
+- Upload Pictures: Cloudinary
 
 
 
