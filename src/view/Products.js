@@ -1,13 +1,11 @@
-import React, { useState, useContext } from "react";
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import React, {  useContext } from "react";
+import { BrowserRouter,Link } from "react-router-dom";
 import { VariablesContext } from "../context/ContextStorage";
-import { AuthContext } from "../context/AuthContext";
+
 import { useMediaQuery } from "react-responsive";
 
 import myfirebase from "../firebase";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import MediaQueries from "../styles/MediaQueries";
-
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -64,7 +62,7 @@ export default function MediaCard() {
     categoryResult,
    
   } = useContext(VariablesContext);
-  const db = myfirebase.firestore();
+
 
   const classes = useStyles();
   

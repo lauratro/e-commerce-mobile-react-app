@@ -11,22 +11,15 @@ import CardContainer from "../components/CardsContainer";
 
 function Women() {
   const {
-    products,
+ 
     setProducts,
     isLoading,
     setIsLoading,
-    filteredProducts,
-    setFilteredProducts,
-    priceResult,
-    setPriceResult,
-    singleCatProducts,
-    setSingleCatProducts,
+ 
   } = useContext(VariablesContext);
 
   const [showFilters, setShowFilters] = useState(false);
-  /*   let showFilter = () => {
-    setShowFilters((noShow) => !noShow);
-  }; */
+
 
   let fetchApi = async () => {
     try {
@@ -34,7 +27,7 @@ function Women() {
         "https://fakestoreapi.com/products/category/women's clothing"
       );
       const data = await response.json();
-      // console.log("jeweleryData", data);
+     
       setProducts(data);
       setIsLoading(false);
     } catch (err) {
@@ -50,7 +43,7 @@ function Women() {
   function showButtonFilter(data) {
     setShowFilters(data);
 
-    console.log("showBut", data);
+  
   }
 
   return (

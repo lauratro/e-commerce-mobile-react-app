@@ -1,11 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
-
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import Page from "../components/PageTitle";
-import { Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { VariablesContext } from "../context/ContextStorage";
-import { auth } from "../firebase";
 import myfirebase from "../firebase";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -51,17 +47,14 @@ const useStyles = makeStyles((theme) => ({
 function ShoppingCart() {
   const classes = useStyles();
   const db = myfirebase.firestore();
-  const { user, setUser } = useContext(AuthContext);
+  const { user} = useContext(AuthContext);
   const {
     docProduct,
     setDocProduct,
     idProductArray,
     setIdProductArray,
-    priceCart,
     setPriceCart,
   } = useContext(VariablesContext);
-  //  const [priceItem, setPriceItem] = useState([]);
-  // const [priceTotal, setPriceTotal] = useState();
   const [quantityUser, setQuantityUser] = useState(null);
   const [filtered, setFiltered] = useState([]);
 
@@ -150,19 +143,12 @@ function ShoppingCart() {
         console.log(id);
       })
       .then(() => {
-        //  console.log("externa", docProduct);
-        let removedPro = [];
-
-        /* removedPro = docProduct.filter((elem) => elem.product.title !== title); */
         let indexToRemove = docProduct.findIndex((elem, index) => {
           return elem.product.title === title;
         });
-        console.log("index", indexToRemove);
         docProduct.splice(indexToRemove, 1);
-        console.log("docP", docProduct);
         setDocProduct(docProduct);
 
-        // console.log("id", prodId);
         if (quantityUser) {
           if (quantityUser.hasOwnProperty(prodId)) {
             setQuantityUser({
@@ -183,18 +169,15 @@ function ShoppingCart() {
   };
   function twoFunctionsRemove(id, title, prodId) {
     removeProductFirebase(id, title, prodId);
-    // removeProductContext(title, prodId);
+   
     refreshPage();
   }
-  // Define quantity for each product
 
-  // console.log("keyValue", objectKeyValue);
 
-  console.log("quantity", quantityUser);
-  console.log("filtered", filtered);
+ 
   if (docProduct && quantityUser) {
     return filtered.map((prod) => {
-      // console.log("title", prod.docId);
+    
       return (
         <div className={classes.root} name={prod.title}>
           <Paper className={classes.paper}>

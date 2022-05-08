@@ -7,11 +7,8 @@ import RangeSlider from "../components/PriceSlider";
 import { VariablesContext } from "../context/ContextStorage";
 import ButtonFilters from "../components/ButtonFilters";
 import Page from "../components/PageTitle";
-
 import "../styles/Checkboxes.css";
 import Box from "@material-ui/core/Box";
-
-import Grid from "@material-ui/core/Grid";
 import CardContainer from "../components/CardsContainer";
 
 function Home() {
@@ -20,11 +17,11 @@ function Home() {
     setProducts,
     isLoading,
     setIsLoading,
-    filteredProducts,
-    setFilteredProducts,
+  
   } = useContext(VariablesContext);
 
-  let [filteredCheckBoxData, setFilteredCheckBoxData] = useState(products);
+
+  
   const [showFilters, setShowFilters] = useState(false);
 
   let fetchApi = async () => {
@@ -46,16 +43,7 @@ function Home() {
 
   function showButtonFilter(data) {
     setShowFilters(data);
-
-    // console.log("showBut", data);
   }
-  /* let showFilter = () => {
-    setShowFilters((noShow) => !noShow);
-  };
-*/
-  //Filtered Products
-
-  // console.log("dati Home filtrati", filteredProducts);
 
   return (
     <Page title="Home">
