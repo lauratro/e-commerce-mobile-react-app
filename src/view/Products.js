@@ -55,33 +55,18 @@ export default function MediaCard() {
   });
   let {
     products,
-    setProducts,
+   
 
     priceResult,
-    setPriceResult,
+    
     categoryResult,
-    setCategoryResult,
+   
   } = useContext(VariablesContext);
   const db = myfirebase.firestore();
-  const {
-    user,
-    setUser,
-    isLoggedIn,
-    setIsLoggedIn,
-    name,
-    setName,
-    productName,
-    setProductName,
-  } = useContext(AuthContext);
-  const classes = useStyles();
-  //Button Buy
 
-  //End Button Buy
-  // console.log("MediaCardProduct", products);
-  // console.log("filProdMediaCard", filteredProducts);
-  // console.log("mediaCategResu", categoryResult);
-  // console.log("mediaPrice", priceResult);
-  let [filtered, setfiltered] = useState([]);
+  const classes = useStyles();
+  
+
 
   //Filters Home page
   if (
