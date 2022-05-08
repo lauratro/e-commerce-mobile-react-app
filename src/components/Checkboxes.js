@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState,  useContext } from "react";
 
 import "../styles/Checkboxes.css";
 import { VariablesContext } from "../context/ContextStorage";
@@ -22,18 +22,16 @@ const useStyles = makeStyles((theme) => ({
 export default function CheckboxesGroup(props) {
   const classes = useStyles();
   let {
-    products,
-    setProducts,
-    isLoading,
-    setIsLoading,
+
+  
     filteredProducts,
-    setFilteredProducts,
+   
     categoryResult,
     setCategoryResult,
   } = useContext(VariablesContext);
-  // let { filteredProducts } = props;
+
   console.log("dati da filtrare Check", filteredProducts);
-  let [filtered, setFiltered] = useState([]);
+
   const [state, setState] = React.useState({
     electronics: false,
     jewelery: false,
@@ -41,12 +39,10 @@ export default function CheckboxesGroup(props) {
     women: false,
   });
 
-  console.log("checkprod", products);
-  console.log("checkfilPro", filteredProducts);
   const [checked, setChecked] = useState(false);
 
   const handleChange = (event) => {
-    // console.log(event.target.value);
+ 
 
     if (event.target.checked) {
       setCategoryResult([...categoryResult, event.target.value]);
@@ -62,13 +58,13 @@ export default function CheckboxesGroup(props) {
   };
 
   const { electronics, jewelery, men, women } = state;
-  const hasCategoryFilter = Object.values(state).includes(true);
-  // console.log("state", hasCategoryFilter);
+
+
   const hasCategoryNameFilter = Object.keys(state).filter(function (k) {
     return state[k] === true;
   });
 
-  // console.log("stateKey", hasCategoryNameFilter);
+ 
 
   for (var key in hasCategoryNameFilter) {
     if (hasCategoryNameFilter[key] == "men") {
@@ -78,62 +74,11 @@ export default function CheckboxesGroup(props) {
     }
   }
   categoryResult = Object.values(hasCategoryNameFilter);
-  //console.log("categoryResult", categoryResult);
 
-  /* const error =
-    [electronics, jewelery, men, women].filter((v) => v).length !== 2;
-  let checkfilterData = (prod) => {
-    setCategoryResult((data) => [...data, data.push(prod)]);
-  };
-  function assignCatValue(data) {
-    setCategoryResult(data);
-  }
-   let filterCheckbox = () => {
-       if (filteredProducts.length === 0) {
-      filteredProducts = products
-    } 
-    let filteredCheckResult = [];
-    products.forEach((prod) => {
-      if (prod.category === "men's clothing") {
-        prod.category = "men";
-      } else if (prod.category === "women's clothing") {
-        prod.category = "women";
-      }
-      if (hasCategoryNameFilter.includes(prod.category)) {
-        filteredCheckResult.push(prod);
-        //  setCategoryResult(prod);
-        //  categoryResult.push(prod);
-        // checkfilterData(prod);
-      }
-      console.log(filteredCheckResult);
-    });
-    console.log("result", filteredCheckResult);
-    categoryResult = filteredCheckResult;
-    return categoryResult;
-  };
-  filterCheckbox();
-  console.log("checkbox", categoryResult);
 
-  function filterData(data) {
-    setCategoryResult(data);
-  }
-  function transferDataCheck(array) {
-    array = filterCheckbox();
-    filterData(array);
-  }
-  function directDataCat() {
-    setCategoryResult(categoryResult);
-  }*/
-  function assignCat() {
-    setCategoryResult(categoryResult);
-  }
-  function twoFunctions(e) {
-    handleChange(e);
-    assignCat();
-  }
-  /*   function assignCat() {
-    setCategoryResult(arrayCat);
-  } */
+ 
+
+
 
   return (
     <div className={classes.root}>
