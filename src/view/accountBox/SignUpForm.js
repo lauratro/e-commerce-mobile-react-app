@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext,  useRef, useState } from "react";
 import myfirebase from "../../firebase";
 import { auth } from "../../firebase";
 import {
   BoxContainer,
-  FormContainer,
-  Input,
-  SubmitButton,
+ 
   MutedLink,
   BoldLink,
 } from "./Common";
@@ -14,19 +12,15 @@ import { useHistory } from "react-router-dom";
 
 import { AuthContext } from "../../context/AuthContext";
 import {
-  Grid,
-  Paper,
-  Avatar,
+
   TextField,
   Button,
-  Typography,
-  FormGroup,
-  FormControl,
+
 } from "@material-ui/core";
 
 const btnStyle = {
   margin: "15px 0",
-  background: "rgb(58,180,117)",
+
   background:
     "linear-gradient(90deg, rgba(58,180,117,1) 0%, rgba(39,161,45,1) 38%, rgba(25,78,34,1) 100%)",
 };
@@ -48,9 +42,9 @@ export function SignUpForm(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
-  const { user, setUser, isLoggedIn, setIsLoggedIn, name, setName } =
+  const {  setUser,  setIsLoggedIn, setName } =
     useContext(AuthContext);
-  const history = useHistory();
+
   const signUp = () => {
     const db = myfirebase.firestore();
     const email = emailRef.current.value;
@@ -80,7 +74,7 @@ export function SignUpForm(props) {
               .doc(user.uid)
               .get()
               .then((doc) => {
-                console.log("doc", doc.data());
+              
                 let docData = doc.data();
               });
           })
@@ -89,14 +83,14 @@ export function SignUpForm(props) {
           });
       })
       .catch((error) => {
-        var errorCode = error.code;
+        
         var errorMessage = error.message;
-        console.log(errorMessage);
+     
         setUser(null);
         setIsLoggedIn(false);
         setError(errorMessage);
         setLoading(false);
-        // ..
+        
       });
   };
   const handleSignup = (e) => {
@@ -104,12 +98,7 @@ export function SignUpForm(props) {
     setError("");
     setLoading(true);
     signUp();
-    /* 
-   
-    signup(email, password, fullName).catch((err) => {
-      setError(err.message);
-      setLoading(false);
-    }); */
+
   };
   return (
     <BoxContainer>

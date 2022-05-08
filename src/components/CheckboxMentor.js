@@ -47,7 +47,7 @@ export default function CheckboxMentor() {
   };
 
   const { mentor } = state;
-  const error = [mentor].filter((v) => v).length !== 2;
+
 
   return (
     <div className={classes.root}>
