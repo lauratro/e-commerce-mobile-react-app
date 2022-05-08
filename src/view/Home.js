@@ -12,6 +12,7 @@ import "../styles/Checkboxes.css";
 import Box from "@material-ui/core/Box";
 
 import Grid from "@material-ui/core/Grid";
+import CardContainer from "../components/CardsContainer";
 
 function Home() {
   const {
@@ -74,17 +75,12 @@ function Home() {
           )}
 
           <Box mt={8}>
-            <Grid
-              container
-              direction="row"
-              justify="space-around"
-
-              /*  display="flex"
-  flexWrap="wrap"
-  */
+            <CardContainer
+              
+   
             >
               <MediaCard />
-            </Grid>
+            </CardContainer>
           </Box>
         </React.Fragment>
       ) : (
