@@ -11,22 +11,14 @@ import CardContainer from "../components/CardsContainer";
 
 function Jewelery() {
   const {
-    products,
+
     setProducts,
     isLoading,
     setIsLoading,
-    filteredProducts,
-    setFilteredProducts,
-    priceResult,
-    setPriceResult,
-    singleCatProducts,
-    setSingleCatProducts,
   } = useContext(VariablesContext);
 
   const [showFilters, setShowFilters] = useState(false);
-  /*   let showFilter = () => {
-    setShowFilters((noShow) => !noShow);
-  }; */
+
 
   let fetchApi = async () => {
     try {
@@ -34,7 +26,7 @@ function Jewelery() {
         "https://fakestoreapi.com/products/category/jewelery"
       );
       const data = await response.json();
-      // console.log("jeweleryData", data);
+     
       setProducts(data);
       setIsLoading(false);
     } catch (err) {
@@ -50,7 +42,6 @@ function Jewelery() {
   function showButtonFilter(data) {
     setShowFilters(data);
 
-    console.log("showBut", data);
   }
 
   return (
@@ -64,16 +55,14 @@ function Jewelery() {
           {showFilters && (
             <React.Fragment>
               <RangeSlider
-              // products={products}
-              // filterData={(data) => filterData(data)}
+             
               />
             </React.Fragment>
           )}
           <Category cat="Jewelery" />
           <CardContainer>
             <MediaCard
-            //products={products}
-            //filteredProducts={filteredProducts}
+            
             />
           </CardContainer>
         </React.Fragment>
