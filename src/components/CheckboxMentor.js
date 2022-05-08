@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CheckboxMentor() {
-  const { docProduct, setDocProduct, priceCart, setPriceCart } =
+  const {  priceCart, setPriceCart } =
     useContext(VariablesContext);
   const [discountText, setDiscountText] = useState(false);
   const classes = useStyles();

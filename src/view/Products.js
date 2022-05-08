@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme)=>({
   },
   margin: {
     marginBottom: 25,
+    margin:"0 auto",
+    width:"90%"
   },
   fontSize: {
     fontSize: 12,
@@ -106,7 +108,7 @@ export default function MediaCard() {
   }
   return products.map((product) => {
     return (
-      <Grid item xs={12} sm={12} md={3} className={classes.margin}>
+      <Grid key={product.id} item xs={12} sm={12} md={3} className={classes.margin}>
         <Card
           key={product.id}
           className={classes.borderCard}

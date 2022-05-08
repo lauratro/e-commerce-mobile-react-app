@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import PosRelDiv from "./PositionRelDiv";
+
 
 function Category(props) {
   useEffect(() => {

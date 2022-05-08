@@ -9,10 +9,11 @@ function CardContainer(props) {
         container
         direction="row"
         justify="space-around"
-
-        /*  display="flex"
-  flexWrap="wrap"
-  */
+        style={{ 
+          margin:"0 auto",
+          width:"90%"
+        }}
+  
       >
         {props.children}
       </Grid>

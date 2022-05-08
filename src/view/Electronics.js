@@ -10,22 +10,20 @@ import MediaCard from "./Products";
 import CardContainer from "../components/CardsContainer";
 
 function Electronics() {
-  const { products, setProducts, isLoading, setIsLoading } =
+  const {  setProducts, isLoading, setIsLoading } =
     useContext(VariablesContext);
 
   const [showFilters, setShowFilters] = useState(false);
-  /*   let showFilter = () => {
-    setShowFilters((noShow) => !noShow);
-  }; */
 
-  // const [isLoading, setIsLoading] = useState(true);
+
+
   let fetchApi = async () => {
     try {
       const response = await fetch(
         "https://fakestoreapi.com/products/category/electronics"
       );
       const data = await response.json();
-      // console.log("electData", data);
+ 
       setProducts(data);
 
       setIsLoading(false);
@@ -56,16 +54,14 @@ function Electronics() {
           {showFilters && (
             <React.Fragment>
               <RangeSlider
-              // products={products}
-              // filterData={(data) => filterData(data)}
+
               />
             </React.Fragment>
           )}
           <Category cat="Electronics" />
           <CardContainer>
             <MediaCard
-            //products={products}
-            //filteredProducts={filteredProducts}
+          
             />
           </CardContainer>
         </React.Fragment>
