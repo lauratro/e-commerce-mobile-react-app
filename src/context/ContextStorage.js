@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 import appFirebase from "../firebase";
 import auth from "../firebase";
 
@@ -69,7 +69,7 @@ export const VariablesContextProvider = ({ children }) => {
     };
   });
  */
-  console.log("in context", docProduct);
+
   return (
     <VariablesContext.Provider
       value={{

@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useMediaQuery } from "react-responsive";
 
 import myfirebase from "../firebase";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import MediaQueries from "../styles/MediaQueries";
 
 import Card from "@material-ui/core/Card";
@@ -16,13 +16,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { Button } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-const useStyles = makeStyles({
-  root: {
-    width: 300,
-  },
-  height: {
-    height: "fit-content",
-  },
+const useStyles = makeStyles((theme)=>({
+
   media: {
     height: 250,
   },
@@ -42,8 +37,17 @@ const useStyles = makeStyles({
   },
   borderCard: {
     borderStyle: "5px solid black",
+    height: "fit-content",
+    width: 300,
   },
-});
+  cardFlexbox:{
+    display: "flex", flexDirection: "row",
+    [theme.breakpoints.up('md')]: {
+flexDirection:"column",
+height:300
+    },
+  }
+}));
 
 export default function MediaCard() {
   const isTabletOrMobileDevice = useMediaQuery({
@@ -117,17 +121,15 @@ export default function MediaCard() {
   }
   return products.map((product) => {
     return (
-      <Grid item xs={12} sm={12} md={6} className={classes.margin}>
+      <Grid item xs={12} sm={12} md={3} className={classes.margin}>
         <Card
           key={product.id}
-          className={classes.root}
-          className={classes.height}
           className={classes.borderCard}
           xs="6"
           sm="3"
           style={{ display: "flex", flexDirection: "row" }}
         >
-          <CardActionArea style={{ display: "flex", flexDirection: "row" }}>
+          <CardActionArea className={classes.cardFlexbox}>
             <Link to={`detail/${product.id}`}>
               <CardMedia
                 style={{ margin: 15, width: 80, height: 80 }}
@@ -142,7 +144,7 @@ export default function MediaCard() {
                 variant="h6"
                 component="h4"
                 style={
-                  isTabletOrMobileDevice ? { fontSize: 15 } : { fontSize: 20 }
+                  isTabletOrMobileDevice ? { fontSize: 12 } : { fontSize: 15 }
                 }
               >
                 {product.title}
