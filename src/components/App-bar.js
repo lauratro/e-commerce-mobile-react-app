@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
+
 import logo from "../img/LbyBig.png";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -25,13 +25,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   appBarColor: {
-    background: " rgb(255,255,255)",
     background:
       "linear-gradient(90deg, rgba(255,255,255,1) 2%, rgba(39,161,45,1) 19%, rgba(25,78,34,1) 100%)",
   },
-  menuButton: {
-    //  marginRight: theme.spacing(1),
-  },
+ 
   title: {
     flexGrow: 1,
   },
@@ -120,9 +117,9 @@ export default function MenuAppBar() {
               ? { justifyContent: " space-between" }
               : { justifyContent: "space-around" }
           }
-        >
-          <img src={logo} alt="logo" className={classes.logo} />
-
+        ><Link to="/">
+                <img src={logo} alt="logo" className={classes.logo} />
+                </Link>
           <IconButton
             edge="start"
             className={classes.menuButton}
