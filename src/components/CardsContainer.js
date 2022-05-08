@@ -7,8 +7,9 @@ function CardContainer(props) {
     <Box mt={8}>
       <Grid
         container
+        spacing={1}
         direction="row"
-        justify="space-around"
+       flexWrap="wrap"
         style={{ 
           margin:"0 auto",
           width:"90%"
