@@ -16,7 +16,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import CustomizedDialogs from "./Login";
 
 import { AccountBox } from "../view/accountBox/ContainerForm";
-import { GoBackButton } from "../components/GoBackButton";
+
 import { AuthContext } from "../context/AuthContext";
 
 import { ItemMenu } from "../view/accountBox/Common";
@@ -192,7 +192,7 @@ console.log(user)
               </MenuItem>
             </ItemMenu>
           </Menu>
-          <GoBackButton className={classes.marginElem} />
+        
           {!user && (
             <CustomizedDialogs>
               <AccountBox />
