@@ -9,6 +9,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import Avatar from "./Avatar";
 
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -202,15 +203,10 @@ export default function MenuAppBar() {
               Log out
             </button>
           )}
+        
           {user && (
-            <p
-              className={classes.welcometext}
-              style={
-                isTabletOrMobileDevice ? { fontSize: 10 } : { fontSize: 14 }
-              }
-            >
-              Welcome {user.displayName ? user.displayName : name}
-            </p>
+             <Avatar />
+           
           )}
         </Toolbar>
       </AppBar>
