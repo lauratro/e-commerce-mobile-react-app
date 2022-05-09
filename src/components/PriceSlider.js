@@ -26,8 +26,7 @@ export default function RangeSlider() {
     setFilteredProducts,
     priceResult,
     setPriceResult,
-    singleCatProducts,
-    setSingleCatProducts,
+
   } = useContext(VariablesContext);
 
   // console.log("dati da filtrare slider", filteredProducts);
@@ -89,7 +88,7 @@ export default function RangeSlider() {
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
         getAriaValueText={valuetext}
-        valueLabelDisplay="on"
+       // valueLabelDisplay="on"
         min={0}
         max={1000}
       />
