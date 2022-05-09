@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     height: 60,
     marginRight: 10,
     borderRadius: "50%",
+    marginTop:10
   },
   marginElem: {
     marginRight: 30,
@@ -124,7 +125,10 @@ console.log(user)
               ? { justifyContent: " space-between" }
               : { justifyContent: "space-around" }
           }
-        ><Link to="/">
+        
+        >
+          <div style={{display:"flex",justifyContent:"center"}}>
+          <Link to="/">
                 <img src={logo} alt="logo" className={classes.logo} />
                 </Link>
           <IconButton
@@ -138,8 +142,9 @@ console.log(user)
           >
             <MenuIcon className={classes.menuIconColor} />
           </IconButton>
+          </div>
           {user && (
-            <div display="flex" style={{ marginTop: 5 }}>
+            <div display="flex" style={{  marginTop: 5 }}>
               <Link to="/shopping" className={classes.marginIcons}>
                 <LocalMallIcon />
               </Link>
