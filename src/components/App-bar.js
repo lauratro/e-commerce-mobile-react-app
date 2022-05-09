@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, {useState, useContext } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import logo from "../img/LbyBig.png";
@@ -25,6 +25,17 @@ import LogoutButton from "./LogoutButton";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+  },
+  menuUser:{
+    position:"absolute",
+    top:50,
+    right:10,
+    paddingTop:20,
+    
+    height:70,
+    width:100,
+    border:" 1px solid black",
+    borderRadius:5
   },
   appBarColor: {
     background:
@@ -81,13 +92,17 @@ export default function MenuAppBar() {
   });
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [showList, setShowList] = useState(false)
   const { user, setUser, isLoggedIn, setIsLoggedIn, name, setName } =
     useContext(AuthContext);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+const toggleShow = () =>{
+  setShowList(prev => !prev)
 
+}
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -182,15 +197,26 @@ export default function MenuAppBar() {
               <AccountBox />
             </CustomizedDialogs>
           )}
+        
+        
+
+<div style={{position:"relative"}} onClick={toggleShow}>
+          {user && (
+             <Avatar  />
+           
+          )}
+            {showList &&
+             <div className={classes.menuUser}>
+             <div >
           {user && (
       
             <LogoutButton />
           )}
-        
-          {user && (
-             <Avatar />
-           
-          )}
+          </div>
+</div>
+}
+          </div>
+       
         </Toolbar>
       </AppBar>
     </div>
