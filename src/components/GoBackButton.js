@@ -3,6 +3,10 @@ import { useHistory } from "react-router-dom";
 import UndoIcon from "@material-ui/icons/Undo";
 const colorIcon = {
   color: "rgb(2, 48, 32)",
+  width:10,
+  height:10,
+ 
+
 };
 const marginAppBarElem = {
   margin: 10,
