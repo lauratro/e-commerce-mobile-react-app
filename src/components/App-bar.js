@@ -18,7 +18,7 @@ import CustomizedDialogs from "./Login";
 import { AccountBox } from "../view/accountBox/ContainerForm";
 import { GoBackButton } from "../components/GoBackButton";
 import { AuthContext } from "../context/AuthContext";
-import { auth } from "../firebase";
+
 import { ItemMenu } from "../view/accountBox/Common";
 import { useMediaQuery } from "react-responsive";
 import LogoutButton from "./LogoutButton";
