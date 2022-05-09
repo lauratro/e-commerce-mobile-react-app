@@ -93,7 +93,7 @@ export default function MenuAppBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [showList, setShowList] = useState(false)
-  const { user, setUser, isLoggedIn, setIsLoggedIn, name, setName } =
+  const { user } =
     useContext(AuthContext);
 
   const handleClick = (event) => {
