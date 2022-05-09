@@ -5,12 +5,13 @@ export default function Footer() {
     <div
       style={{
         background: "  rgba(25,78,34,0.9)",
-        height: 100,
+        height: 30,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        position: "relative",
-        top: "40vh",
+        position: "fixed",
+        width:"100%",
+        bottom: 0,
       }}
     >
       <p>LBY Shop | Created by Laura Tronchin</p>
