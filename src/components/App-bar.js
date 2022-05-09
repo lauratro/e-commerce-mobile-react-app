@@ -21,6 +21,7 @@ import { AuthContext } from "../context/AuthContext";
 import { auth } from "../firebase";
 import { ItemMenu } from "../view/accountBox/Common";
 import { useMediaQuery } from "react-responsive";
+import LogoutButton from "./LogoutButton";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -86,18 +87,7 @@ export default function MenuAppBar() {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const signout = () => {
-    auth
-      .signOut()
-      .then(() => {
-        console.log("log Out");
-        setUser(null);
-      })
-      .catch((error) => {
-        // An error happened.
-        console.log(error);
-      });
-  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -193,15 +183,8 @@ export default function MenuAppBar() {
             </CustomizedDialogs>
           )}
           {user && (
-            <button
-              onClick={signout}
-              className={classes.logOut}
-              style={
-                isTabletOrMobileDevice ? { fontSize: 10 } : { fontSize: 12 }
-              }
-            >
-              Log out
-            </button>
+      
+            <LogoutButton />
           )}
         
           {user && (
