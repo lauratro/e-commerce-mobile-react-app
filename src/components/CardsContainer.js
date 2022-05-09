@@ -9,7 +9,7 @@ function CardContainer(props) {
         container
         spacing={1}
         direction="row"
-       flexWrap="wrap"
+       flexwrap="wrap"
         style={{ 
           margin:"0 auto",
           width:"90%"
