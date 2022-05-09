@@ -22,17 +22,18 @@ import { AuthContext } from "../context/AuthContext";
 import { ItemMenu } from "../view/accountBox/Common";
 import { useMediaQuery } from "react-responsive";
 import LogoutButton from "./LogoutButton";
+import { withThemeCreator } from "@material-ui/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   menuUser:{
     position:"absolute",
-    top:50,
-    right:10,
-    paddingTop:20,
-    
-    height:70,
+    top:35,
+    right:5,
+    paddingTop:5,
+    background:"white",
+    height:100,
     width:100,
     border:" 1px solid black",
     borderRadius:5
@@ -101,7 +102,7 @@ export default function MenuAppBar() {
   };
 const toggleShow = () =>{
   setShowList(prev => !prev)
-
+console.log(user)
 }
   const handleClose = () => {
     setAnchorEl(null);
@@ -207,12 +208,21 @@ const toggleShow = () =>{
           )}
             {showList &&
              <div className={classes.menuUser}>
-             <div >
-          {user && (
-      
+          <div>
+            {user && 
+              <div style={{margin:"0 auto"}}>
+                <div style={{display:"flex", justifyContent:"center"}}>
+            <Avatar  />
+            </div>
+             <p style={{color:"black", fontSize:10, marginTop:2, marginBottom: 3}}>{user.email}</p>
+             </div>
+            
+            }
+             </div>
+            
             <LogoutButton />
-          )}
-          </div>
+        
+          
 </div>
 }
           </div>
