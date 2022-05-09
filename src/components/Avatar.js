@@ -16,14 +16,21 @@ const useStyles = makeStyles({
   });
 export default function Avatar(){
     let [initial, setInitial]=useState("")
-    const {  user } = useContext(AuthContext);
+    const {  user, name } = useContext(AuthContext);
     let classes = useStyles()
     let getUserInitial = ()=>{
-        const firstLetters = user.displayName
+        let username
+        if(user){ username = user.displayName ? user.displayName : name}
+       
+      if(user){
+        const firstLetters = username
         .split(' ')
         .map(word => word[0])
         .join('');
-        setInitial(firstLetters)
+        setInitial(firstLetters) 
+       
+      }
+
        
     }
     useEffect(()=>{
