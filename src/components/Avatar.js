@@ -1,5 +1,6 @@
-import React, {useState,useEffect} from "react"
+import React, {useState,useEffect, useContext} from "react"
 import { makeStyles } from "@material-ui/core/styles";
+import { AuthContext } from "../context/AuthContext";
 
 const useStyles = makeStyles({
     avatarCircle: {
@@ -15,14 +16,15 @@ const useStyles = makeStyles({
   });
 export default function Avatar(){
     let [initial, setInitial]=useState("")
+    const {  user } = useContext(AuthContext);
     let classes = useStyles()
-    let username = localStorage.getItem("usernameStorage")
     let getUserInitial = ()=>{
-        const firstLetters = username
+        const firstLetters = user.displayName
         .split(' ')
         .map(word => word[0])
         .join('');
         setInitial(firstLetters)
+       
     }
     useEffect(()=>{
         getUserInitial()
