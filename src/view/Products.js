@@ -38,19 +38,32 @@ const useStyles = makeStyles((theme)=>({
   borderCard: {
     borderStyle: "5px solid black",
     height: "fit-content",
+    display: "flex", flexDirection: "row",
     width: 300,
     [theme.breakpoints.down('md')]: {
     width:400,
     height:300
           },
+   [theme.breakpoints.down('sm')]: {
+            width:400,
+            height:300,
+            flexDirection:"column",
+            
+                  },
   },
   cardFlexbox:{
     display: "flex", flexDirection: "row",
     margin:25,
     [theme.breakpoints.up('md')]: {
 flexDirection:"column",
-height:300
+height:300,
+margin:15,
     },
+    [theme.breakpoints.down('md')]: {
+      flexDirection:"column",
+      height:300,
+      margin:5,
+          },
   }
 }));
 
@@ -115,9 +128,9 @@ export default function MediaCard() {
         <Card
           key={product.id}
           className={classes.borderCard}
-          xs="6"
+          xs="12"
           sm="3"
-          style={{ display: "flex", flexDirection: "row" }}
+          style={{ }}
         >
           <CardActionArea className={classes.cardFlexbox}>
             <Link to={`detail/${product.id}`}>
