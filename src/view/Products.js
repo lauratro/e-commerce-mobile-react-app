@@ -39,6 +39,10 @@ const useStyles = makeStyles((theme)=>({
     borderStyle: "5px solid black",
     height: "fit-content",
     width: 300,
+    [theme.breakpoints.down('md')]: {
+    width:400,
+    height:300
+          },
   },
   cardFlexbox:{
     display: "flex", flexDirection: "row",
@@ -107,7 +111,7 @@ export default function MediaCard() {
   }
   return products.map((product) => {
     return (
-      <Grid container key={product.id} item xs={12} sm={12} md={3} className={classes.margin}>
+      <Grid container key={product.id} item xs={12} sm={6} md={3} className={classes.margin}>
         <Card
           key={product.id}
           className={classes.borderCard}
