@@ -4,7 +4,7 @@ import { VariablesContext } from "../context/ContextStorage";
 
 import { useMediaQuery } from "react-responsive";
 
-import myfirebase from "../firebase";
+
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
