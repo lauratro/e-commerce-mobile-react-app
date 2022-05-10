@@ -4,8 +4,11 @@ import { AuthContext } from "../context/AuthContext";
 
 const useStyles = makeStyles({
     avatarCircle: {
-      width: 20,
-      height:20,
+      width: 30,
+      height:30,
+      display:"flex",
+      justifyContent:"center",
+      alignItems:"center",
       margin:5,
       border:"1px solid black",
       borderRadius:"100%",
