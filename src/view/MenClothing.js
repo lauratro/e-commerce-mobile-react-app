@@ -10,23 +10,13 @@ import CardContainer from "../components/CardsContainer";
 import Category from "../components/NameCategory";
 
 function Men() {
-  const {
-    products,
+  const {  
     setProducts,
     isLoading,
     setIsLoading,
-    filteredProducts,
-    setFilteredProducts,
-    priceResult,
-    setPriceResult,
-    singleCatProducts,
-    setSingleCatProducts,
   } = useContext(VariablesContext);
 
   const [showFilters, setShowFilters] = useState(false);
-  /*   let showFilter = () => {
-    setShowFilters((noShow) => !noShow);
-  }; */
 
   let fetchApi = async () => {
     try {
@@ -64,16 +54,12 @@ function Men() {
           {showFilters && (
             <React.Fragment>
               <RangeSlider
-              // products={products}
-              // filterData={(data) => filterData(data)}
               />
             </React.Fragment>
           )}
           <Category cat="Men's Clothing" />
           <CardContainer>
-            <MediaCard
-            //products={products}
-            //filteredProducts={filteredProducts}
+            <MediaCard       
             />
           </CardContainer>
         </React.Fragment>

@@ -13,7 +13,6 @@ import CardContainer from "../components/CardsContainer";
 
 function Home() {
   const {
-    products,
     setProducts,
     isLoading,
     setIsLoading,
