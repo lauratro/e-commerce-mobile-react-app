@@ -88,9 +88,9 @@ export default function MediaCard() {
 
   //Filters Home page
   if (
-    categoryResult.length == 0 &&
+    categoryResult.length === 0 &&
     priceResult.length === 0 &&
-    document.title == "Home | LBY"
+    document.title === "Home | LBY"
   ) {
     let result = products.filter((p) => {
       return p;

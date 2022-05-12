@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 function ShoppingCart() {
   const classes = useStyles();
   const db = myfirebase.firestore();
-  const { user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const {
     docProduct,
     setDocProduct,
@@ -70,15 +70,10 @@ function ShoppingCart() {
           let arrayPrice = [];
           let arrayId = [];
           querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            //   console.log(doc.id, " => ", doc.data());
-            // console.log("intern", doc.data());
-
             let docData = doc.data();
             let docDataProd = docData;
             let priceProd = docDataProd.product.price;
-            //   console.log("price", priceI);
-            //Product id
+
             let idProd = docData.product.id;
             //  console.log("id", idProd);
             arrayId.push(idProd);
@@ -92,8 +87,6 @@ function ShoppingCart() {
           setDocProduct(arrayShopProd);
           setPriceCart(arrayPrice);
           setIdProductArray(arrayId);
-          console.log("doc", docProduct);
-          // setIdProductArray(arrayId);
         })
         .catch((error) => {
           console.log("Error getting documents: ", error);
@@ -101,7 +94,6 @@ function ShoppingCart() {
     }
   }, []);
   useEffect(() => {
-    //Object with quantity
     var objectKeyValue = idProductArray.reduce(function (acc, curr) {
       if (typeof acc[curr] == "undefined") {
         acc[curr] = 1;
@@ -140,7 +132,6 @@ function ShoppingCart() {
       .delete()
       .then(() => {
         console.log("Document successfully deleted!");
-        console.log(id);
       })
       .then(() => {
         let indexToRemove = docProduct.findIndex((elem, index) => {
@@ -169,15 +160,12 @@ function ShoppingCart() {
   };
   function twoFunctionsRemove(id, title, prodId) {
     removeProductFirebase(id, title, prodId);
-   
+
     refreshPage();
   }
 
-
- 
   if (docProduct && quantityUser) {
     return filtered.map((prod) => {
-    
       return (
         <div className={classes.root} name={prod.title}>
           <Paper className={classes.paper}>
@@ -191,7 +179,7 @@ function ShoppingCart() {
               <img
                 xs={6}
                 src={prod.product.image}
-                alt="picture"
+                alt="pictureProduct"
                 className={classes.image}
               />
               <Grid items xs={6}>
