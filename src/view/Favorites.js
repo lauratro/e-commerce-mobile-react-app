@@ -135,7 +135,7 @@ function Favorites() {
               sm={6}
               justifyContent="space-between"
             >
-              <Grid items>
+              <Grid item>
                 <ImgProd
                   src={prod.product.image}
                   alt="picture"
@@ -143,7 +143,7 @@ function Favorites() {
                 />
               </Grid>
               <Grid
-                items
+                item
                 md={6}
 
                 
@@ -154,7 +154,7 @@ function Favorites() {
                 <Category>Category: {prod.product.category}</Category>
               </Grid>
 
-              <Grid items>
+              <Grid item>
                 <button
                   alignItems="flex-start"
                   onClick={() => removeProduct(prod.docId, prod.product.title)}

@@ -142,6 +142,9 @@ let getDataFromBackend =()=>{
           return elem.product.title === title;
         });
         docProduct.splice(indexToRemove, 1);
+        let newProductsArray = docProduct
+        console.log(newProductsArray)
+        setDocProduct(newProductsArray)
         priceCart.splice(indexToRemove,1)
        
         if (quantityUser) {
@@ -168,14 +171,14 @@ let getDataFromBackend =()=>{
   if (docProduct && quantityUser) {
     return filtered.map((prod) => {
       return (
-        <div key={prod.id} className={classes.root} name={prod.title}>
+        <div key={`${prod.id}${quantityUser}`} className={classes.root} name={prod.title}>
           <Paper className={classes.paper}>
             <Grid
               container
               direction="row"
               justify="space-around"
               alignItems="center"
-              xs={12}
+              
             >
               <img
                 xs={6}
@@ -183,7 +186,7 @@ let getDataFromBackend =()=>{
                 alt="pictureProduct"
                 className={classes.image}
               />
-              <Grid items xs={6}>
+              <Grid item xs={6}>
                 <p style={{ fontWeight: 900 }}>{prod.product.title}</p>
 
                 <p>
@@ -194,7 +197,7 @@ let getDataFromBackend =()=>{
               </Grid>
               <Grid
                 xs={12}
-                items
+                item
                 style={{
                   display: "flex",
                   margin: 10,
