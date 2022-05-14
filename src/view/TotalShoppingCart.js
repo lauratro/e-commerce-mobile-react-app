@@ -1,26 +1,31 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { VariablesContext } from "../context/ContextStorage";
+import { AuthContext } from "../context/AuthContext";
 import CheckboxMentor from "../components/CheckboxMentor";
 
 export default function TotalShoppingCart() {
-  const { docProduct, priceCart, setPriceCart } =
+  const [total,setTotal] = useState(0)
+  const { docProduct, priceCart } =
     useContext(VariablesContext);
+    const { quantityUser } = useContext(AuthContext);
 
-  let amount = 0;
-  console.log("totaldoc", docProduct);
+    useEffect(()=>{
+ let amount = 0;
 
-  if (priceCart.length > 0) {
+  if (priceCart.length > 0 && typeof priceCart == "object") {
     amount = priceCart.reduce((a, c) => a + c, 0);
   
     let rounded = amount.toFixed(2);
     let roundedPrice = Number(rounded);
-    setPriceCart(roundedPrice);
+
+setTotal(roundedPrice)
   } else {
     amount = 0;
+    setTotal(amount)
   }
-
+},[quantityUser,docProduct])
   return (
     <div display="flex">
       <Grid
@@ -35,7 +40,8 @@ export default function TotalShoppingCart() {
       >
         <Paper xs={12} style={{ marginTop: 15 }}>
           <p style={{ backgroundColor: "lightgreen" }}>
-            Total Cost {priceCart} $
+            Total Cost {total} $
+         
           </p>
           <CheckboxMentor />
         </Paper>
