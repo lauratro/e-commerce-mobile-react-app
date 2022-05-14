@@ -47,51 +47,56 @@ const useStyles = makeStyles((theme) => ({
 function ShoppingCart() {
   const classes = useStyles();
   const db = myfirebase.firestore();
-  const { user } = useContext(AuthContext);
+  const { user,quantityUser,setQuantityUser } = useContext(AuthContext);
   const {
     docProduct,
     setDocProduct,
     idProductArray,
     setIdProductArray,
+    priceCart,
     setPriceCart,
+   
   } = useContext(VariablesContext);
-  const [quantityUser, setQuantityUser] = useState(null);
+ // const [quantityUser, setQuantityUser] = useState(null);
   const [filtered, setFiltered] = useState([]);
+  
+let getDataFromBackend =()=>{
 
-  console.log("OutshoppingCartProd", docProduct);
-  useEffect(() => {
-    console.log("totdoc pre filter", docProduct);
-    let arrayShopProd = [];
-    if (user) {
-      db.collection("shopping")
-        .where("uid", "==", user.uid)
-        .get()
-        .then((querySnapshot) => {
-          let arrayPrice = [];
-          let arrayId = [];
-          querySnapshot.forEach((doc) => {
-            let docData = doc.data();
-            let docDataProd = docData;
-            let priceProd = docDataProd.product.price;
+  let arrayShopProd = [];
+  if (user) {
+    db.collection("shopping")
+      .where("uid", "==", user.uid)
+      .get()
+      .then((querySnapshot) => {
+        let arrayPrice = [];
+        let arrayId = [];
+        querySnapshot.forEach((doc) => {
+          let docData = doc.data();
+          let docDataProd = docData;
+          let priceProd = docDataProd.product.price;
 
-            let idProd = docData.product.id;
-            //  console.log("id", idProd);
-            arrayId.push(idProd);
-            //  console.log("idlist", arrayId);
-            //Product Price
-            arrayPrice.push(Number(priceProd));
+          let idProd = docData.product.id;
 
-            arrayShopProd.push(docData);
-          });
-          console.log("docData", arrayShopProd);
-          setDocProduct(arrayShopProd);
-          setPriceCart(arrayPrice);
-          setIdProductArray(arrayId);
-        })
-        .catch((error) => {
-          console.log("Error getting documents: ", error);
+          arrayId.push(idProd);
+   
+          arrayPrice.push(Number(priceProd));
+
+          arrayShopProd.push(docData);
         });
-    }
+       
+        setDocProduct(arrayShopProd);
+        setPriceCart(arrayPrice);
+        setIdProductArray(arrayId);
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+  }
+}
+
+  useEffect(() => {
+ getDataFromBackend()
+
   }, []);
   useEffect(() => {
     var objectKeyValue = idProductArray.reduce(function (acc, curr) {
@@ -104,7 +109,7 @@ function ShoppingCart() {
       return acc;
     }, {});
     setQuantityUser(objectKeyValue);
-    console.log("quantity", objectKeyValue);
+
   }, [idProductArray]);
 
   useEffect(() => {
@@ -117,14 +122,12 @@ function ShoppingCart() {
         return unique;
       }, []);
 
-      console.log("filt", filteredA);
+  
       setFiltered(filteredA);
     }
   }, [docProduct]);
   //Remove Product
-  useEffect(() => {
-    removeProductFirebase();
-  }, [idProductArray]);
+
 
   let removeProductFirebase = (id, title, prodId) => {
     db.collection("shopping")
@@ -134,12 +137,13 @@ function ShoppingCart() {
         console.log("Document successfully deleted!");
       })
       .then(() => {
+      
         let indexToRemove = docProduct.findIndex((elem, index) => {
           return elem.product.title === title;
         });
         docProduct.splice(indexToRemove, 1);
-        setDocProduct(docProduct);
-
+        priceCart.splice(indexToRemove,1)
+       
         if (quantityUser) {
           if (quantityUser.hasOwnProperty(prodId)) {
             setQuantityUser({
@@ -153,21 +157,18 @@ function ShoppingCart() {
         console.error("Error removing document: ", error);
       });
   };
-  console.log("shoppingCartProd", docProduct);
 
-  const refreshPage = () => {
-    window.location.reload();
-  };
+
   function twoFunctionsRemove(id, title, prodId) {
     removeProductFirebase(id, title, prodId);
 
-    refreshPage();
+  
   }
 
   if (docProduct && quantityUser) {
     return filtered.map((prod) => {
       return (
-        <div className={classes.root} name={prod.title}>
+        <div key={prod.id} className={classes.root} name={prod.title}>
           <Paper className={classes.paper}>
             <Grid
               container
