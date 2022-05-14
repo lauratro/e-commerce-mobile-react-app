@@ -10,6 +10,7 @@ const initAuthContext = {
   productPrice: " ",
 
   loading: true,
+  quantityUser:null
 };
 
 export const AuthContext = createContext(initAuthContext);
@@ -21,6 +22,7 @@ export const AuthContextProvider = ({ children }) => {
   const [name, setName] = useState(initAuthContext.name);
   const [productName, setProductName] = useState(initAuthContext.productName);
   const [productPrice, setProductPrice] = useState(initAuthContext.productName);
+  const[quantityUser,setQuantityUser] =useState(initAuthContext.quantityUser)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -42,6 +44,8 @@ export const AuthContextProvider = ({ children }) => {
         setProductName,
         productPrice,
         productName,
+     quantityUser,
+     setQuantityUser
       }}
     >
       {children}
